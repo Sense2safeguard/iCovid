@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iCovid/ui/screens/home_screen/home_screen.dart';
+import 'package:iCovid/ui/screens/quiz_screen/quiz_screen.dart';
 
 void main() {
   runApp(ICovidApp());
@@ -11,6 +12,10 @@ class ICovidApp extends StatelessWidget {
     return MaterialApp(
         title: "iCovid App",
         debugShowCheckedModeBanner: false,
-        home: HomeScreen());
+        initialRoute: '/',
+        routes: {
+          '/': (context) => HomeScreen(),
+          '/quiz_screen': (context) => QuizScreen(),
+        });
   }
 }

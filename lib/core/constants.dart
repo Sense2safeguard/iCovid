@@ -55,13 +55,40 @@ const kBodyText2 = TextStyle(
     color: Colors.white);
 
 // Components
-const kButtonTextStyle = TextStyle(
+// Buttons TextStyles
+final kMainButtonTextStyle = TextStyle(
     fontFamily: "Montserrat",
     fontSize: 16,
     fontWeight: FontWeight.w500,
     color: Colors.white);
 
-const overlineTextStyle = TextStyle(
+final kSecondaryButtonTextStyle = TextStyle(
+    fontFamily: "Montserrat",
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    color: kNeoAccent);
+
+final kButtonsDisabledTextStyle = TextStyle(
+    fontFamily: "Montserrat",
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    color: kAccent.withOpacity(0.4));
+
+// Selection Buttons
+final kCheckedSelectionSelected = TextStyle(
+    fontFamily: "Montserrat",
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    color: Colors.white);
+
+final kCheckedSelectionUnSelected = TextStyle(
+    fontFamily: "Montserrat",
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    color: kLightBlue);
+
+// Others
+final kOverlineTextStyle = TextStyle(
     fontFamily: "Montserrat",
     fontSize: 12,
     fontWeight: FontWeight.w500,
