@@ -1,32 +1,44 @@
 import 'package:flutter/material.dart';
+
+import 'package:provider/provider.dart';
+
 import 'package:iCovid/core/constants.dart';
+import 'package:iCovid/core/models/data_structure_models.dart';
 import 'package:iCovid/ui/components/ic_app_bar.dart';
 import 'package:iCovid/ui/components/ic_question.dart';
+import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
 
 class QuizScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    Question currentQuestion =
+        Provider.of<QuizViewmodel>(context, listen: false).currentQuestion;
+
+    print('Quiz Screen painted');
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: kBlue,
         body: Column(
           children: [
-            ICAppBar(accentTitle: "iCO", lightBlueTitle: "VID"),
+            ICAppBar(
+              question: currentQuestion,
+            ),
             SizedBox(height: 34),
-            buildBody(size)
+            buildBody(size, currentQuestion)
           ],
         ),
       ),
     );
   }
 
-  Padding buildBody(Size size) {
+  Padding buildBody(Size size, Question question) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40),
       child: Column(
         children: [
-          buildTitleArea("Demographics"),
+          buildTitleArea(question.category),
           SizedBox(height: 26),
           ICQuestion(size: size)
         ],

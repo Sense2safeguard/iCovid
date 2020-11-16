@@ -1,28 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/single_checked_selection.dart';
+import 'package:iCovid/core/models/data_structure_models.dart';
+import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
+import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/single_checkable_selection.dart';
+import 'package:provider/provider.dart';
 
-class ICOptionsArea extends StatefulWidget {
-  // final QuestionModel question;
-  // const ICOptionsArea({Key key, this.question}) : super(key: key);
+class ICOptionsArea extends StatelessWidget {
+  final Question question;
 
-  @override
-  _ICOptionsAreaState createState() => _ICOptionsAreaState();
-}
-
-class _ICOptionsAreaState extends State<ICOptionsArea> {
-  String _widgetType;
-
-  @override
-  void initState() {
-    super.initState();
-    _widgetType = "SingleCheckedSelection";
-  }
-
+  const ICOptionsArea({Key key, this.question}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    switch (_widgetType) {
-      case "SingleCheckedSelection":
-        return SingleCheckedSelection();
+    // Question question =
+    //     Provider.of<QuizViewmodel>(context, listen: true).currentQuestion;
+
+    switch (question.widgetType) {
+      case "SingleCheckableSelection":
+        return SingleCheckableSelection();
         break;
       default:
         return Container();

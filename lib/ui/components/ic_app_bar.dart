@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:iCovid/core/constants.dart';
+import 'package:iCovid/core/models/data_structure_models.dart';
 
 class ICAppBar extends StatelessWidget {
-  final String accentTitle;
-  final String lightBlueTitle;
-  final bool hasCategory;
-  ICAppBar({this.accentTitle, this.hasCategory, this.lightBlueTitle});
+  final Question question;
+  ICAppBar({this.question});
 
   @override
   Widget build(BuildContext context) {
+    String _accentTitle = "i";
+    String _lightBlueTitle = "COVID";
+
+    // TODO: better dartpad
+    if (question != null && question.category != null) {
+      switch (question.category) {
+        case "Demographics":
+          _accentTitle = "iCO";
+          _lightBlueTitle = "VID";
+          break;
+        default:
+      }
+    }
+
     return Container(
       height: 56,
       width: double.infinity,
@@ -20,14 +33,14 @@ class ICAppBar extends StatelessWidget {
         child: Stack(
           children: [
             buildCloseButton(),
-            buildLogo(),
+            buildLogo(_accentTitle, _lightBlueTitle),
           ],
         ),
       ),
     );
   }
 
-  Align buildLogo() {
+  Align buildLogo(String accentTitle, String lightBlueTitle) {
     return Align(
       alignment: Alignment.center,
       child: RichText(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:iCovid/core/constants.dart';
 import 'package:iCovid/ui/components/ic_app_bar.dart';
 import 'package:iCovid/ui/components/ic_buttons.dart';
@@ -10,10 +11,7 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: kBlue,
         body: Column(
-          children: [
-            ICAppBar(accentTitle: "i", lightBlueTitle: "COVID"),
-            buildBody(context)
-          ],
+          children: [ICAppBar(), buildBody(context)],
         ),
       ),
     );
