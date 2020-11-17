@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:iCovid/core/models/data_structure_models.dart';
-import 'package:iCovid/core/models/data_structure_models.dart';
-import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/dial_selection.dart';
-import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/single_checkable_selection.dart';
 
 import 'package:provider/provider.dart';
 
+import 'package:iCovid/core/models/data_structure_models.dart';
+import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/dial_selection.dart';
+import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/single_checkable_selection.dart';
 import 'package:iCovid/core/constants.dart';
 import 'package:iCovid/ui/shared/ic_buttons.dart';
 import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
@@ -38,6 +37,9 @@ class ICQuestion extends StatelessWidget {
                       ),
                       // SizedBox(height: 32),
                       Spacer(),
+                      // TODO: Better semantics
+                      // Not semantic as I wish but if not,
+                      // the Align should go in each case of the switch
                       Align(
                           alignment: Alignment.center,
                           child: buildOptionsArea(model.currentQuestion)),

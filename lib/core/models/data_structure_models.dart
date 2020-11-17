@@ -18,8 +18,9 @@ class Question {
   final String text;
   final String category;
   final String widgetType;
+  // TODO: remove hasFreeText if not necessary
   final bool hasFreeText;
-  // TODO: remove next if not necesarry
+  // TODO: remove next if not necessary
   final String next;
   final OptionsModel options;
   Question(
