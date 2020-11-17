@@ -1,3 +1,4 @@
+/// [questionsMap] is a Map of the total questions
 class QuestionsModel {
   final Map<String, Question> questionsMap;
 
@@ -18,6 +19,7 @@ class Question {
   final String category;
   final String widgetType;
   final bool hasFreeText;
+  // TODO: remove next if not necesarry
   final String next;
   final OptionsModel options;
   Question(

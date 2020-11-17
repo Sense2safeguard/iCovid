@@ -19,13 +19,18 @@ class QuizViewmodel extends ChangeNotifier {
   Question _currentQuestion;
   Question get currentQuestion => _currentQuestion;
 
+  // Options
   OptionsModel _options;
   OptionsModel get options => _options;
 
   void initialize() {
-    getDB();
+    getDataBase();
     calculateOrder();
     notifyListeners();
+  }
+
+  void getDataBase() {
+    _questions = dbService.getDB();
   }
 
   void calculateOrder() {
@@ -34,11 +39,8 @@ class QuizViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getDB() {
-    _questions = dbService.getDB();
-  }
-
   // Answers
+  // with Options
   int _selectedOption;
   int get selectedOption => _selectedOption;
 
@@ -49,6 +51,15 @@ class QuizViewmodel extends ChangeNotifier {
     _selectedOption = val;
     _selectedNext = _options.optionsMap[val.toString()].next;
     notifyListeners();
+  }
+
+  // with Dials and Date selectors
+  List<Map<String, int>> _dialsList = [];
+
+  void setDialSelected(String dialText, int counterVal) {
+    Map<String, int> _dialMap = {dialText: counterVal};
+    _dialsList.add(_dialMap);
+    _selectedNext = _currentQuestion.options.optionsMap["1"].next;
   }
 
   // Navigation

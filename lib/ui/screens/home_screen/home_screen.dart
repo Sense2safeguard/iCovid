@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:iCovid/core/constants.dart';
-import 'package:iCovid/ui/components/ic_app_bar.dart';
-import 'package:iCovid/ui/components/ic_buttons.dart';
+import 'package:iCovid/ui/shared/ic_app_bar.dart';
+import 'package:iCovid/ui/shared/ic_buttons.dart';
 
 class HomeScreen extends StatelessWidget {
   @override

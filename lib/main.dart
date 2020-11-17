@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+
 import 'package:iCovid/ui/screens/home_screen/home_screen.dart';
 import 'package:iCovid/ui/screens/quiz_screen/quiz_screen.dart';
 import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   runApp(ICovidApp());

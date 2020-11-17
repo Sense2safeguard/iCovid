@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 
 import 'package:iCovid/core/constants.dart';
 import 'package:iCovid/core/models/data_structure_models.dart';
-import 'package:iCovid/ui/components/ic_app_bar.dart';
-import 'package:iCovid/ui/components/ic_question.dart';
+import 'package:iCovid/ui/shared/ic_app_bar.dart';
+import 'package:iCovid/ui/screens/quiz_screen/components/ic_question.dart';
 import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
 
 class QuizScreen extends StatelessWidget {

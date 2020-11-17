@@ -23,7 +23,9 @@ class DBServiceMocked implements DBService {
         "widgetType": "DialSelection",
         "hasFreeText": "false",
         "next": "3",
-        "options": {}
+        "options": {
+          "1": {"id": "1", "text": "Age", "next": "3"},
+        }
       },
       "3": {
         "id": "3",
