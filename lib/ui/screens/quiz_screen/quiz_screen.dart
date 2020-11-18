@@ -20,7 +20,7 @@ class QuizScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: kBlue,
-        body: Column(
+        body: ListView(
           children: [
             ICAppBar(
               question: currentQuestion,

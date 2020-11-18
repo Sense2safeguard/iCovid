@@ -18,6 +18,10 @@ class ICAppBar extends StatelessWidget {
           _accentTitle = "iCO";
           _lightBlueTitle = "VID";
           break;
+        case "Co-morbidities":
+          _accentTitle = "iC";
+          _lightBlueTitle = "OVID";
+          break;
         default:
       }
     }

@@ -9,17 +9,20 @@ import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
 class SingleCheckableSelection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<QuizViewmodel>(builder: (context, model, _) {
+    return Consumer<QuizViewmodel>(builder: (_, model, __) {
       Map<String, Option> optionsMap = model.options.optionsMap;
       return Column(
         children: [
           for (var entry in optionsMap.entries)
             ICCheckableSelection(
                 label: optionsMap[entry.key].text,
-                value: int.parse(entry.key),
+                index: entry.key,
                 groupValue: model.selectedOption,
-                onChanged: (int index) {
-                  model.setSelectedOption(index);
+                hasOther: model.currentQuestion.hasOther,
+                widgetType: model.currentQuestion.widgetType,
+                onChanged: (String label, String index, String widgetType,
+                    bool hasOther) {
+                  model.setAndStoreOption(label, index, widgetType, hasOther);
                 }),
         ],
       );

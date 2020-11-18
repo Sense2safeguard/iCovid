@@ -16,6 +16,7 @@ class ICovidApp extends StatelessWidget {
     return ChangeNotifierProvider(
         create: (context) => QuizViewmodel(),
         builder: (context, _) {
+          // used to dismiss keyboard when enter
           return MaterialApp(
               title: "iCovid App",
               debugShowCheckedModeBanner: false,

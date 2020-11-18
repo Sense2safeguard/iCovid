@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:provider/provider.dart';
 
 import 'package:iCovid/core/models/data_structure_models.dart';
 import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/dial_selection.dart';
 import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/single_checkable_selection.dart';
+import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/multiple_pill_selection.dart';
 import 'package:iCovid/core/constants.dart';
 import 'package:iCovid/ui/shared/ic_buttons.dart';
 import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
@@ -17,8 +19,11 @@ class ICQuestion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<QuizViewmodel>(
-      builder: (context, model, child) {
+      builder: (context, model, _) {
         print("IC Question painted");
+        Question _currentQuestion = model.currentQuestion;
+        String _widgetType = _currentQuestion.widgetType;
+
         return ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(10)),
           child: Container(
@@ -30,8 +35,9 @@ class ICQuestion extends StatelessWidget {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // TODO: change alignment dependant on _widgetType
                       Text(
-                        model.currentQuestion.text,
+                        _currentQuestion.text,
                         style: kheadline4,
                         textAlign: TextAlign.left,
                       ),
@@ -42,7 +48,8 @@ class ICQuestion extends StatelessWidget {
                       // the Align should go in each case of the switch
                       Align(
                           alignment: Alignment.center,
-                          child: buildOptionsArea(model.currentQuestion)),
+                          child: buildOptionsArea(_widgetType)),
+                      if (model.isOtherVisible) buildOtherArea(_widgetType),
                       Spacer(),
                       buildButtons(model),
                       SizedBox(height: 16),
@@ -53,17 +60,47 @@ class ICQuestion extends StatelessWidget {
     );
   }
 
-  Widget buildOptionsArea(Question question) {
-    switch (question.widgetType) {
+  Widget buildOptionsArea(String widgetType) {
+    switch (widgetType) {
       case "SingleCheckableSelection":
         return SingleCheckableSelection();
         break;
       case "DialSelection":
         return DialSelection();
         break;
+      case "MultiplePillSelection":
+        return MultiplePillSelection();
+        break;
       default:
-        return Container();
+        return Container(
+            child: Center(
+          child: Text("Ops! Something happened!"),
+        ));
     }
+  }
+
+  Widget buildOtherArea(String widgetType) {
+    return Padding(
+      padding: widgetType == "MultiplePillSelection"
+          ? EdgeInsets.all(10.0)
+          : EdgeInsets.only(top: 10),
+      child: Container(
+        width: double.infinity,
+        child: TextField(
+          style: kHintTextStyle.copyWith(color: kBlue),
+          decoration: InputDecoration(
+              hintText: "Please, write here",
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              hintStyle: kHintTextStyle,
+              focusedBorder:
+                  OutlineInputBorder(borderSide: BorderSide(color: kBlue)),
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: kBlue),
+                  borderRadius: BorderRadius.circular(8))),
+        ),
+      ),
+    );
   }
 
   Row buildButtons(QuizViewmodel model) {

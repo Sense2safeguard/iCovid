@@ -4,9 +4,9 @@ import 'package:iCovid/core/constants.dart';
 
 class ICDialSelection extends StatefulWidget {
   final String text;
-  final Function onChange;
+  final Function onChanged;
 
-  const ICDialSelection({Key key, this.text, this.onChange}) : super(key: key);
+  const ICDialSelection({Key key, this.text, this.onChanged}) : super(key: key);
 
   @override
   _ICDialSelectionState createState() => _ICDialSelectionState();
@@ -27,7 +27,7 @@ class _ICDialSelectionState extends State<ICDialSelection> {
       _counter++;
       _textToDisplay = _counter.toString();
     });
-    widget.onChange(widget.text, _counter);
+    widget.onChanged(widget.text, _counter);
   }
 
   void decrement() {
@@ -36,7 +36,7 @@ class _ICDialSelectionState extends State<ICDialSelection> {
         _counter--;
         _textToDisplay = _counter == 0 ? widget.text : _counter.toString();
       });
-    widget.onChange(widget.text, _counter);
+    widget.onChanged(widget.text, _counter);
   }
 
   @override

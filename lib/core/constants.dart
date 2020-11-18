@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-// TODO: make responsive proportions stylde guide
+// TODO: make responsive proportions styles guide
 
 // Colors
 // Primary Palette
@@ -89,9 +89,27 @@ final kCheckedSelectionUnSelected = TextStyle(
     fontWeight: FontWeight.w500,
     color: kLightBlue);
 
+final kPillSelectedTextStyle = TextStyle(
+    fontFamily: "Montserrat",
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+    color: Colors.white);
+
+final kPillUnselectedTextStyle = TextStyle(
+    fontFamily: "Montserrat",
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+    color: kPaleBlue);
+
 // Others
 final kOverlineTextStyle = TextStyle(
     fontFamily: "Montserrat",
     fontSize: 12,
     fontWeight: FontWeight.w500,
     color: Colors.white);
+
+const kHintTextStyle = TextStyle(
+    fontFamily: "Open Sans",
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: kLightBlue);

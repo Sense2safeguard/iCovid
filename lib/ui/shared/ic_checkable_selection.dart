@@ -3,21 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:iCovid/core/constants.dart';
 
 class ICCheckableSelection extends StatelessWidget {
+  final String label;
+  final String groupValue;
+  final String index;
+  final Function onChanged;
+  final bool hasOther;
+  final String widgetType;
+
   const ICCheckableSelection({
     this.label,
     this.groupValue,
-    this.value,
+    this.index,
     this.onChanged,
+    this.hasOther,
+    this.widgetType,
   });
-
-  final String label;
-  final int groupValue;
-  final int value;
-  final Function onChanged;
 
   @override
   Widget build(BuildContext context) {
-    bool _isSelected = value == groupValue;
+    bool _isSelected = index == groupValue;
     return Column(
       children: [
         Container(
@@ -37,7 +41,7 @@ class ICCheckableSelection extends StatelessWidget {
                   color: _isSelected ? Colors.transparent : kCoolGrey)),
           child: InkWell(
               onTap: () {
-                if (!_isSelected) onChanged(value);
+                if (!_isSelected) onChanged(label, index, widgetType, hasOther);
               },
               child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),

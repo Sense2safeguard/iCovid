@@ -16,18 +16,14 @@ class QuestionsModel {
 class Question {
   final String id;
   final String text;
+  final bool hasOther;
   final String category;
   final String widgetType;
-  // TODO: remove hasFreeText if not necessary
-  final bool hasFreeText;
-  // TODO: remove next if not necessary
-  final String next;
   final OptionsModel options;
   Question(
-      {this.id,
+      {this.hasOther,
+      this.id,
       this.text,
-      this.hasFreeText,
-      this.next,
       this.category,
       this.widgetType,
       this.options});
@@ -36,8 +32,7 @@ class Question {
     return Question(
         id: json['id'],
         text: json['text'],
-        hasFreeText: json['hasFreeText'].toString().toLowerCase() == 'true',
-        next: json['next'] == "" ? "0" : json['next'],
+        hasOther: json['hasOther'].toString().toLowerCase() == 'true',
         category: json['category'],
         widgetType: json['widgetType'],
         options: OptionsModel.fromJson(json['options']));
