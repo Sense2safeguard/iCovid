@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:provider/provider.dart';
 
@@ -66,7 +65,10 @@ class ICQuestion extends StatelessWidget {
         return SingleCheckableSelection();
         break;
       case "DialSelection":
-        return DialSelection();
+        return Column(children: [
+          DialSelection(),
+          Text('* Long pressed for big jump!', style: kHintTextStyle)
+        ]);
         break;
       case "MultiplePillSelection":
         return MultiplePillSelection();

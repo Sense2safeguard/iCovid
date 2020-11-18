@@ -22,18 +22,18 @@ class _ICDialSelectionState extends State<ICDialSelection> {
     _textToDisplay = widget.text;
   }
 
-  void increment() {
+  void increment(bool isBigJump) {
     setState(() {
-      _counter++;
+      isBigJump ? _counter += 10 : _counter++;
       _textToDisplay = _counter.toString();
     });
     widget.onChanged(widget.text, _counter);
   }
 
-  void decrement() {
+  void decrement(bool isBigJump) {
     if (_counter > 0)
       setState(() {
-        _counter--;
+        isBigJump ? _counter -= 10 : _counter--;
         _textToDisplay = _counter == 0 ? widget.text : _counter.toString();
       });
     widget.onChanged(widget.text, _counter);
@@ -60,11 +60,13 @@ class _ICDialSelectionState extends State<ICDialSelection> {
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(8),
                         bottomLeft: Radius.circular(8))),
-                onPressed: () => decrement(),
+                onPressed: () => decrement(false),
+                onLongPress: () => decrement(true),
                 child: Icon(Icons.remove)),
             Text(_textToDisplay,
                 style: kSecondaryButtonTextStyle.copyWith(
                     color: kDarkBlue, fontSize: 14)),
+            // TODO: onLongPressed increase linearly
             MaterialButton(
                 minWidth: 4,
                 height: 48,
@@ -72,7 +74,8 @@ class _ICDialSelectionState extends State<ICDialSelection> {
                     borderRadius: BorderRadius.only(
                         topRight: Radius.circular(8),
                         bottomRight: Radius.circular(8))),
-                onPressed: () => increment(),
+                onPressed: () => increment(false),
+                onLongPress: () => increment(true),
                 child: Icon(Icons.add)),
           ],
         ),
