@@ -20,6 +20,8 @@ class QuizScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: kBlue,
+        // TODO: Make better: This is ListView help when the keyboard appears
+        // Maybe a better solution is create a Dialog for the Other field
         body: ListView(
           children: [
             ICAppBar(

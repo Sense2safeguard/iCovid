@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/single_selection_scrollable.dart';
 
 import 'package:provider/provider.dart';
 
@@ -64,6 +65,7 @@ class ICQuestion extends StatelessWidget {
       case "SingleCheckableSelection":
         return SingleCheckableSelection();
         break;
+      // TODO: semantics
       case "DialSelection":
         return Column(children: [
           DialSelection(),
@@ -72,6 +74,9 @@ class ICQuestion extends StatelessWidget {
         break;
       case "MultiplePillSelection":
         return MultiplePillSelection();
+        break;
+      case "SingleSelectionScrollable":
+        return SingleSelectionScrollable();
         break;
       default:
         return Container(

@@ -54,7 +54,41 @@ class DBServiceMocked implements DBService {
         "category": "Demographics",
         "widgetType": "DialSelection",
         "options": {
-          "1": {"id": "1", "text": "Age", "next": "3"},
+          "1": {"id": "1", "text": "Age", "next": "5"},
+        }
+      },
+      "5": {
+        "id": "5",
+        "text": "Where do you live?",
+        "hasOther": "false",
+        "category": "Demographics",
+        "widgetType": "SingleSelectionScrollable",
+        "options": {
+          "1": {"id": "1", "text": "Åland Islands", "next": "6"},
+          "2": {"id": "2", "text": "Albania", "next": "6"},
+          "3": {"id": "3", "text": "Algeria", "next": "6"},
+          "4": {"id": "4", "text": "American Samoa", "next": "6"},
+          "5": {"id": "5", "text": "AndorrA", "next": "6"},
+          "6": {"id": "6", "text": "Angola", "next": "6"},
+          "7": {"id": "7", "text": "Anguilla", "next": "6"},
+          "8": {"id": "8", "text": "Antarctica", "next": "6"},
+        }
+      },
+      "6": {
+        "id": "6",
+        "text": "Where were you born?",
+        "hasOther": "false",
+        "category": "Demographics",
+        "widgetType": "SingleSelectionScrollable",
+        "options": {
+          "1": {"id": "1", "text": "Åland Islands", "next": "7"},
+          "2": {"id": "2", "text": "Albania", "next": "7"},
+          "3": {"id": "3", "text": "Algeria", "next": "7"},
+          "4": {"id": "4", "text": "American Samoa", "next": "7"},
+          "5": {"id": "5", "text": "AndorrA", "next": "7"},
+          "6": {"id": "6", "text": "Angola", "next": "7"},
+          "7": {"id": "7", "text": "Anguilla", "next": "7"},
+          "8": {"id": "8", "text": "Antarctica", "next": "7"},
         }
       },
       // "2": {
