@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/single_selection_scrollable.dart';
+import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/single_radio_selection.dart';
+import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/single_scrollable_pill_selection.dart';
+import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/single_scrollable_selection.dart';
 
 import 'package:provider/provider.dart';
 
@@ -75,8 +77,14 @@ class ICQuestion extends StatelessWidget {
       case "MultiplePillSelection":
         return MultiplePillSelection();
         break;
-      case "SingleSelectionScrollable":
-        return SingleSelectionScrollable();
+      case "SingleScrollableSelection":
+        return SingleScrollableSelection();
+        break;
+      case "SingleScrolabblePillSelection":
+        return SingleScrollablePillSelection();
+        break;
+      case "SingleSelectionRadio":
+        return SingleRadioSelection();
         break;
       default:
         return Container(

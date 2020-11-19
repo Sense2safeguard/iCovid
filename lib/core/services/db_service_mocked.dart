@@ -62,7 +62,7 @@ class DBServiceMocked implements DBService {
         "text": "Where do you live?",
         "hasOther": "false",
         "category": "Demographics",
-        "widgetType": "SingleSelectionScrollable",
+        "widgetType": "SingleScrollableSelection",
         "options": {
           "1": {"id": "1", "text": "Åland Islands", "next": "6"},
           "2": {"id": "2", "text": "Albania", "next": "6"},
@@ -79,7 +79,7 @@ class DBServiceMocked implements DBService {
         "text": "Where were you born?",
         "hasOther": "false",
         "category": "Demographics",
-        "widgetType": "SingleSelectionScrollable",
+        "widgetType": "SingleScrollableSelection",
         "options": {
           "1": {"id": "1", "text": "Åland Islands", "next": "7"},
           "2": {"id": "2", "text": "Albania", "next": "7"},
@@ -89,6 +89,56 @@ class DBServiceMocked implements DBService {
           "6": {"id": "6", "text": "Angola", "next": "7"},
           "7": {"id": "7", "text": "Anguilla", "next": "7"},
           "8": {"id": "8", "text": "Antarctica", "next": "7"},
+        }
+      },
+      "7": {
+        "id": "7",
+        "text": "What is your ethnicity?",
+        "hasOther": "false",
+        "category": "Demographics",
+        "widgetType": "SingleScrolabblePillSelection",
+        "options": {
+          "1": {"id": "1", "text": "African", "next": "8"},
+          "2": {
+            "id": "2",
+            "text": "American Indian or Alaska Native",
+            "next": "8"
+          },
+          "3": {"id": "3", "text": "Any other Asian background", "next": "8"},
+          "4": {"id": "4", "text": "Any other mixed background", "next": "8"},
+          "5": {"id": "5", "text": "Any other white background", "next": "8"},
+          "6": {"id": "6", "text": "Asian -", "next": "8"},
+          "7": {"id": "7", "text": "Black or African American", "next": "8"},
+          "8": {"id": "8", "text": "British", "next": "8"},
+          "9": {"id": "9", "text": "Caribbean", "next": "8"},
+          "10": {"id": "10", "text": "Chinese", "next": "8"},
+          "11": {"id": "11", "text": "Hispanic (of any race)", "next": "8"},
+          "12": {"id": "12", "text": "Indian", "next": "8"},
+          "13": {"id": "13", "text": "Irish", "next": "8"},
+          "14": {"id": "14", "text": "Native Hawaiian", "next": "8"},
+          "15": {"id": "15", "text": "Pakistani", "next": "8"},
+          "16": {"id": "16", "text": "White", "next": "8"},
+          "17": {"id": "17", "text": "White and Asian", "next": "8"},
+          "18": {"id": "18", "text": "White and Black Caribbean", "next": "8"},
+          "19": {"id": "19", "text": "Other", "next": "8"},
+        }
+      },
+      "8": {
+        "id": "8",
+        "text": "What blood type are you?",
+        "hasOther": "false",
+        "category": "Demographics",
+        "widgetType": "SingleSelectionRadio",
+        "options": {
+          "1": {"id": "1", "text": "A +", "next": "7"},
+          "2": {"id": "2", "text": "A -", "next": "7"},
+          "3": {"id": "3", "text": "B +", "next": "7"},
+          "4": {"id": "4", "text": "B -", "next": "7"},
+          "5": {"id": "5", "text": "AB +", "next": "7"},
+          "6": {"id": "6", "text": "AB -", "next": "7"},
+          "7": {"id": "7", "text": "0 +", "next": "7"},
+          "8": {"id": "8", "text": "0 -", "next": "7"},
+          "9": {"id": "9", "text": "Don't know", "next": "7"},
         }
       },
       // "2": {

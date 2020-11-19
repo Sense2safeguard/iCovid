@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'package:iCovid/core/constants.dart';
 
-class ICPillSelection extends StatefulWidget {
+class ICRadioSelection extends StatefulWidget {
   final String text;
   final String index;
   final Function onChanged;
   final String widgetType;
   final bool hasOther;
 
-  const ICPillSelection({
+  const ICRadioSelection({
     this.text,
     this.onChanged,
     this.index,
@@ -18,10 +18,10 @@ class ICPillSelection extends StatefulWidget {
   });
 
   @override
-  _ICPillSelectionState createState() => _ICPillSelectionState();
+  _ICRadioSelectionState createState() => _ICRadioSelectionState();
 }
 
-class _ICPillSelectionState extends State<ICPillSelection> {
+class _ICRadioSelectionState extends State<ICRadioSelection> {
   bool _isSelected = false;
 
   @override
