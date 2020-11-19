@@ -83,7 +83,7 @@ class ICQuestion extends StatelessWidget {
       case "SingleScrolabblePillSelection":
         return SingleScrollablePillSelection();
         break;
-      case "SingleSelectionRadio":
+      case "SingleRadioSelection":
         return SingleRadioSelection();
         break;
       default:

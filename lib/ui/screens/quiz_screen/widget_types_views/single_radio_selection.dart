@@ -11,20 +11,25 @@ class SingleRadioSelection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<QuizViewmodel>(builder: (_, model, __) {
       Map<String, Option> optionsMap = model.options.optionsMap;
-      return Column(
-        children: [
-          for (var entry in optionsMap.entries)
-            ICRadioSelection(
-                text: optionsMap[entry.key].text,
-                index: entry.key,
-                // groupValue: model.selectedOption,
-                hasOther: model.currentQuestion.hasOther,
-                widgetType: model.currentQuestion.widgetType,
-                onChanged: (String label, String index, String widgetType,
-                    bool hasOther) {
-                  model.setAndStoreOption(label, index, widgetType, hasOther);
-                }),
-        ],
+      return Container(
+        height: 340,
+        child: GridView.count(
+          crossAxisCount: 2,
+          childAspectRatio: 3,
+          children: [
+            for (var entry in optionsMap.entries)
+              ICRadioSelection(
+                  label: optionsMap[entry.key].text,
+                  index: entry.key,
+                  groupValue: model.selectedOption,
+                  hasOther: model.currentQuestion.hasOther,
+                  widgetType: model.currentQuestion.widgetType,
+                  onChanged: (String label, String index, String widgetType,
+                      bool hasOther) {
+                    model.setAndStoreOption(label, index, widgetType, hasOther);
+                  }),
+          ],
+        ),
       );
     });
   }

@@ -128,7 +128,7 @@ class DBServiceMocked implements DBService {
         "text": "What blood type are you?",
         "hasOther": "false",
         "category": "Demographics",
-        "widgetType": "SingleSelectionRadio",
+        "widgetType": "SingleRadioSelection",
         "options": {
           "1": {"id": "1", "text": "A +", "next": "7"},
           "2": {"id": "2", "text": "A -", "next": "7"},
