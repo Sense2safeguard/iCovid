@@ -113,3 +113,9 @@ const kHintTextStyle = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w400,
     color: kLightBlue);
+
+const kSelectedDateTextStyle = TextStyle(
+    fontFamily: "Open Sans",
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+    color: kNeoAccent);

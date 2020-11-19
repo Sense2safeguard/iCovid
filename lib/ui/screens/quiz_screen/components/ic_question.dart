@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/date_selection.dart';
 import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/single_radio_selection.dart';
 import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/single_scrollable_pill_selection.dart';
 import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/single_scrollable_selection.dart';
@@ -85,6 +86,9 @@ class ICQuestion extends StatelessWidget {
         break;
       case "SingleRadioSelection":
         return SingleRadioSelection();
+        break;
+      case "DateSelection":
+        return DateSelection();
         break;
       default:
         return Container(

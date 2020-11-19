@@ -107,7 +107,7 @@ class DBServiceMocked implements DBService {
           "3": {"id": "3", "text": "Any other Asian background", "next": "8"},
           "4": {"id": "4", "text": "Any other mixed background", "next": "8"},
           "5": {"id": "5", "text": "Any other white background", "next": "8"},
-          "6": {"id": "6", "text": "Asian -", "next": "8"},
+          "6": {"id": "6", "text": "Asian", "next": "8"},
           "7": {"id": "7", "text": "Black or African American", "next": "8"},
           "8": {"id": "8", "text": "British", "next": "8"},
           "9": {"id": "9", "text": "Caribbean", "next": "8"},
@@ -130,15 +130,25 @@ class DBServiceMocked implements DBService {
         "category": "Demographics",
         "widgetType": "SingleRadioSelection",
         "options": {
-          "1": {"id": "1", "text": "A +", "next": "7"},
-          "2": {"id": "2", "text": "A -", "next": "7"},
-          "3": {"id": "3", "text": "B +", "next": "7"},
-          "4": {"id": "4", "text": "B -", "next": "7"},
-          "5": {"id": "5", "text": "AB +", "next": "7"},
-          "6": {"id": "6", "text": "AB -", "next": "7"},
-          "7": {"id": "7", "text": "0 +", "next": "7"},
-          "8": {"id": "8", "text": "0 -", "next": "7"},
-          "9": {"id": "9", "text": "Don't know", "next": "7"},
+          "1": {"id": "1", "text": "A +", "next": "9"},
+          "2": {"id": "2", "text": "A -", "next": "9"},
+          "3": {"id": "3", "text": "B +", "next": "9"},
+          "4": {"id": "4", "text": "B -", "next": "9"},
+          "5": {"id": "5", "text": "AB +", "next": "9"},
+          "6": {"id": "6", "text": "AB -", "next": "9"},
+          "7": {"id": "7", "text": "0 +", "next": "9"},
+          "8": {"id": "8", "text": "0 -", "next": "9"},
+          "9": {"id": "9", "text": "Don't know", "next": "9"},
+        }
+      },
+      "9": {
+        "id": "9",
+        "text": "When were you born?",
+        "hasOther": "false",
+        "category": "Demographics",
+        "widgetType": "DateSelection",
+        "options": {
+          "1": {"id": "1", "text": " ", "next": "10"},
         }
       },
       // "2": {
