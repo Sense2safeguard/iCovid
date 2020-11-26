@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 
 import 'package:iCovid/core/constants.dart';
+import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class ICPillMultipleSelection extends StatefulWidget {
   final String text;
   final String index;
-  final Function onChanged;
-  final String widgetType;
-  final bool hasOther;
+  final bool isPreviouslySelected;
+  final bool isNoneSelected;
+  final bool isSelected;
 
-  const ICPillMultipleSelection({
-    this.text,
-    this.onChanged,
-    this.index,
-    this.widgetType,
-    this.hasOther,
-  });
+  const ICPillMultipleSelection(
+      {Key key,
+      this.text,
+      this.index,
+      this.isPreviouslySelected,
+      this.isNoneSelected,
+      this.isSelected})
+      : super(key: key);
 
   @override
   _ICPillMultipleSelectionState createState() =>
@@ -23,10 +26,10 @@ class ICPillMultipleSelection extends StatefulWidget {
 }
 
 class _ICPillMultipleSelectionState extends State<ICPillMultipleSelection> {
-  bool _isSelected = false;
-
   @override
   Widget build(BuildContext context) {
+    QuizViewmodel model = Provider.of<QuizViewmodel>(context);
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -34,10 +37,10 @@ class _ICPillMultipleSelectionState extends State<ICPillMultipleSelection> {
           height: 32,
           margin: EdgeInsets.symmetric(vertical: 4),
           decoration: BoxDecoration(
-            color: _isSelected ? kBlue : kPaleBlue.withOpacity(0.2),
+            color: widget.isSelected ? kBlue : kPaleBlue.withOpacity(0.2),
             borderRadius: BorderRadius.circular(6),
             boxShadow: [
-              if (_isSelected)
+              if (widget.isSelected)
                 BoxShadow(
                     offset: Offset(0, 8),
                     blurRadius: 10,
@@ -46,18 +49,18 @@ class _ICPillMultipleSelectionState extends State<ICPillMultipleSelection> {
           ),
           child: InkWell(
               onTap: () {
-                setState(() {
-                  _isSelected = !_isSelected;
-                });
-                widget.onChanged(widget.text, widget.index, widget.widgetType,
-                    widget.hasOther);
+                model.toggleNoneSelected(widget.text);
+                model.storeAnswers(widget.index, widget.text);
+                model.amISelected(widget.text, widget.index);
+                model.otherVisible(widget.text);
+                model.selectNext(widget.index);
               },
               child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      if (_isSelected)
+                      if (widget.isSelected)
                         Container(
                             width: 20,
                             height: 20,
@@ -69,12 +72,12 @@ class _ICPillMultipleSelectionState extends State<ICPillMultipleSelection> {
                               color: Colors.white,
                               size: 12,
                             )),
-                      if (_isSelected)
+                      if (widget.isSelected)
                         SizedBox(
                           width: 10,
                         ),
                       Text(widget.text,
-                          style: _isSelected
+                          style: widget.isSelected
                               ? kPillSelectedTextStyle
                               : kPillUnselectedTextStyle)
                     ],

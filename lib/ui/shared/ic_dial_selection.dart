@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
 import 'package:iCovid/core/constants.dart';
+import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class ICDialSelection extends StatefulWidget {
   final String text;
-  final Function onChanged;
 
-  const ICDialSelection({Key key, this.text, this.onChanged}) : super(key: key);
+  const ICDialSelection({
+    Key key,
+    this.text,
+  }) : super(key: key);
 
   @override
   _ICDialSelectionState createState() => _ICDialSelectionState();
@@ -22,25 +26,29 @@ class _ICDialSelectionState extends State<ICDialSelection> {
     _textToDisplay = widget.text;
   }
 
-  void increment(bool isBigJump) {
+  void increment(QuizViewmodel model, bool isBigJump) {
     setState(() {
       isBigJump ? _counter += 10 : _counter++;
       _textToDisplay = _counter.toString();
     });
-    widget.onChanged(widget.text, _counter);
+    model.storeAnswers(_counter.toString());
+    model.selectNext();
   }
 
-  void decrement(bool isBigJump) {
+  void decrement(QuizViewmodel model, bool isBigJump) {
     if (_counter > 0)
       setState(() {
         isBigJump ? _counter -= 10 : _counter--;
         _textToDisplay = _counter == 0 ? widget.text : _counter.toString();
       });
-    widget.onChanged(widget.text, _counter);
+    model.storeAnswers(_counter.toString());
+    model.selectNext();
   }
 
   @override
   Widget build(BuildContext context) {
+    QuizViewmodel model = Provider.of<QuizViewmodel>(context);
+
     return Container(
       margin: EdgeInsets.symmetric(vertical: 4),
       width: 220,
@@ -60,13 +68,13 @@ class _ICDialSelectionState extends State<ICDialSelection> {
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(8),
                         bottomLeft: Radius.circular(8))),
-                onPressed: () => decrement(false),
-                onLongPress: () => decrement(true),
+                onPressed: () => decrement(model, false),
+                onLongPress: () => decrement(model, true),
                 child: Icon(Icons.remove)),
             Text(_textToDisplay,
                 style: kSecondaryButtonTextStyle.copyWith(
                     color: kDarkBlue, fontSize: 14)),
-            // TODO: onLongPressed increase linearly
+            // TODO: input to add directly
             MaterialButton(
                 minWidth: 4,
                 height: 48,
@@ -74,8 +82,8 @@ class _ICDialSelectionState extends State<ICDialSelection> {
                     borderRadius: BorderRadius.only(
                         topRight: Radius.circular(8),
                         bottomRight: Radius.circular(8))),
-                onPressed: () => increment(false),
-                onLongPress: () => increment(true),
+                onPressed: () => increment(model, false),
+                onLongPress: () => increment(model, true),
                 child: Icon(Icons.add)),
           ],
         ),

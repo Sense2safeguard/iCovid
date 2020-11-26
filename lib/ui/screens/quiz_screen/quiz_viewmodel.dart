@@ -8,24 +8,45 @@ class QuizViewmodel extends ChangeNotifier {
     initialize();
   }
 
+  QuizViewmodel.forTesting() {
+    getDataBase();
+    calculateOrder("3");
+    _answers = AnswersModel(storedAnswers: {
+      "1": Answer(
+          questionId: "1",
+          selectedOptions: ["1", "2", "11"],
+          otherValue: "Other value"),
+      "2": Answer(questionId: "2", selectedOptions: ["1"]),
+    });
+  }
+
   DBServiceMocked dbService = DBServiceMocked();
 
   // Questions
   QuestionsModel _questions;
-  QuestionsModel get questions => _questions;
-
-  String _questionOrder = "1";
-
   Question _currentQuestion;
-  Question get currentQuestion => _currentQuestion;
+  String _questionOrder = "1";
+  bool _isOtherVisible = false;
+  bool _hasOther;
+  String _otherValue;
+  String _widgetType;
 
   // Options
-  OptionsModel _options;
-  OptionsModel get options => _options;
+  OptionsModel _currentOptions;
+
+  // Answers
+  String _selectedOption;
+  List<String> _selectedOptions;
+  String _selectedNext;
+  AnswersModel _answers;
+  bool _isNextDisabled = true;
+  bool _isNoneSelected = false;
 
   void initialize() {
     getDataBase();
     calculateOrder();
+    initializeAnswers();
+    computeOther();
     notifyListeners();
   }
 
@@ -33,85 +54,197 @@ class QuizViewmodel extends ChangeNotifier {
     _questions = dbService.getDB();
   }
 
-  void calculateOrder() {
-    _currentQuestion = _questions.questionsMap[_questionOrder];
-    _options = _currentQuestion.options;
+  /// This will prepare all the configuration for next option
+  /// Shared Prefs will resume on [_questionOrder]
+  void calculateOrder([String questionOrder]) {
+    _currentQuestion = questionOrder != null
+        ? _questions.questionsMap[questionOrder]
+        : _questions.questionsMap[_questionOrder];
+    _currentOptions = _currentQuestion.options;
+    _selectedOption = null;
+    _widgetType = _currentQuestion.widgetType;
+
     notifyListeners();
   }
 
-  // Answers
-  // with Options
-  String _selectedOption;
-  String get selectedOption => _selectedOption;
+  void initializeAnswers() {
+    if (_answers == null || _answers.storedAnswers == null)
+      _answers = AnswersModel(storedAnswers: {
+        _currentQuestion.id: Answer.empty(_currentQuestion.id)
+      });
 
-  String _selectedNext;
-  String get selectedNext => _selectedNext;
+    if (_answers.storedAnswers[_currentQuestion.id] == null) {
+      _answers.storedAnswers[_currentQuestion.id] =
+          Answer.empty(_currentQuestion.id);
+      _isNextDisabled = true;
+    }
+  }
 
-  // with Multiple Options
-  List<String> _storedOption = [];
-  bool _isOtherVisible = false;
-  bool get isOtherVisible => _isOtherVisible;
+  // NAVIGATION
+  // Moving forward
+  void navigateNext() {
+    selectNext();
+    saveOtherValue();
+    calculateOrder(_selectedNext);
+    initializeAnswers();
+    computeOther();
+    calculateNextDisabled();
+
+    notifyListeners();
+  }
+
+  // Moving backwards
+  void navigateBack() {
+    saveOtherValue();
+    calculateOrder((int.parse(_currentQuestion.id) - 1).toString());
+    computeOther();
+    calculateNextDisabled();
+
+    notifyListeners();
+  }
+
+  void computeOther() {
+    _isOtherVisible =
+        !(_answers.storedAnswers[_currentQuestion.id].otherValue == "" ||
+            _answers.storedAnswers[_currentQuestion.id].otherValue == null);
+
+    _otherValue = _answers.storedAnswers[_currentQuestion.id].otherValue != null
+        ? _answers.storedAnswers[_currentQuestion.id].otherValue
+        : null;
+
+    _hasOther = _currentQuestion.hasOther;
+  }
+
+  void saveOtherValue() {
+    if (_hasOther && _otherValue != null && _isOtherVisible ||
+        hasOther && _otherValue != "" && _isOtherVisible)
+      _answers.storedAnswers[_currentQuestion.id].otherValue = _otherValue;
+  }
+
+  void calculateNextDisabled() {
+    if (_answers.storedAnswers[_currentQuestion.id].selectedOptions.length >
+        0) {
+      _isNextDisabled = false;
+    } else {
+      _isNextDisabled = true;
+    }
+  }
+
+  void storeAnswers(String optionId, [String text]) {
+    _selectedOption = optionId;
+
+// TODO: till line 139, is almost the same as initializeAnswers()
+    if (_answers.storedAnswers[_currentQuestion.id] == null)
+      _answers.storedAnswers[_currentQuestion.id] =
+          Answer.empty(_currentQuestion.id);
+
+    if (_answers.storedAnswers[_currentQuestion.id].selectedOptions == null) {
+      _selectedOptions = [];
+    } else {
+      _selectedOptions =
+          _answers.storedAnswers[_currentQuestion.id].selectedOptions;
+    }
+
+    if (!_selectedOptions.contains(optionId)) {
+      if (text == "None") _selectedOptions.clear();
+      if (_selectedOptions.length == 1 && _selectedOptions.contains("12"))
+        _selectedOptions.clear();
+      _selectedOptions.add(optionId);
+    } else {
+      _selectedOptions.remove(optionId);
+    }
+
+    if (_widgetType == "DialSelection" ||
+        _widgetType == "SingleCheckableSelection" ||
+        _widgetType == "SingleScrollableSelection" ||
+        _widgetType == "SingleScrolabblePillSelection" ||
+        _widgetType == "SingleRadioSelection") {
+      _selectedOptions.clear();
+      _selectedOptions.add(optionId);
+    }
+
+    _answers.storedAnswers[_currentQuestion.id] = Answer(
+        questionId: _currentQuestion.id, selectedOptions: _selectedOptions);
+    calculateNextDisabled();
+  }
+
+  String getNoneOptionId() {
+    String computedOptionId;
+    _currentOptions.optionsMap.forEach((key, value) {
+      if (value.text == "None")
+        computedOptionId = (int.parse(key) + 1).toString();
+    });
+    return computedOptionId;
+  }
+
+  void updateOtherValue(String otherValue) {
+    _otherValue = otherValue;
+  }
+
+  void selectNext([String index]) {
+    _selectedNext = index != null
+        ? _currentOptions.optionsMap[index].next
+        : _currentOptions.optionsMap["1"].next;
+    notifyListeners();
+  }
+
+  void otherVisible(String optionText) {
+    if (optionText == "Other" && _hasOther ||
+        optionText == "Yes" && _hasOther) {
+      toggleOtherVisible();
+    } else {
+      if (_widgetType != "MultiplePillSelection") {
+        _isOtherVisible = false;
+      }
+    }
+    notifyListeners();
+  }
+
+  bool amISelected(String text, String index) {
+    if (text == "None" && _isNoneSelected == true) {
+      return true;
+    }
+    if (text == "None" && _isNoneSelected == false) {
+      return false;
+    } else if (text != "None" &&
+        _answers.storedAnswers[_currentQuestion.id].selectedOptions
+            .contains(index) &&
+        _isNoneSelected == false) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void toggleNoneSelected(String text) {
+    if (text == "None") {
+      _isNoneSelected = !_isNoneSelected;
+    } else {
+      _isNoneSelected = false;
+    }
+  }
 
   void toggleOtherVisible() {
     _isOtherVisible = !_isOtherVisible;
     notifyListeners();
   }
 
-  // it works also for single selection with other
-  void setAndStoreOption(
-      String optionText, String index, String widgetType, bool hasOther) {
-    _selectedOption = index;
+  // Getters
+  QuestionsModel get questions => _questions;
+  Question get currentQuestion => _currentQuestion;
+  String get questionOrder => _questionOrder;
 
-    if (!_storedOption.contains(optionText)) {
-      _storedOption.add(optionText);
-    } else {
-      _storedOption.remove(optionText);
-    }
-    if (optionText == "Other" && hasOther || optionText == "Yes" && hasOther) {
-      toggleOtherVisible();
-    } else {
-      if (widgetType != "MultiplePillSelection") {
-        _isOtherVisible = false;
-      }
-    }
+  OptionsModel get currentOptions => _currentOptions;
+  AnswersModel get answers => _answers;
 
-    _selectedNext = _currentQuestion.options.optionsMap[index].next;
-    notifyListeners();
-  }
+  String get selectedOption => _selectedOption;
+  String get selectedNext => _selectedNext;
+  bool get isNextDisabled => _isNextDisabled;
+  bool get isNoneSelected => _isNoneSelected;
 
-  // TODO: delete if setAndStore works
-  // void setSelectedOption(String index) {
-  //   _selectedOption = index;
-  //   _selectedNext = _options.optionsMap[index].next;
-  //   notifyListeners();
-  // }
+  bool get isOtherVisible => _isOtherVisible;
+  String get otherValue => _otherValue;
+  bool get hasOther => _hasOther;
 
-  // TODO: refactor to cover all methods in one
-  // with Dials and Date selectors
-  List<Map<String, int>> _selectedDials = [];
-
-  void setDialSelected(String dialText, int counterVal) {
-    Map<String, int> _dialMap = {dialText: counterVal};
-    if (!_selectedDials.contains(_dialMap)) {
-      _selectedDials.add(_dialMap);
-    } else {
-      _selectedDials.remove(_dialMap);
-    }
-    _selectedNext = _currentQuestion.options.optionsMap["1"].next;
-  }
-
-  // Navigation
-  void navigateNext() {
-    // store answer to shared prefs
-    // and some place to undo/back
-    _questionOrder = _selectedNext;
-    calculateOrder();
-    _isOtherVisible = false;
-    _selectedOption = null;
-    notifyListeners();
-  }
-
-  // void navigateBack() {
-  //   _questionOrder
-  // }
+  String get widgetType => _widgetType;
 }

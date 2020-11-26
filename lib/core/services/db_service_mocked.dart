@@ -22,6 +22,7 @@ class DBServiceMocked implements DBService {
           "9": {"id": "9", "text": "Immunodeficiency", "next": "2"},
           "10": {"id": "10", "text": "Depression", "next": "2"},
           "11": {"id": "11", "text": "Other", "next": "2"},
+          "12": {"id": "12", "text": "None", "next": "2"},
         }
       },
       "2": {

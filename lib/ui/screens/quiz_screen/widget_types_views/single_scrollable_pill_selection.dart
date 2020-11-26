@@ -10,7 +10,7 @@ class SingleScrollablePillSelection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<QuizViewmodel>(builder: (_, model, __) {
-      Map<String, Option> optionsMap = model.options.optionsMap;
+      Map<String, Option> optionsMap = model.currentOptions.optionsMap;
       return Container(
         // TODO: review fixed height
         height: 380,
@@ -18,15 +18,9 @@ class SingleScrollablePillSelection extends StatelessWidget {
           children: [
             for (var entry in optionsMap.entries)
               ICPillSingleSelection(
-                  label: optionsMap[entry.key].text,
-                  index: entry.key,
-                  groupValue: model.selectedOption,
-                  hasOther: model.currentQuestion.hasOther,
-                  widgetType: model.currentQuestion.widgetType,
-                  onChanged: (String label, String index, String widgetType,
-                      bool hasOther) {
-                    model.setAndStoreOption(label, index, widgetType, hasOther);
-                  }),
+                text: optionsMap[entry.key].text,
+                index: entry.key,
+              ),
           ],
         ),
       );

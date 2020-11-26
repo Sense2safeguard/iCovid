@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+
 import 'package:iCovid/core/constants.dart';
+import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
 
 class ICPillSingleSelection extends StatelessWidget {
-  final String label;
-  final String groupValue;
+  final String text;
   final String index;
-  final Function onChanged;
-  final bool hasOther;
-  final String widgetType;
 
   ICPillSingleSelection({
-    this.onChanged,
     this.index,
-    this.widgetType,
-    this.hasOther,
-    this.label,
-    this.groupValue,
+    this.text,
   });
 
   @override
   Widget build(BuildContext context) {
-    bool _isSelected = index == groupValue;
+    QuizViewmodel model = Provider.of<QuizViewmodel>(context);
+
+    bool _isSelected = index == model.selectedOption;
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -42,8 +39,11 @@ class ICPillSingleSelection extends StatelessWidget {
             ),
             child: InkWell(
                 onTap: () {
-                  if (!_isSelected)
-                    onChanged(label, index, widgetType, hasOther);
+                  if (!_isSelected) {
+                    model.storeAnswers(index);
+                    model.otherVisible(text);
+                    model.selectNext(index);
+                  }
                 },
                 child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 12),
@@ -66,7 +66,7 @@ class ICPillSingleSelection extends StatelessWidget {
                           SizedBox(
                             width: 10,
                           ),
-                        Text(label,
+                        Text(text,
                             style: _isSelected
                                 ? kPillSelectedTextStyle
                                 : kPillUnselectedTextStyle)

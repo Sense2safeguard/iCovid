@@ -10,13 +10,13 @@ class DialSelection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<QuizViewmodel>(builder: (context, model, _) {
-      Map<String, Option> optionsMap = model.options.optionsMap;
+      Map<String, Option> optionsMap = model.currentOptions.optionsMap;
       return Column(
         children: [
           for (var entry in optionsMap.entries)
             ICDialSelection(
-                text: optionsMap[entry.key].text,
-                onChanged: model.setDialSelected),
+              text: optionsMap[entry.key].text,
+            ),
         ],
       );
     });

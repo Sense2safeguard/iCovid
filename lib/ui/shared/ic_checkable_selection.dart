@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+
 import 'package:iCovid/core/constants.dart';
+import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
 
 class ICCheckableSelection extends StatelessWidget {
-  final String label;
-  final String groupValue;
+  final String text;
   final String index;
-  final Function onChanged;
-  final bool hasOther;
-  final String widgetType;
+  final bool isPreviouslySelected;
 
   const ICCheckableSelection({
-    this.label,
-    this.groupValue,
+    this.text,
     this.index,
-    this.onChanged,
-    this.hasOther,
-    this.widgetType,
+    this.isPreviouslySelected,
   });
 
   @override
   Widget build(BuildContext context) {
-    bool _isSelected = index == groupValue;
+    QuizViewmodel model = Provider.of<QuizViewmodel>(context);
+
+    bool _isSelected =
+        isPreviouslySelected ? true : index == model.selectedOption;
     return Column(
       children: [
         Container(
@@ -41,7 +41,11 @@ class ICCheckableSelection extends StatelessWidget {
                   color: _isSelected ? Colors.transparent : kCoolGrey)),
           child: InkWell(
               onTap: () {
-                if (!_isSelected) onChanged(label, index, widgetType, hasOther);
+                if (!_isSelected) {
+                  model.storeAnswers(index);
+                  model.otherVisible(text);
+                  model.selectNext(index);
+                }
               },
               child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
@@ -61,7 +65,7 @@ class ICCheckableSelection extends StatelessWidget {
                       SizedBox(
                         width: 10,
                       ),
-                      Text(label,
+                      Text(text,
                           style: _isSelected
                               ? kCheckedSelectionSelected
                               : kCheckedSelectionUnSelected)

@@ -10,20 +10,21 @@ class SingleCheckableSelection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<QuizViewmodel>(builder: (_, model, __) {
-      Map<String, Option> optionsMap = model.options.optionsMap;
+      Map<String, Option> optionsMap = model.currentOptions.optionsMap;
       return Column(
         children: [
           for (var entry in optionsMap.entries)
             ICCheckableSelection(
-                label: optionsMap[entry.key].text,
+                text: optionsMap[entry.key].text,
                 index: entry.key,
-                groupValue: model.selectedOption,
-                hasOther: model.currentQuestion.hasOther,
-                widgetType: model.currentQuestion.widgetType,
-                onChanged: (String label, String index, String widgetType,
-                    bool hasOther) {
-                  model.setAndStoreOption(label, index, widgetType, hasOther);
-                }),
+                isPreviouslySelected:
+                    model.answers.storedAnswers[model.currentQuestion.id] !=
+                                null &&
+                            model.selectedOption == null
+                        ? model.answers.storedAnswers[model.currentQuestion.id]
+                            .selectedOptions
+                            .contains(entry.key)
+                        : false),
         ],
       );
     });

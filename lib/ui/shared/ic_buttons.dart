@@ -21,9 +21,10 @@ class ICMainButton extends StatelessWidget {
       height: 48,
       child: MaterialButton(
         disabledColor: kNeoAccent.withOpacity(0.15),
-        onPressed: isDisabled ? null : onPressed,
+        onPressed: onPressed,
         color: kNeoAccent,
         highlightColor: kAccent,
+        splashColor: Colors.white,
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),

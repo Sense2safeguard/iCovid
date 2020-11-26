@@ -68,3 +68,30 @@ class Option {
     );
   }
 }
+
+/// [storedAnswers]] is a Map of the total questions
+class AnswersModel {
+  Map<String, Answer> storedAnswers;
+  AnswersModel({this.storedAnswers});
+}
+
+class Answer {
+  String questionId;
+  List<String> selectedOptions;
+  String otherValue;
+
+  Answer({this.questionId, this.selectedOptions, this.otherValue});
+
+  factory Answer.empty(String currentQuestionId) {
+    return Answer(
+        questionId: currentQuestionId, selectedOptions: [], otherValue: "");
+  }
+}
+
+/* _storedAnswers: {
+  "1": {questionId: "1", selectedOptions: ['1', '3']};
+  "2": {questionId: "2", selectedOptions: ['8']};
+  "3": {questionId: "3", selectedOptions: ['2', '4', '7']};
+}
+
+*/

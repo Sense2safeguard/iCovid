@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:iCovid/core/constants.dart';
+import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+
+import 'package:iCovid/core/constants.dart';
+import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
 
 class ICDateSelection extends StatefulWidget {
   final String text;
-  final Function onChanged;
 
-  const ICDateSelection({Key key, this.text, this.onChanged}) : super(key: key);
+  const ICDateSelection({Key key, this.text}) : super(key: key);
 
   @override
   _ICDateSelectionState createState() => _ICDateSelectionState();
@@ -24,6 +26,8 @@ class _ICDateSelectionState extends State<ICDateSelection> {
 
   @override
   Widget build(BuildContext context) {
+    QuizViewmodel model = Provider.of<QuizViewmodel>(context);
+
     return Column(
       children: [
         Text(_dateString, style: kSelectedDateTextStyle),
@@ -40,6 +44,8 @@ class _ICDateSelectionState extends State<ICDateSelection> {
                 setState(() {
                   _dateString = formatter.format(date);
                 });
+                model.storeAnswers(_dateString);
+                model.selectNext();
               }),
         ),
       ],

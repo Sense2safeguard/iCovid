@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+
+import 'package:provider/provider.dart';
+
 import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/date_selection.dart';
 import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/single_radio_selection.dart';
 import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/single_scrollable_pill_selection.dart';
 import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/single_scrollable_selection.dart';
-
-import 'package:provider/provider.dart';
-
-import 'package:iCovid/core/models/data_structure_models.dart';
 import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/dial_selection.dart';
 import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/single_checkable_selection.dart';
 import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/multiple_pill_selection.dart';
-import 'package:iCovid/core/constants.dart';
-import 'package:iCovid/ui/shared/ic_buttons.dart';
 import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
+
+import 'package:iCovid/ui/shared/ic_other_input.dart';
+import 'package:iCovid/ui/shared/ic_buttons.dart';
+
+import 'package:iCovid/core/models/data_structure_models.dart';
+
+import 'package:iCovid/core/constants.dart';
 
 class ICQuestion extends StatelessWidget {
   final Size size;
@@ -52,7 +56,15 @@ class ICQuestion extends StatelessWidget {
                       Align(
                           alignment: Alignment.center,
                           child: buildOptionsArea(_widgetType)),
-                      if (model.isOtherVisible) buildOtherArea(_widgetType),
+                      if (model.isOtherVisible)
+                        ICOtherInput(
+                            key: Key(model.currentQuestion.id),
+                            previousValue: model
+                                .answers
+                                .storedAnswers[model.currentQuestion.id]
+                                .otherValue,
+                            widgetType: _widgetType,
+                            storeOtherValue: model.updateOtherValue),
                       Spacer(),
                       buildButtons(model),
                       SizedBox(height: 16),
@@ -68,12 +80,8 @@ class ICQuestion extends StatelessWidget {
       case "SingleCheckableSelection":
         return SingleCheckableSelection();
         break;
-      // TODO: semantics
       case "DialSelection":
-        return Column(children: [
-          DialSelection(),
-          Text('* Long pressed for big jump!', style: kHintTextStyle)
-        ]);
+        return DialSelection();
         break;
       case "MultiplePillSelection":
         return MultiplePillSelection();
@@ -98,45 +106,28 @@ class ICQuestion extends StatelessWidget {
     }
   }
 
-  Widget buildOtherArea(String widgetType) {
-    return Padding(
-      padding: widgetType == "MultiplePillSelection"
-          ? EdgeInsets.all(10.0)
-          : EdgeInsets.only(top: 10),
-      child: Container(
-        width: double.infinity,
-        child: TextField(
-          style: kHintTextStyle.copyWith(color: kBlue),
-          decoration: InputDecoration(
-              hintText: "Please, write here",
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              hintStyle: kHintTextStyle,
-              focusedBorder:
-                  OutlineInputBorder(borderSide: BorderSide(color: kBlue)),
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: kBlue),
-                  borderRadius: BorderRadius.circular(8))),
-        ),
-      ),
-    );
-  }
-
   Row buildButtons(QuizViewmodel model) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Flexible(
-            child: ICSecondaryButton(
-          onPressed: () {},
-          text: "Back",
-        )),
-        Flexible(
-            child: ICMainButton(
-                onPressed: () {
-                  model.navigateNext();
-                },
-                text: "Next")),
+        if (int.parse(model.currentQuestion.id) > 1)
+          Flexible(
+              child: ICSecondaryButton(
+            onPressed: () {
+              model.navigateBack();
+            },
+            text: "Back",
+          )),
+        // TODO: please, better code
+        if (model.isNextDisabled)
+          Expanded(child: ICMainButton(isDisabled: true, text: "Next")),
+        if (!model.isNextDisabled)
+          Expanded(
+              child: ICMainButton(
+                  onPressed: () {
+                    model.navigateNext();
+                  },
+                  text: "Next")),
       ],
     );
   }
