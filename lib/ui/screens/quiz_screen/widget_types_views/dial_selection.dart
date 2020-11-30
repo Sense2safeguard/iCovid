@@ -15,7 +15,9 @@ class DialSelection extends StatelessWidget {
         children: [
           for (var entry in optionsMap.entries)
             ICDialSelection(
+              key: Key(model.currentQuestion.id),
               text: optionsMap[entry.key].text,
+              model: model,
             ),
         ],
       );

@@ -17,6 +17,14 @@ class SingleScrollableSelection extends StatelessWidget {
           children: [
             for (var entry in optionsMap.entries)
               ICCheckableSelection(
+                isPreviouslySelected:
+                    model.answers.storedAnswers[model.currentQuestion.id] !=
+                                null &&
+                            model.selectedOption == null
+                        ? model.answers.storedAnswers[model.currentQuestion.id]
+                            .selectedOptions
+                            .contains(entry.key)
+                        : false,
                 text: optionsMap[entry.key].text,
                 index: entry.key,
               ),

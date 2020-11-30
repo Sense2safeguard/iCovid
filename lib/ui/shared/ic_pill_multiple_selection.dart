@@ -54,6 +54,7 @@ class _ICPillMultipleSelectionState extends State<ICPillMultipleSelection> {
                 model.amISelected(widget.text, widget.index);
                 model.otherVisible(widget.text);
                 model.selectNext(widget.index);
+                model.calculateNextDisabled();
               },
               child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12),

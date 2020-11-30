@@ -76,15 +76,21 @@ class QuizViewmodel extends ChangeNotifier {
     if (_answers.storedAnswers[_currentQuestion.id] == null) {
       _answers.storedAnswers[_currentQuestion.id] =
           Answer.empty(_currentQuestion.id);
-      _isNextDisabled = true;
+    }
+
+    if (_answers.storedAnswers[_currentQuestion.id].selectedOptions == null) {
+      _selectedOptions = [];
+    } else {
+      _selectedOptions =
+          _answers.storedAnswers[_currentQuestion.id].selectedOptions;
     }
   }
 
   // NAVIGATION
   // Moving forward
   void navigateNext() {
-    selectNext();
     saveOtherValue();
+    selectNext();
     calculateOrder(_selectedNext);
     initializeAnswers();
     computeOther();
@@ -96,11 +102,22 @@ class QuizViewmodel extends ChangeNotifier {
   // Moving backwards
   void navigateBack() {
     saveOtherValue();
-    calculateOrder((int.parse(_currentQuestion.id) - 1).toString());
+    calculateOrder(calculateLastStoredAnswer());
+    selectNext();
     computeOther();
     calculateNextDisabled();
 
     notifyListeners();
+  }
+
+  String calculateLastStoredAnswer() {
+    List<String> answersIds = [];
+    _answers.storedAnswers.forEach((key, value) {
+      answersIds.add(key);
+    });
+    int currentQuestionIndex = answersIds.indexOf(_currentQuestion.id);
+
+    return answersIds[currentQuestionIndex - 1];
   }
 
   void computeOther() {
@@ -123,30 +140,22 @@ class QuizViewmodel extends ChangeNotifier {
 
   void calculateNextDisabled() {
     if (_answers.storedAnswers[_currentQuestion.id].selectedOptions.length >
-        0) {
+            0 &&
+        !_isOtherVisible) {
       _isNextDisabled = false;
     } else {
       _isNextDisabled = true;
     }
+    notifyListeners();
   }
 
   void storeAnswers(String optionId, [String text]) {
     _selectedOption = optionId;
-
-// TODO: till line 139, is almost the same as initializeAnswers()
-    if (_answers.storedAnswers[_currentQuestion.id] == null)
-      _answers.storedAnswers[_currentQuestion.id] =
-          Answer.empty(_currentQuestion.id);
-
-    if (_answers.storedAnswers[_currentQuestion.id].selectedOptions == null) {
-      _selectedOptions = [];
-    } else {
-      _selectedOptions =
-          _answers.storedAnswers[_currentQuestion.id].selectedOptions;
-    }
+    initializeAnswers();
 
     if (!_selectedOptions.contains(optionId)) {
       if (text == "None") _selectedOptions.clear();
+      // TODO: !!! this is hardcoded! I've lost calculation on commits
       if (_selectedOptions.length == 1 && _selectedOptions.contains("12"))
         _selectedOptions.clear();
       _selectedOptions.add(optionId);
@@ -162,6 +171,9 @@ class QuizViewmodel extends ChangeNotifier {
       _selectedOptions.clear();
       _selectedOptions.add(optionId);
     }
+
+    if (_widgetType == "DialSelection" && optionId == "0")
+      _selectedOptions.clear();
 
     _answers.storedAnswers[_currentQuestion.id] = Answer(
         questionId: _currentQuestion.id, selectedOptions: _selectedOptions);
@@ -182,9 +194,19 @@ class QuizViewmodel extends ChangeNotifier {
   }
 
   void selectNext([String index]) {
-    _selectedNext = index != null
-        ? _currentOptions.optionsMap[index].next
-        : _currentOptions.optionsMap["1"].next;
+    if (_widgetType != "DialSelection" &&
+        _answers.storedAnswers[_currentQuestion.id].selectedOptions.length >
+            0) {
+      _selectedNext = _currentOptions
+          .optionsMap[
+              _answers.storedAnswers[_currentQuestion.id].selectedOptions[0]]
+          .next;
+    } else {
+      _selectedNext = index != null
+          ? _currentOptions.optionsMap[index].next
+          : _currentOptions.optionsMap["1"].next;
+    }
+
     notifyListeners();
   }
 

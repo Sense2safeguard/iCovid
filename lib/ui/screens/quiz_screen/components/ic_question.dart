@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/multiple_scrollable_pill_selection.dart';
 
 import 'package:provider/provider.dart';
 
@@ -36,7 +37,7 @@ class ICQuestion extends StatelessWidget {
           child: Container(
               color: Colors.white,
               width: double.infinity,
-              height: size.height * 0.67,
+              height: size.height * 0.69,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(24, 32, 24, 0),
                 child: Column(
@@ -85,6 +86,9 @@ class ICQuestion extends StatelessWidget {
         break;
       case "MultiplePillSelection":
         return MultiplePillSelection();
+        break;
+      case "MultipleScrollablePillSelection":
+        return MultipleScrollablePillSelection();
         break;
       case "SingleScrollableSelection":
         return SingleScrollableSelection();

@@ -26,6 +26,7 @@ class ICCheckableSelection extends StatelessWidget {
       children: [
         Container(
           height: 48,
+          width: double.infinity,
           margin: EdgeInsets.symmetric(vertical: 4),
           decoration: BoxDecoration(
               color: _isSelected ? kNeoAccent : Colors.white,
@@ -45,31 +46,36 @@ class ICCheckableSelection extends StatelessWidget {
                   model.storeAnswers(index);
                   model.otherVisible(text);
                   model.selectNext(index);
+                  model.calculateNextDisabled();
                 }
               },
               child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    children: [
-                      if (_isSelected)
-                        Container(
-                            width: 20,
-                            height: 20,
-                            decoration: BoxDecoration(
-                                color: kAccent, shape: BoxShape.circle),
-                            child: Icon(
-                              Icons.check,
-                              color: Colors.white,
-                              size: 12,
-                            )),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(text,
-                          style: _isSelected
-                              ? kCheckedSelectionSelected
-                              : kCheckedSelectionUnSelected)
-                    ],
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        if (_isSelected)
+                          Container(
+                              width: 20,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                  color: kAccent, shape: BoxShape.circle),
+                              child: Icon(
+                                Icons.check,
+                                color: Colors.white,
+                                size: 12,
+                              )),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(text,
+                            style: _isSelected
+                                ? kCheckedSelectionSelected
+                                : kCheckedSelectionUnSelected)
+                      ],
+                    ),
                   ))),
         ),
         SizedBox(

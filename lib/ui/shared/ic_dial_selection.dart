@@ -1,15 +1,19 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:iCovid/core/constants.dart';
 import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
-import 'package:provider/provider.dart';
 
 class ICDialSelection extends StatefulWidget {
   final String text;
+  final QuizViewmodel model;
 
   const ICDialSelection({
     Key key,
     this.text,
+    this.model,
   }) : super(key: key);
 
   @override
@@ -17,38 +21,63 @@ class ICDialSelection extends StatefulWidget {
 }
 
 class _ICDialSelectionState extends State<ICDialSelection> {
-  String _textToDisplay;
+  Timer timer;
   int _counter = 0;
+  TextEditingController _controller = TextEditingController();
+  int _controllerCounter;
 
   @override
   void initState() {
     super.initState();
-    _textToDisplay = widget.text;
+    if (widget.model.answers.storedAnswers[widget.model.currentQuestion.id]
+            .selectedOptions.length >
+        0) {
+      _controller.text = widget.model.answers
+          .storedAnswers[widget.model.currentQuestion.id].selectedOptions[0];
+    } else {
+      _controller.text = widget.text;
+    }
   }
 
-  void increment(QuizViewmodel model, bool isBigJump) {
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  int computeControllerText() {
+    return _controller.text == "" || _controller.text == "${widget.text}"
+        ? 0
+        : int.parse(_controller.text);
+  }
+
+  void increment() {
+    _controllerCounter = computeControllerText();
     setState(() {
-      isBigJump ? _counter += 10 : _counter++;
-      _textToDisplay = _counter.toString();
+      _counter = _controllerCounter;
+      _counter++;
+      _controller.text = _counter.toString();
     });
-    model.storeAnswers(_counter.toString());
-    model.selectNext();
+    widget.model.storeAnswers(_counter.toString());
+    widget.model.calculateNextDisabled();
   }
 
-  void decrement(QuizViewmodel model, bool isBigJump) {
-    if (_counter > 0)
+  void decrement() {
+    _controllerCounter = computeControllerText();
+
+    if (_controllerCounter > 0)
       setState(() {
-        isBigJump ? _counter -= 10 : _counter--;
-        _textToDisplay = _counter == 0 ? widget.text : _counter.toString();
+        _counter = _controllerCounter;
+        _counter--;
+        if (_counter < 1) _counter = 0;
+        _controller.text = _counter == 0 ? widget.text : _counter.toString();
       });
-    model.storeAnswers(_counter.toString());
-    model.selectNext();
+    widget.model.storeAnswers(_counter.toString());
+    widget.model.calculateNextDisabled();
   }
 
   @override
   Widget build(BuildContext context) {
-    QuizViewmodel model = Provider.of<QuizViewmodel>(context);
-
     return Container(
       margin: EdgeInsets.symmetric(vertical: 4),
       width: 220,
@@ -61,30 +90,36 @@ class _ICDialSelectionState extends State<ICDialSelection> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            MaterialButton(
-                minWidth: 4,
-                height: 48,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(8),
-                        bottomLeft: Radius.circular(8))),
-                onPressed: () => decrement(model, false),
-                onLongPress: () => decrement(model, true),
-                child: Icon(Icons.remove)),
-            Text(_textToDisplay,
-                style: kSecondaryButtonTextStyle.copyWith(
-                    color: kDarkBlue, fontSize: 14)),
-            // TODO: input to add directly
-            MaterialButton(
-                minWidth: 4,
-                height: 48,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(8),
-                        bottomRight: Radius.circular(8))),
-                onPressed: () => increment(model, false),
-                onLongPress: () => increment(model, true),
-                child: Icon(Icons.add)),
+            GestureDetector(
+              onTap: () => decrement(),
+              child: Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(),
+                  child: Icon(Icons.remove)),
+            ),
+            Container(
+              width: 110,
+              child: TextField(
+                  textAlign: TextAlign.center,
+                  keyboardType: TextInputType.number,
+                  controller: _controller,
+                  onSubmitted: (value) {
+                    _controllerCounter = computeControllerText();
+                    widget.model.storeAnswers(value.toString());
+                  },
+                  decoration: InputDecoration(border: InputBorder.none),
+                  style: kSecondaryButtonTextStyle.copyWith(
+                      color: kDarkBlue, fontSize: 14)),
+            ),
+            GestureDetector(
+              onTap: () => increment(),
+              child: Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(),
+                  child: Icon(Icons.add)),
+            )
           ],
         ),
       ),

@@ -19,9 +19,18 @@ class SingleRadioSelection extends StatelessWidget {
           children: [
             for (var entry in optionsMap.entries)
               ICRadioSelection(
-                text: optionsMap[entry.key].text,
-                index: entry.key,
-              ),
+                  text: optionsMap[entry.key].text,
+                  index: entry.key,
+                  isPreviouslySelected:
+                      model.answers.storedAnswers[model.currentQuestion.id] !=
+                                  null &&
+                              model.selectedOption == null
+                          ? model
+                              .answers
+                              .storedAnswers[model.currentQuestion.id]
+                              .selectedOptions
+                              .contains(entry.key)
+                          : false),
           ],
         ),
       );

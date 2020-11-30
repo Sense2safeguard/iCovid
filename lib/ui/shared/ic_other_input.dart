@@ -20,8 +20,6 @@ class _ICOtherInputState extends State<ICOtherInput> {
   @override
   void initState() {
     super.initState();
-    print("ic_other)input INIT STATE");
-    print("${widget.previousValue}");
     textController.text =
         widget.previousValue != null ? widget.previousValue : null;
   }
@@ -34,8 +32,6 @@ class _ICOtherInputState extends State<ICOtherInput> {
 
   @override
   Widget build(BuildContext context) {
-    print("ic_other_input REBUILD");
-
     return Padding(
       padding: widget.widgetType == "MultiplePillSelection"
           ? EdgeInsets.all(10.0)

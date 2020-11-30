@@ -8,17 +8,20 @@ import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
 class ICRadioSelection extends StatelessWidget {
   final String text;
   final String index;
+  final bool isPreviouslySelected;
 
   ICRadioSelection({
     this.index,
     this.text,
+    this.isPreviouslySelected,
   });
 
   @override
   Widget build(BuildContext context) {
     QuizViewmodel model = Provider.of<QuizViewmodel>(context);
 
-    bool _isSelected = index == model.selectedOption;
+    bool _isSelected =
+        isPreviouslySelected ? true : index == model.selectedOption;
     return Row(
       mainAxisSize: MainAxisSize.max,
       children: [
