@@ -279,7 +279,7 @@ class DBServiceMocked implements DBService {
         "id": "21",
         "text": "How many times last week?",
         "hasOther": "false",
-        "category": "Demographics",
+        "category": "Social Distancing",
         "widgetType": "DialSelection",
         "options": {
           "1": {"id": "1", "text": "Times", "next": "22"},
@@ -301,7 +301,7 @@ class DBServiceMocked implements DBService {
         "id": "23",
         "text": "How many times last week?",
         "hasOther": "false",
-        "category": "Demographics",
+        "category": "Social Distancing",
         "widgetType": "DialSelection",
         "options": {
           "1": {"id": "1", "text": "Times", "next": "24"},
@@ -323,7 +323,7 @@ class DBServiceMocked implements DBService {
         "id": "25",
         "text": "How many times last week?",
         "hasOther": "false",
-        "category": "Demographics",
+        "category": "Social Distancing",
         "widgetType": "DialSelection",
         "options": {
           "1": {"id": "1", "text": "Times", "next": "24"},
@@ -345,7 +345,7 @@ class DBServiceMocked implements DBService {
         "id": "27",
         "text": "How many times last week?",
         "hasOther": "false",
-        "category": "Demographics",
+        "category": "Social Distancing",
         "widgetType": "DialSelection",
         "options": {
           "1": {"id": "1", "text": "Times", "next": "28"},
@@ -367,7 +367,7 @@ class DBServiceMocked implements DBService {
         "id": "29",
         "text": "How many times last week?",
         "hasOther": "false",
-        "category": "Demographics",
+        "category": "Social Distancing",
         "widgetType": "DialSelection",
         "options": {
           "1": {"id": "1", "text": "Times", "next": "30"},
@@ -389,7 +389,7 @@ class DBServiceMocked implements DBService {
         "id": "29",
         "text": "How many times last week?",
         "hasOther": "false",
-        "category": "Demographics",
+        "category": "Social Distancing",
         "widgetType": "DialSelection",
         "options": {
           "1": {"id": "1", "text": "Times", "next": "32"},
@@ -399,7 +399,7 @@ class DBServiceMocked implements DBService {
         "id": "32",
         "text": "Are you religious?",
         "hasOther": "true",
-        "category": "Co-morbidities",
+        "category": "Social Distancing",
         "widgetType": "MultiplePillSelection",
         "options": {
           "1": {"id": "1", "text": "Buddhism", "next": "33"},
@@ -427,7 +427,7 @@ class DBServiceMocked implements DBService {
         "id": "34",
         "text": "How many times last week?",
         "hasOther": "false",
-        "category": "Demographics",
+        "category": "Social Distancing",
         "widgetType": "DialSelection",
         "options": {
           "1": {"id": "1", "text": "Times", "next": "35"},
@@ -449,7 +449,7 @@ class DBServiceMocked implements DBService {
         "id": "36",
         "text": "How many times last week?",
         "hasOther": "false",
-        "category": "Demographics",
+        "category": "Social Distancing",
         "widgetType": "DialSelection",
         "options": {
           "1": {"id": "1", "text": "Times", "next": "37"},
@@ -471,7 +471,7 @@ class DBServiceMocked implements DBService {
         "id": "38",
         "text": "How many times last week?",
         "hasOther": "false",
-        "category": "Demographics",
+        "category": "Social Distancing",
         "widgetType": "DialSelection",
         "options": {
           "1": {"id": "1", "text": "Times", "next": "39"},
@@ -492,7 +492,7 @@ class DBServiceMocked implements DBService {
         "id": "40",
         "text": "How many weeks last week?",
         "hasOther": "false",
-        "category": "Demographics",
+        "category": "Social Distancing",
         "widgetType": "DialSelection",
         "options": {
           "1": {"id": "1", "text": "Times", "next": "41"},

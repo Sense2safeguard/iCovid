@@ -12,7 +12,6 @@ class ICAppBar extends StatelessWidget {
     String _accentTitle = "i";
     String _lightBlueTitle = "COVID";
 
-    // TODO: better dartpad
     if (question != null && question.category != null) {
       switch (question.category) {
         case "Demographics":
@@ -22,6 +21,18 @@ class ICAppBar extends StatelessWidget {
         case "Co-morbidities":
           _accentTitle = "iC";
           _lightBlueTitle = "OVID";
+          break;
+        case "Viral":
+          _accentTitle = "iCOV";
+          _lightBlueTitle = "ID";
+          break;
+        case "International":
+          _accentTitle = "iCOVI";
+          _lightBlueTitle = "D";
+          break;
+        case "Social Distancing":
+          _accentTitle = "iCOVID";
+          _lightBlueTitle = "";
           break;
         default:
       }

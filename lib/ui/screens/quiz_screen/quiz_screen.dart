@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iCovid/core/helpers/check_progress_helper.dart';
 
 import 'package:provider/provider.dart';
 
@@ -12,35 +13,32 @@ class QuizScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    Question currentQuestion =
-        Provider.of<QuizViewmodel>(context, listen: false).currentQuestion;
+    QuizViewmodel model = Provider.of<QuizViewmodel>(context);
 
     print('Quiz Screen painted');
 
     return SafeArea(
       child: Scaffold(
         backgroundColor: kBlue,
-        // TODO: This ListView helps when the keyboard appears
-        // Maybe there's a better solution. Create a Dialog for the Other field?
         body: ListView(
           children: [
             ICAppBar(
-              question: currentQuestion,
+              question: model.currentQuestion,
             ),
             SizedBox(height: 34),
-            buildBody(size, currentQuestion)
+            buildBody(size, model.currentQuestion, model)
           ],
         ),
       ),
     );
   }
 
-  Padding buildBody(Size size, Question question) {
+  Padding buildBody(Size size, Question question, QuizViewmodel model) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40),
       child: Column(
         children: [
-          buildTitleArea(question.category),
+          buildTitleArea(question.category, model),
           SizedBox(height: 26),
           ICQuestion(size: size)
         ],
@@ -48,7 +46,7 @@ class QuizScreen extends StatelessWidget {
     );
   }
 
-  Column buildTitleArea(String category) {
+  Column buildTitleArea(String category, QuizViewmodel model) {
     return Column(
       children: [
         Text(
@@ -65,7 +63,7 @@ class QuizScreen extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(6)),
           child: LinearProgressIndicator(
             minHeight: 10,
-            value: 0.3,
+            value: checkProgress(model),
             backgroundColor: Colors.white.withOpacity(0.3),
             valueColor: AlwaysStoppedAnimation<Color>(kAccent),
           ),
