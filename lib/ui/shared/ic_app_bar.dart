@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:iCovid/core/constants.dart';
 import 'package:iCovid/core/models/data_structure_models.dart';
 
@@ -74,7 +75,7 @@ class ICAppBar extends StatelessWidget {
       child: RawMaterialButton(
         splashColor: kAccent,
         constraints: BoxConstraints.expand(width: 32, height: 32),
-        onPressed: () {},
+        onPressed: () => SystemNavigator.pop(),
         shape: CircleBorder(),
         fillColor: Colors.white.withOpacity(0.3),
         child: Icon(Icons.close, color: Colors.white, size: 16),
