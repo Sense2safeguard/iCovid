@@ -99,7 +99,7 @@ final kPillUnselectedTextStyle = TextStyle(
     fontFamily: "Montserrat",
     fontSize: 12,
     fontWeight: FontWeight.w500,
-    color: kPaleBlue);
+    color: kBlue);
 
 // Others
 final kOverlineTextStyle = TextStyle(

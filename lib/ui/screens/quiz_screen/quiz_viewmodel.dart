@@ -1,8 +1,9 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:iCovid/core/models/data_structure_models.dart';
 import 'package:iCovid/core/services/db_service_mocked.dart';
 import 'package:iCovid/core/services/machine_learning_service_mocked.dart';
+import 'package:iCovid/ui/screens/post_assessment_screen/post_assessment_screen.dart';
 
 class QuizViewmodel extends ChangeNotifier {
   QuizViewmodel() {
@@ -46,6 +47,8 @@ class QuizViewmodel extends ChangeNotifier {
 
   // Results
   Results _results;
+  PostAssessment _postAssessment;
+  String _postAssessmentResult;
 
   void initialize() {
     getDataBase();
@@ -188,6 +191,20 @@ class QuizViewmodel extends ChangeNotifier {
     calculateNextDisabled();
   }
 
+  void storeTestResult(String text) {
+    _postAssessmentResult = text;
+  }
+
+  void sendTestResults() {
+    _postAssessment =
+        PostAssessment(date: DateTime.now(), text: _postAssessmentResult);
+  }
+
+  void updateTestOption(String index) {
+    _selectedOption = index;
+    notifyListeners();
+  }
+
   String getNoneOptionId() {
     String computedOptionId;
     _currentOptions.optionsMap.forEach((key, value) {
@@ -259,7 +276,7 @@ class QuizViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Results getResults() {
+  void getResults() {
     _results = mlService.getResultsFromServer();
     notifyListeners();
   }

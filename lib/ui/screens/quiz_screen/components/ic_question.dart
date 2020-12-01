@@ -68,7 +68,7 @@ class ICQuestion extends StatelessWidget {
                             widgetType: _widgetType,
                             storeOtherValue: model.updateOtherValue),
                       Spacer(),
-                      buildButtons(model, _widgetType),
+                      buildButtons(model, _widgetType, context),
                       SizedBox(height: 16),
                     ]),
               )),
@@ -114,7 +114,8 @@ class ICQuestion extends StatelessWidget {
     }
   }
 
-  Row buildButtons(QuizViewmodel model, String widgetType) {
+  Row buildButtons(
+      QuizViewmodel model, String widgetType, BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -133,8 +134,10 @@ class ICQuestion extends StatelessWidget {
           Expanded(
               child: ICMainButton(
                   onPressed: () {
-                    // widgetType == "ScoreResults" ?
-                    model.navigateNext();
+                    widgetType == "ScoreResults"
+                        ? Navigator.pushNamed(
+                            context, "/post-assessment-screen")
+                        : model.navigateNext();
                   },
                   text: widgetType == "ScoreResults" ? "Finish" : "Next")),
       ],

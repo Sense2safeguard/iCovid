@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iCovid/ui/screens/post_assessment_screen/post_assessment_screen.dart';
 import 'package:iCovid/ui/screens/privacy_policy_screen/privacy_policy_screen.dart';
 
 import 'package:provider/provider.dart';
@@ -21,11 +22,12 @@ class ICovidApp extends StatelessWidget {
           return MaterialApp(
               title: "iCovid App",
               debugShowCheckedModeBanner: false,
-              initialRoute: '/privacy-policy',
+              initialRoute: '/post-assessment-screen',
               routes: {
                 '/privacy-policy': (context) => PrivacyPolicyScreen(),
                 '/': (context) => HomeScreen(),
                 '/quiz_screen': (context) => QuizScreen(),
+                '/post-assessment-screen': (context) => PostAssessmentScreen()
               });
         });
   }

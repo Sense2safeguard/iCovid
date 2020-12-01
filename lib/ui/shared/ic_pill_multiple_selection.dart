@@ -37,7 +37,7 @@ class _ICPillMultipleSelectionState extends State<ICPillMultipleSelection> {
           height: 32,
           margin: EdgeInsets.symmetric(vertical: 4),
           decoration: BoxDecoration(
-            color: widget.isSelected ? kBlue : kPaleBlue.withOpacity(0.2),
+            color: widget.isSelected ? kBlue : kPaleBlue.withOpacity(0.35),
             borderRadius: BorderRadius.circular(6),
             boxShadow: [
               if (widget.isSelected)

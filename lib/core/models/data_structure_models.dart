@@ -100,3 +100,10 @@ class Results {
         infectionScore: json['infectionScore']);
   }
 }
+
+class PostAssessment {
+  DateTime date;
+  String text;
+
+  PostAssessment({this.date, this.text});
+}

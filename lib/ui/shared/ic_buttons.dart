@@ -7,12 +7,14 @@ class ICMainButton extends StatelessWidget {
   final Function onPressed;
   final String text;
   final double width;
+  final Color backgroundColor;
 
   ICMainButton(
       {this.isDisabled = false,
       this.onPressed,
       @required this.text,
-      this.width});
+      this.width,
+      this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class ICMainButton extends StatelessWidget {
       child: MaterialButton(
         disabledColor: kNeoAccent.withOpacity(0.15),
         onPressed: onPressed,
-        color: kNeoAccent,
+        color: backgroundColor ?? kNeoAccent,
         highlightColor: kAccent,
         splashColor: Colors.white,
         elevation: 0,
@@ -42,12 +44,14 @@ class ICSecondaryButton extends StatelessWidget {
   final Function onPressed;
   final String text;
   final double width;
+  final Color accentColor;
 
   ICSecondaryButton(
       {this.isDisabled = false,
       this.onPressed,
       @required this.text,
-      this.width});
+      this.width,
+      this.accentColor});
 
   @override
   Widget build(BuildContext context) {
@@ -61,13 +65,15 @@ class ICSecondaryButton extends StatelessWidget {
           highlightColor: kAccent,
           elevation: 0,
           shape: RoundedRectangleBorder(
-            side: BorderSide(color: kAccent),
+            side: BorderSide(color: accentColor ?? kAccent),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(text,
               style: isDisabled
                   ? kButtonsDisabledTextStyle
-                  : kSecondaryButtonTextStyle)),
+                  : accentColor != null
+                      ? kSecondaryButtonTextStyle.copyWith(color: accentColor)
+                      : kSecondaryButtonTextStyle)),
     );
   }
 }

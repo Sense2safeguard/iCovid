@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 
 import 'package:iCovid/core/constants.dart';
 import 'package:iCovid/core/models/data_structure_models.dart';
@@ -49,7 +49,7 @@ class ICAppBar extends StatelessWidget {
         padding: const EdgeInsets.only(top: 8.0, left: 8),
         child: Stack(
           children: [
-            buildCloseButton(),
+            // buildCloseButton(),
             buildLogo(_accentTitle, _lightBlueTitle),
           ],
         ),
@@ -81,17 +81,17 @@ class ICAppBar extends StatelessWidget {
     );
   }
 
-  Align buildCloseButton() {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: RawMaterialButton(
-        splashColor: kAccent,
-        constraints: BoxConstraints.expand(width: 32, height: 32),
-        onPressed: () => SystemNavigator.pop(),
-        shape: CircleBorder(),
-        fillColor: Colors.white.withOpacity(0.3),
-        child: Icon(Icons.close, color: Colors.white, size: 16),
-      ),
-    );
-  }
+  // Align buildCloseButton() {
+  //   return Align(
+  //     alignment: Alignment.centerLeft,
+  //     child: RawMaterialButton(
+  //       splashColor: kAccent,
+  //       constraints: BoxConstraints.expand(width: 32, height: 32),
+  //       onPressed: () => SystemNavigator.pop(),
+  //       shape: CircleBorder(),
+  //       fillColor: Colors.white.withOpacity(0.3),
+  //       child: Icon(Icons.close, color: Colors.white, size: 16),
+  //     ),
+  //   );
+  // }
 }
