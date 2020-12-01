@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:iCovid/core/constants.dart';
 import 'package:iCovid/core/models/data_structure_models.dart';
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/multiple_scrollable_pill_selection.dart';
+import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/score_results.dart';
 
 import 'package:provider/provider.dart';
 
@@ -67,7 +68,7 @@ class ICQuestion extends StatelessWidget {
                             widgetType: _widgetType,
                             storeOtherValue: model.updateOtherValue),
                       Spacer(),
-                      buildButtons(model),
+                      buildButtons(model, _widgetType),
                       SizedBox(height: 16),
                     ]),
               )),
@@ -99,6 +100,9 @@ class ICQuestion extends StatelessWidget {
       case "SingleRadioSelection":
         return SingleRadioSelection();
         break;
+      case "ScoreResults":
+        return ScoreResults();
+        break;
       case "DateSelection":
         return DateSelection();
         break;
@@ -110,7 +114,7 @@ class ICQuestion extends StatelessWidget {
     }
   }
 
-  Row buildButtons(QuizViewmodel model) {
+  Row buildButtons(QuizViewmodel model, String widgetType) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -129,9 +133,10 @@ class ICQuestion extends StatelessWidget {
           Expanded(
               child: ICMainButton(
                   onPressed: () {
+                    // widgetType == "ScoreResults" ?
                     model.navigateNext();
                   },
-                  text: "Next")),
+                  text: widgetType == "ScoreResults" ? "Finish" : "Next")),
       ],
     );
   }

@@ -88,10 +88,15 @@ class Answer {
   }
 }
 
-/* _storedAnswers: {
-  "1": {questionId: "1", selectedOptions: ['1', '3']};
-  "2": {questionId: "2", selectedOptions: ['8']};
-  "3": {questionId: "3", selectedOptions: ['2', '4', '7']};
-}
+class Results {
+  String infectionScore;
+  String complicationScore;
 
-*/
+  Results({this.complicationScore, this.infectionScore});
+
+  factory Results.fromJson(Map<String, dynamic> json) {
+    return Results(
+        complicationScore: json['complicationScore'],
+        infectionScore: json['infectionScore']);
+  }
+}

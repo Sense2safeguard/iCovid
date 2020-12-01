@@ -9,7 +9,7 @@ double checkProgress(QuizViewmodel model) {
 
   int actualIndex = questionsIds.indexOf(model.currentQuestion.id);
 
-  var a = questionsIds.length;
+  var a = questionsIds.length - 1;
   var b = 1;
   var c = actualIndex;
   double d = (c * b) / a;

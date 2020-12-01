@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:iCovid/core/models/data_structure_models.dart';
 import 'package:iCovid/core/services/db_service_mocked.dart';
+import 'package:iCovid/core/services/machine_learning_service_mocked.dart';
 
 class QuizViewmodel extends ChangeNotifier {
   QuizViewmodel() {
@@ -21,6 +22,7 @@ class QuizViewmodel extends ChangeNotifier {
   }
 
   DBServiceMocked dbService = DBServiceMocked();
+  MLServiceMocked mlService = MLServiceMocked();
 
   // Questions
   QuestionsModel _questions;
@@ -41,6 +43,9 @@ class QuizViewmodel extends ChangeNotifier {
   AnswersModel _answers;
   bool _isNextDisabled = true;
   bool _isNoneSelected = false;
+
+  // Results
+  Results _results;
 
   void initialize() {
     getDataBase();
@@ -95,6 +100,7 @@ class QuizViewmodel extends ChangeNotifier {
     initializeAnswers();
     computeOther();
     calculateNextDisabled();
+    if (_currentQuestion.widgetType == "ScoreResults") getResults();
 
     notifyListeners();
   }
@@ -142,6 +148,8 @@ class QuizViewmodel extends ChangeNotifier {
     if (_answers.storedAnswers[_currentQuestion.id].selectedOptions.length >
             0 &&
         !_isOtherVisible) {
+      _isNextDisabled = false;
+    } else if (_widgetType == "ScoreResults") {
       _isNextDisabled = false;
     } else {
       _isNextDisabled = true;
@@ -251,6 +259,11 @@ class QuizViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Results getResults() {
+    _results = mlService.getResultsFromServer();
+    notifyListeners();
+  }
+
   // Getters
   QuestionsModel get questions => _questions;
   Question get currentQuestion => _currentQuestion;
@@ -269,4 +282,6 @@ class QuizViewmodel extends ChangeNotifier {
   bool get hasOther => _hasOther;
 
   String get widgetType => _widgetType;
+
+  Results get results => _results;
 }

@@ -57,7 +57,8 @@ class QuizScreen extends StatelessWidget {
         SizedBox(height: 20),
         Align(
             alignment: Alignment.centerLeft,
-            child: Text("... % to complete", style: kOverlineTextStyle)),
+            child: Text("${(checkProgress(model) * 100).toInt()} % to complete",
+                style: kOverlineTextStyle)),
         SizedBox(height: 10),
         ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(6)),

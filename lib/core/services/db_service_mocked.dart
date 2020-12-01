@@ -498,6 +498,14 @@ class DBServiceMocked implements DBService {
           "1": {"id": "1", "text": "Times", "next": "41"},
         }
       },
+      "41": {
+        "id": "41",
+        "text": "Your iCOVID scores are?",
+        "hasOther": "false",
+        "category": "Congratulations!",
+        "widgetType": "ScoreResults",
+        "options": {}
+      },
     }
   };
 
