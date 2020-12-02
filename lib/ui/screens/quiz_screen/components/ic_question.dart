@@ -55,6 +55,7 @@ class ICQuestion extends StatelessWidget {
                       // TODO: Better semantics
                       // Not semantic as I wish but if not,
                       // the Align should go in each case of the switch
+                      // I could use Extensions to types
                       Align(
                           alignment: Alignment.center,
                           child: buildOptionsArea(_widgetType)),
@@ -65,8 +66,7 @@ class ICQuestion extends StatelessWidget {
                                 .answers
                                 .storedAnswers[model.currentQuestion.id]
                                 .otherValue,
-                            widgetType: _widgetType,
-                            storeOtherValue: model.updateOtherValue),
+                            updateOtherValue: model.updateOtherValue),
                       Spacer(),
                       buildButtons(model, _widgetType, context),
                       SizedBox(height: 16),

@@ -43,7 +43,7 @@ class ICCheckableSelection extends StatelessWidget {
           child: InkWell(
               onTap: () {
                 if (!_isSelected) {
-                  model.storeAnswers(index);
+                  model.storeAnswers(index, text);
                   model.otherVisible(text);
                   model.selectNext(index);
                   model.calculateNextDisabled();

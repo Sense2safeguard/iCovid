@@ -22,7 +22,7 @@ class ICovidApp extends StatelessWidget {
           return MaterialApp(
               title: "iCovid App",
               debugShowCheckedModeBanner: false,
-              initialRoute: '/post-assessment-screen',
+              initialRoute: '/privacy-policy',
               routes: {
                 '/privacy-policy': (context) => PrivacyPolicyScreen(),
                 '/': (context) => HomeScreen(),

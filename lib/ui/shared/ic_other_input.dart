@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:iCovid/core/constants.dart';
+import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class ICOtherInput extends StatefulWidget {
-  final String widgetType;
-  final Function storeOtherValue;
+  final Function updateOtherValue;
   final String previousValue;
 
-  const ICOtherInput(
-      {Key key, this.widgetType, this.storeOtherValue, this.previousValue})
+  const ICOtherInput({Key key, this.updateOtherValue, this.previousValue})
       : super(key: key);
   @override
   _ICOtherInputState createState() => _ICOtherInputState();
@@ -32,14 +32,21 @@ class _ICOtherInputState extends State<ICOtherInput> {
 
   @override
   Widget build(BuildContext context) {
+    QuizViewmodel model = Provider.of<QuizViewmodel>(context);
+
     return Padding(
-      padding: widget.widgetType == "MultiplePillSelection"
+      padding: model.widgetType == "MultiplePillSelection"
           ? EdgeInsets.all(10.0)
           : EdgeInsets.only(top: 10),
       child: Container(
         width: double.infinity,
         child: TextField(
-          onChanged: widget.storeOtherValue(textController.text.toString()),
+          onChanged: (value) =>
+              model.updateOtherValue(textController.text.toString()),
+          onSubmitted: (value) {
+            model.saveOtherValue();
+            model.calculateNextDisabled();
+          },
           controller: textController,
           style: kHintTextStyle.copyWith(color: kBlue),
           decoration: InputDecoration(

@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:iCovid/core/models/data_structure_models.dart';
 import 'package:iCovid/core/services/db_service_mocked.dart';
 import 'package:iCovid/core/services/machine_learning_service_mocked.dart';
-import 'package:iCovid/ui/screens/post_assessment_screen/post_assessment_screen.dart';
 
 class QuizViewmodel extends ChangeNotifier {
   QuizViewmodel() {
@@ -37,11 +36,12 @@ class QuizViewmodel extends ChangeNotifier {
   // Options
   OptionsModel _currentOptions;
 
-  // Answers
+  // Answers and Navigation
   String _selectedOption;
   List<String> _selectedOptions;
   String _selectedNext;
   AnswersModel _answers;
+  Answer _answer;
   bool _isNextDisabled = true;
   bool _isNoneSelected = false;
 
@@ -62,8 +62,6 @@ class QuizViewmodel extends ChangeNotifier {
     _questions = dbService.getDB();
   }
 
-  /// This will prepare all the configuration for next option
-  /// Shared Prefs will resume on [_questionOrder]
   void calculateOrder([String questionOrder]) {
     _currentQuestion = questionOrder != null
         ? _questions.questionsMap[questionOrder]
@@ -86,16 +84,15 @@ class QuizViewmodel extends ChangeNotifier {
           Answer.empty(_currentQuestion.id);
     }
 
-    if (_answers.storedAnswers[_currentQuestion.id].selectedOptions == null) {
+    _answer = _answers.storedAnswers[_currentQuestion.id];
+
+    if (_answer.selectedOptions == null) {
       _selectedOptions = [];
     } else {
-      _selectedOptions =
-          _answers.storedAnswers[_currentQuestion.id].selectedOptions;
+      _selectedOptions = _answer.selectedOptions;
     }
   }
 
-  // NAVIGATION
-  // Moving forward
   void navigateNext() {
     saveOtherValue();
     selectNext();
@@ -108,7 +105,6 @@ class QuizViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Moving backwards
   void navigateBack() {
     saveOtherValue();
     calculateOrder(calculateLastStoredAnswer());
@@ -121,54 +117,67 @@ class QuizViewmodel extends ChangeNotifier {
 
   String calculateLastStoredAnswer() {
     List<String> answersIds = [];
+
     _answers.storedAnswers.forEach((key, value) {
       answersIds.add(key);
     });
+
     int currentQuestionIndex = answersIds.indexOf(_currentQuestion.id);
 
     return answersIds[currentQuestionIndex - 1];
   }
 
   void computeOther() {
-    _isOtherVisible =
-        !(_answers.storedAnswers[_currentQuestion.id].otherValue == "" ||
-            _answers.storedAnswers[_currentQuestion.id].otherValue == null);
+    _answer = _answers.storedAnswers[_currentQuestion.id];
 
-    _otherValue = _answers.storedAnswers[_currentQuestion.id].otherValue != null
-        ? _answers.storedAnswers[_currentQuestion.id].otherValue
-        : null;
-
+    _isOtherVisible = !(_answer.otherValue == "" || _answer.otherValue == null);
+    _otherValue = _answer.otherValue != null ? _answer.otherValue : null;
     _hasOther = _currentQuestion.hasOther;
   }
 
+  void updateOtherValue(String otherValue) {
+    _otherValue = otherValue;
+  }
+
   void saveOtherValue() {
+    _answer = _answers.storedAnswers[_currentQuestion.id];
+
     if (_hasOther && _otherValue != null && _isOtherVisible ||
         hasOther && _otherValue != "" && _isOtherVisible)
-      _answers.storedAnswers[_currentQuestion.id].otherValue = _otherValue;
+      _answer.otherValue = _otherValue;
   }
 
   void calculateNextDisabled() {
-    if (_answers.storedAnswers[_currentQuestion.id].selectedOptions.length >
-            0 &&
-        !_isOtherVisible) {
+    _answer = _answers.storedAnswers[_currentQuestion.id];
+
+    if (_answer.otherValue != null && _isOtherVisible ||
+        _answer.selectedOptions.length > 0 && !_isOtherVisible ||
+        _answer.selectedOptions.contains(getOptionId("Other")) &&
+            _answer.otherValue != null) {
       _isNextDisabled = false;
     } else if (_widgetType == "ScoreResults") {
       _isNextDisabled = false;
     } else {
       _isNextDisabled = true;
     }
+
     notifyListeners();
   }
 
   void storeAnswers(String optionId, [String text]) {
     _selectedOption = optionId;
+
     initializeAnswers();
 
     if (!_selectedOptions.contains(optionId)) {
       if (text == "None") _selectedOptions.clear();
-      // TODO: !!! this is hardcoded! I've lost calculation on commits
-      if (_selectedOptions.length == 1 && _selectedOptions.contains("12"))
+      if (text != "None" && _selectedOptions.contains(getOptionId("None")))
         _selectedOptions.clear();
+
+      if (_selectedOptions.length == 1 && _selectedOptions.contains(optionId)) {
+        _selectedOptions.clear();
+      }
+
       _selectedOptions.add(optionId);
     } else {
       _selectedOptions.remove(optionId);
@@ -188,7 +197,13 @@ class QuizViewmodel extends ChangeNotifier {
 
     _answers.storedAnswers[_currentQuestion.id] = Answer(
         questionId: _currentQuestion.id, selectedOptions: _selectedOptions);
-    calculateNextDisabled();
+
+    if ((text == "Other" || text == "No") && _answer.otherValue != null) {
+      _answer.otherValue = null;
+      _otherValue = null;
+    }
+
+    saveOtherValue();
   }
 
   void storeTestResult(String text) {
@@ -205,27 +220,22 @@ class QuizViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  String getNoneOptionId() {
+  String getOptionId(String text) {
     String computedOptionId;
+
     _currentOptions.optionsMap.forEach((key, value) {
-      if (value.text == "None")
-        computedOptionId = (int.parse(key) + 1).toString();
+      if (value.text == text) computedOptionId = (int.parse(key)).toString();
     });
+
     return computedOptionId;
   }
 
-  void updateOtherValue(String otherValue) {
-    _otherValue = otherValue;
-  }
-
   void selectNext([String index]) {
-    if (_widgetType != "DialSelection" &&
-        _answers.storedAnswers[_currentQuestion.id].selectedOptions.length >
-            0) {
-      _selectedNext = _currentOptions
-          .optionsMap[
-              _answers.storedAnswers[_currentQuestion.id].selectedOptions[0]]
-          .next;
+    _answer = _answers.storedAnswers[_currentQuestion.id];
+
+    if (_widgetType != "DialSelection" && _answer.selectedOptions.length > 0) {
+      _selectedNext =
+          _currentOptions.optionsMap[_answer.selectedOptions[0]].next;
     } else {
       _selectedNext = index != null
           ? _currentOptions.optionsMap[index].next
@@ -236,26 +246,35 @@ class QuizViewmodel extends ChangeNotifier {
   }
 
   void otherVisible(String optionText) {
+    _answer = _answers.storedAnswers[_currentQuestion.id];
+
     if (optionText == "Other" && _hasOther ||
         optionText == "Yes" && _hasOther) {
       toggleOtherVisible();
+    } else if (optionText == "None" && _hasOther && _isOtherVisible) {
+      _isOtherVisible = false;
+      _otherValue = null;
+      _answer.otherValue = null;
     } else {
       if (_widgetType != "MultiplePillSelection") {
         _isOtherVisible = false;
       }
     }
+
     notifyListeners();
   }
 
   bool amISelected(String text, String index) {
+    _answer = _answers.storedAnswers[_currentQuestion.id];
+
     if (text == "None" && _isNoneSelected == true) {
       return true;
     }
+
     if (text == "None" && _isNoneSelected == false) {
       return false;
     } else if (text != "None" &&
-        _answers.storedAnswers[_currentQuestion.id].selectedOptions
-            .contains(index) &&
+        _answer.selectedOptions.contains(index) &&
         _isNoneSelected == false) {
       return true;
     } else {
