@@ -11,6 +11,8 @@ class QuestionsModel {
     });
     return QuestionsModel(questionsMap: map);
   }
+
+  Map<String, dynamic> toJson() => {"questionsMap": questionsMap};
 }
 
 class Question {
@@ -37,6 +39,14 @@ class Question {
         widgetType: json['widgetType'],
         options: OptionsModel.fromJson(json['options']));
   }
+
+  Map<String, dynamic> toJson() => {
+        "id": this.id,
+        "text": this.text,
+        "category": this.category,
+        "widgetType": this.widgetType,
+        "options": this.options,
+      };
 }
 
 class OptionsModel {
@@ -51,6 +61,8 @@ class OptionsModel {
     });
     return OptionsModel(optionsMap: map);
   }
+
+  Map<String, dynamic> toJson() => {"optionsMap": optionsMap};
 }
 
 class Option {
@@ -67,12 +79,27 @@ class Option {
       text: json['text'],
     );
   }
+
+  Map<String, dynamic> toJson() =>
+      {"id": this.id, "next": this.next, "text": this.text};
 }
 
 /// [storedAnswers]] is a Map of the total questions
 class AnswersModel {
   Map<String, Answer> storedAnswers;
+
   AnswersModel({this.storedAnswers});
+
+  factory AnswersModel.fromJson(Map<String, dynamic> json) {
+    Map<String, Answer> map = {};
+
+    json['storedAnswers'].forEach((key, value) {
+      map[key] = Answer.fromJson(value);
+    });
+    return AnswersModel(storedAnswers: map);
+  }
+
+  Map<String, dynamic> toJson() => {"storedAnswers": storedAnswers};
 }
 
 class Answer {
@@ -86,6 +113,22 @@ class Answer {
     return Answer(
         questionId: currentQuestionId, selectedOptions: [], otherValue: "");
   }
+
+  factory Answer.fromJson(Map<String, dynamic> json) {
+    var selectedOptionsFromJson = json['selectedOptions'];
+    List<String> selectedOptions = List<String>.from(selectedOptionsFromJson);
+    return Answer(
+      questionId: json['questionId'],
+      selectedOptions: selectedOptions,
+      otherValue: json['otherValue'],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "questionId": questionId,
+        "selectedOptions": selectedOptions,
+        "otherValue": otherValue
+      };
 }
 
 class Results {
@@ -99,6 +142,11 @@ class Results {
         complicationScore: json['complicationScore'],
         infectionScore: json['infectionScore']);
   }
+
+  Map<String, dynamic> toJson() => {
+        "infectionScore": infectionScore,
+        "complicationScore": complicationScore
+      };
 }
 
 class PostAssessment {

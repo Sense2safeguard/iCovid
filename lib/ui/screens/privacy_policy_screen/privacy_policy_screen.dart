@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:iCovid/core/helpers/responsive_sized_widgets.dart';
+
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:iCovid/core/constants.dart';
+import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
 import 'package:iCovid/ui/shared/ic_buttons.dart';
 
 class PrivacyPolicyScreen extends StatelessWidget {
@@ -22,46 +26,54 @@ The application uses machine learning techniques to provide useful predictions f
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    QuizViewmodel model = Provider.of<QuizViewmodel>(context);
 
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: Padding(
-          padding: const EdgeInsets.fromLTRB(40, 20, 40, 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("iCOVID",
-                  style: kheadline4.copyWith(
-                      fontWeight: FontWeight.w800, fontSize: 29, color: kBlue)),
-              Container(
-                height: size.height * 0.75,
-                child: SingleChildScrollView(
-                    child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 70,
-                    ),
-                    Text("Privacy Policy",
-                        style: kheadline3.copyWith(color: kBlue)),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(bodyText,
-                        style: kBodyText2.copyWith(fontSize: 14, color: kBlue)),
-                  ],
-                )),
+        body: Builder(
+          builder: (BuildContext context) {
+            return generalPadding(
+              currentDeviceSize: size,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("iCOVID",
+                      style: kheadline4.copyWith(
+                          fontWeight: FontWeight.w800,
+                          fontSize: 29,
+                          color: kBlue)),
+                  Container(
+                    height: size.height * 0.75,
+                    child: SingleChildScrollView(
+                        child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        bigSizedBoxVertical(
+                          currentDeviceSize: size,
+                        ),
+                        Text("Privacy Policy",
+                            style: kheadline3.copyWith(color: kBlue)),
+                        smallSizedBoxVertical(
+                          currentDeviceSize: size,
+                        ),
+                        Text(bodyText,
+                            style: kBodyText2.copyWith(
+                                fontSize: 14, color: kBlue)),
+                      ],
+                    )),
+                  ),
+                  buildButtons(context, model),
+                ],
               ),
-              buildButtons(context),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );
   }
 
-  Row buildButtons(BuildContext context) {
+  Row buildButtons(BuildContext context, QuizViewmodel model) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -74,8 +86,18 @@ The application uses machine learning techniques to provide useful predictions f
         )),
         Flexible(
             child: ICMainButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, "/");
+                onPressed: () async {
+                  final snackbar = SnackBar(
+                      content: Text(
+                          "Something wrong happened. Please, try again later."));
+
+                  User _user = await model.signInAnon();
+
+                  if (_user != null) {
+                    Navigator.pushNamed(context, "/");
+                  } else {
+                    Scaffold.of(context).showSnackBar(snackbar);
+                  }
                 },
                 text: "Accept")),
       ],

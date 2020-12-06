@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:iCovid/core/constants.dart';
+import 'package:iCovid/core/helpers/responsive_sized_widgets.dart';
 import 'package:iCovid/ui/shared/ic_app_bar.dart';
 import 'package:iCovid/ui/shared/ic_buttons.dart';
 
@@ -18,9 +19,11 @@ class HomeScreen extends StatelessWidget {
   }
 
   Expanded buildBody(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+      child: generalPadding(
+        currentDeviceSize: size,
         child: Column(
           children: [
             Spacer(),
@@ -29,13 +32,13 @@ class HomeScreen extends StatelessWidget {
               style: kBodyText2,
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 36),
+            mediumSizedBoxVertical(currentDeviceSize: size),
             Text(
               "Why i?",
               style: kheadline3,
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 36),
+            mediumSizedBoxVertical(currentDeviceSize: size),
             Text(
               "Because iCOVID infection and complications risk assessment is interactive, integrative, innovative, intelligent, internet-based, individual, informative, instructive",
               style: kBodyText2,
@@ -43,7 +46,7 @@ class HomeScreen extends StatelessWidget {
             ),
             Spacer(),
             ICMainButton(
-              width: 295,
+              width: size.width * 7.5,
               onPressed: () {
                 Navigator.pushNamed(context, '/quiz_screen');
               },

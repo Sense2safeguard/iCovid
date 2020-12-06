@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import 'package:iCovid/ui/screens/post_assessment_screen/widget_types_views/post_assessment_viewmodel.dart';
 import 'package:iCovid/core/constants.dart';
-import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
 
 class ICRadioSelectionPostAssessment extends StatelessWidget {
   final Key key;
@@ -22,7 +22,8 @@ class ICRadioSelectionPostAssessment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    QuizViewmodel model = Provider.of<QuizViewmodel>(context);
+    PostAssessmentViewmodel model =
+        Provider.of<PostAssessmentViewmodel>(context);
 
     bool _isSelected =
         isPreviouslySelected ? true : index == model.selectedOption;
@@ -48,8 +49,8 @@ class ICRadioSelectionPostAssessment extends StatelessWidget {
           child: InkWell(
               onTap: () {
                 if (!_isSelected) {
-                  model.updateTestOption(index);
-                  model.storeTestResult(text);
+                  model.updateSelectedOptionOrValue(index);
+                  model.checkisDisabled();
                 }
               },
               child: Padding(

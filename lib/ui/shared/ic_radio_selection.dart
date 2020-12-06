@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iCovid/core/helpers/responsive_sized_widgets.dart';
 
 import 'package:provider/provider.dart';
 
@@ -19,6 +20,7 @@ class ICRadioSelection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     QuizViewmodel model = Provider.of<QuizViewmodel>(context);
+    Size size = MediaQuery.of(context).size;
 
     bool _isSelected =
         isPreviouslySelected ? true : index == model.selectedOption;
@@ -26,8 +28,8 @@ class ICRadioSelection extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: [
         Container(
-          height: 32,
-          width: 122,
+          height: size.height * 0.04,
+          width: size.width * 0.32,
           margin: EdgeInsets.symmetric(vertical: 4),
           decoration: BoxDecoration(
               color: Colors.white,
@@ -46,6 +48,8 @@ class ICRadioSelection extends StatelessWidget {
                   model.storeAnswers(index);
                   model.otherVisible(text);
                   model.selectNext(index);
+                  model.amISelected(text, index);
+                  model.calculateNextDisabled();
                 }
               },
               child: Padding(
@@ -63,8 +67,8 @@ class ICRadioSelection extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(3.0),
                           child: Container(
-                              width: 8,
-                              height: 8,
+                              width: size.width * 0.04,
+                              height: size.width * 0.04,
                               decoration: BoxDecoration(
                                 color: _isSelected ? kBlue : Colors.transparent,
                                 shape: BoxShape.circle,
@@ -78,8 +82,8 @@ class ICRadioSelection extends StatelessWidget {
                               )),
                         ),
                       ),
-                      SizedBox(
-                        width: 8,
+                      smallestSizedBoxHorizontal(
+                        currentDeviceSize: size,
                       ),
                       Text(text,
                           style: _isSelected
@@ -88,7 +92,7 @@ class ICRadioSelection extends StatelessWidget {
                     ],
                   ))),
         ),
-        SizedBox(width: 6),
+        SizedBox(width: size.width * 0.015),
       ],
     );
   }

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-// TODO: make responsive proportions styles guide
-
 // Colors
 // Primary Palette
 const kDarkBlue = Color(0xFF21314D);

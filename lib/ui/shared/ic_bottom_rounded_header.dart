@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:iCovid/core/constants.dart';
+import 'package:iCovid/core/helpers/responsive_sized_widgets.dart';
 
 class BottomRoundedHeader extends StatelessWidget {
   const BottomRoundedHeader({
@@ -15,18 +16,16 @@ class BottomRoundedHeader extends StatelessWidget {
     return ClipPath(
       clipper: HeaderClipper(size),
       child: Container(
-          height: 200,
+          height: size.height * 0.26,
           color: kBlue,
           child: Padding(
-            padding: const EdgeInsets.only(top: 40),
+            padding: EdgeInsets.only(top: kBottomRoundedHeaderTopPadding(size)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.asset("assets/images/Virus_with_molecules.png"),
-                SizedBox(
-                  width: 20,
-                ),
+                SizedBox(width: size.width * 0.051),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   // mainAxisAlignment: MainAxisAlignment.center,
@@ -59,9 +58,9 @@ class HeaderClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var path = Path();
-    path.lineTo(0, size.height - 10);
-    path.quadraticBezierTo(
-        size.width / 2, size.height - 50, size.width, size.height - 10);
+    path.lineTo(0, size.height - size.height * 0.01);
+    path.quadraticBezierTo(size.width / 2, size.height - (size.height * 0.3),
+        size.width, size.height - (size.height * 0.01));
     path.lineTo(size.width, 0);
     path.close();
     return path;

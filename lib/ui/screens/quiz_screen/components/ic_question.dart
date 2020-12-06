@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iCovid/core/helpers/responsive_sized_widgets.dart';
 import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/multiple_scrollable_pill_selection.dart';
 import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/score_results.dart';
 
@@ -29,7 +30,6 @@ class ICQuestion extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<QuizViewmodel>(
       builder: (context, model, _) {
-        print("IC Question painted");
         Question _currentQuestion = model.currentQuestion;
         String _widgetType = _currentQuestion.widgetType;
 
@@ -40,17 +40,15 @@ class ICQuestion extends StatelessWidget {
               width: double.infinity,
               height: size.height * 0.69,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(24, 32, 24, 0),
+                padding: kQuestionMainBodyPadding(size),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // TODO: change alignment dependant on _widgetType
                       Text(
                         _currentQuestion.text,
                         style: kheadline4,
                         textAlign: TextAlign.left,
                       ),
-                      // SizedBox(height: 32),
                       Spacer(),
                       // TODO: Better semantics
                       // Not semantic as I wish but if not,
@@ -69,7 +67,7 @@ class ICQuestion extends StatelessWidget {
                             updateOtherValue: model.updateOtherValue),
                       Spacer(),
                       buildButtons(model, _widgetType, context),
-                      SizedBox(height: 16),
+                      smallSizedBoxVertical(currentDeviceSize: size),
                     ]),
               )),
         );
@@ -127,7 +125,7 @@ class ICQuestion extends StatelessWidget {
             },
             text: "Back",
           )),
-        // TODO: please, better code
+        // TODO: better code
         if (model.isNextDisabled)
           Expanded(child: ICMainButton(isDisabled: true, text: "Next")),
         if (!model.isNextDisabled)

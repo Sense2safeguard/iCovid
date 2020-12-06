@@ -1,8 +1,13 @@
+import 'dart:convert';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:iCovid/core/models/data_structure_models.dart';
+import 'package:iCovid/core/services/auth_firebase_service.dart';
 import 'package:iCovid/core/services/db_service_mocked.dart';
 import 'package:iCovid/core/services/machine_learning_service_mocked.dart';
+import 'package:iCovid/core/services/shared_preferences_service.dart';
 
 class QuizViewmodel extends ChangeNotifier {
   QuizViewmodel() {
@@ -23,6 +28,7 @@ class QuizViewmodel extends ChangeNotifier {
 
   DBServiceMocked dbService = DBServiceMocked();
   MLServiceMocked mlService = MLServiceMocked();
+  AuthFirebaseService _auth = AuthFirebaseService();
 
   // Questions
   QuestionsModel _questions;
@@ -47,14 +53,51 @@ class QuizViewmodel extends ChangeNotifier {
 
   // Results
   Results _results;
-  PostAssessment _postAssessment;
-  String _postAssessmentResult;
+
+  // User
+  User user;
 
   void initialize() {
     getDataBase();
+
+    // to resume the app
+    if (UserPreferences().questionOrder != null) {
+      _questionOrder = UserPreferences().questionOrder;
+      _otherValue = UserPreferences().otherValue;
+      _answers = AnswersModel.fromJson(jsonDecode(UserPreferences().answers));
+    }
     calculateOrder();
     initializeAnswers();
     computeOther();
+
+    // to resume the app
+    if (UserPreferences().questionOrder != null) calculateNextDisabled();
+
+    notifyListeners();
+  }
+
+  void resetQuiz() {
+    _questionOrder = "1";
+    _currentQuestion = _questions.questionsMap[questionOrder];
+    _currentOptions = _currentQuestion.options;
+    _selectedOption = null;
+
+    _isOtherVisible = false;
+    _hasOther = null;
+    _otherValue = null;
+
+    _widgetType = _currentQuestion.widgetType;
+
+    _answers = null;
+    _answer = null;
+
+    _isNextDisabled = true;
+    _isNoneSelected = false;
+
+    initializeAnswers();
+    computeOther();
+    cleanCache();
+
     notifyListeners();
   }
 
@@ -93,14 +136,20 @@ class QuizViewmodel extends ChangeNotifier {
     }
   }
 
-  void navigateNext() {
+  void navigateNext() async {
     saveOtherValue();
+
+    if (_currentQuestion.id == (_questions.questionsMap.length - 1).toString())
+      await sendQuiz(UserPreferences().userUid);
+
     selectNext();
+    cachePrefs();
     calculateOrder(_selectedNext);
     initializeAnswers();
     computeOther();
     calculateNextDisabled();
-    if (_currentQuestion.widgetType == "ScoreResults") getResults();
+
+    if (_currentQuestion.widgetType == "ScoreResults") await getResultsMocked();
 
     notifyListeners();
   }
@@ -151,6 +200,7 @@ class QuizViewmodel extends ChangeNotifier {
     _answer = _answers.storedAnswers[_currentQuestion.id];
 
     if (_answer.otherValue != null && _isOtherVisible ||
+        // _answer.selectedOptions[0] != "" ||
         _answer.selectedOptions.length > 0 && !_isOtherVisible ||
         _answer.selectedOptions.contains(getOptionId("Other")) &&
             _answer.otherValue != null) {
@@ -192,7 +242,8 @@ class QuizViewmodel extends ChangeNotifier {
       _selectedOptions.add(optionId);
     }
 
-    if (_widgetType == "DialSelection" && optionId == "0")
+    if (_widgetType == "DialSelection" && optionId == "0" ||
+        _widgetType == "DialSelection" && optionId == "")
       _selectedOptions.clear();
 
     _answers.storedAnswers[_currentQuestion.id] = Answer(
@@ -206,13 +257,16 @@ class QuizViewmodel extends ChangeNotifier {
     saveOtherValue();
   }
 
-  void storeTestResult(String text) {
-    _postAssessmentResult = text;
+  void cachePrefs() {
+    UserPreferences().setAnswers(jsonEncode(_answers));
+    UserPreferences().setQuestionOrder(_currentQuestion.id);
+    UserPreferences().setOtherValue(_otherValue);
   }
 
-  void sendTestResults() {
-    _postAssessment =
-        PostAssessment(date: DateTime.now(), text: _postAssessmentResult);
+  void cleanCache() {
+    UserPreferences().setAnswers("");
+    UserPreferences().setQuestionOrder("");
+    UserPreferences().setOtherValue("");
   }
 
   void updateTestOption(String index) {
@@ -295,8 +349,21 @@ class QuizViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getResults() {
-    _results = mlService.getResultsFromServer();
+  Future signInAnon() async {
+    user = await _auth.signInAnon();
+    if (user != null) UserPreferences().setUserUid(user.uid);
+    // notifyListeners();
+    return user;
+  }
+
+  Future sendQuiz(String userUid) async {
+    var response = mlService.sendQuiz(
+        questions: _questions, answers: _answers, userUid: userUid);
+    print(response);
+  }
+
+  void getResultsMocked() async {
+    _results = await mlService.getResultsFromServer();
     notifyListeners();
   }
 

@@ -89,31 +89,24 @@ class DBServiceMocked implements DBService {
             "text": "American Indian or Alaska Native",
             "next": "8"
           },
-          "3": {"id": "3", "text": "African", "next": "8"},
-          "4": {
-            "id": "4",
-            "text": "American Indian or Alaska Native",
+          "3": {"id": "3", "text": "Any other Asian background", "next": "8"},
+          "4": {"id": "4", "text": "Any other mixed background", "next": "8"},
+          "5": {"id": "5", "text": "Black or African American", "next": "8"},
+          "6": {"id": "6", "text": "British", "next": "8"},
+          "7": {"id": "7", "text": "Caribbean", "next": "8"},
+          "8": {"id": "8", "text": "Chinese", "next": "8"},
+          "9": {"id": "9", "text": "Hispanic (of any race)", "next": "8"},
+          "10": {"id": "10", "text": "Indian", "next": "8"},
+          "11": {"id": "11", "text": "Irish", "next": "8"},
+          "12": {
+            "id": "12",
+            "text": "Native Hawaiian or Islander",
             "next": "8"
           },
-          "5": {"id": "5", "text": "Any other Asian background", "next": "8"},
-          "6": {"id": "6", "text": "Any other mixed background", "next": "8"},
-          "7": {"id": "7", "text": "Black or African American", "next": "8"},
-          "8": {"id": "8", "text": "British", "next": "8"},
-          "9": {"id": "9", "text": "Caribbean", "next": "8"},
-          "10": {"id": "10", "text": "Chinese", "next": "8"},
-          "11": {"id": "11", "text": "Hispanic (of any race)", "next": "8"},
-          "12": {"id": "12", "text": "Indian", "next": "8"},
-          "13": {"id": "13", "text": "Irish", "next": "8"},
-          "14": {
-            "id": "14",
-            "text": "Native Hawaiian or Pacific Islander",
-            "next": "8"
-          },
-          "15": {"id": "15", "text": "Pakistani", "next": "8"},
-          "16": {"id": "16", "text": "White", "next": "8"},
-          "17": {"id": "17", "text": "White and Asian", "next": "8"},
-          "18": {"id": "18", "text": "White and Black Caribbean", "next": "8"},
-          "19": {"id": "19", "text": "Other", "next": "8"},
+          "13": {"id": "13", "text": "Pakistani", "next": "8"},
+          "14": {"id": "14", "text": "White", "next": "8"},
+          "15": {"id": "15", "text": "White and Asian", "next": "8"},
+          "16": {"id": "16", "text": "White and Black Caribbean", "next": "8"},
         }
       },
       "8": {
@@ -230,16 +223,7 @@ class DBServiceMocked implements DBService {
         "hasOther": "false",
         "category": "International",
         "widgetType": "SingleScrollableSelection",
-        "options": {
-          "1": {"id": "1", "text": "Åland Islands", "next": "18"},
-          "2": {"id": "2", "text": "Albania", "next": "18"},
-          "3": {"id": "3", "text": "Algeria", "next": "18"},
-          "4": {"id": "4", "text": "American Samoa", "next": "18"},
-          "5": {"id": "5", "text": "AndorrA", "next": "18"},
-          "6": {"id": "6", "text": "Angola", "next": "18"},
-          "7": {"id": "7", "text": "Anguilla", "next": "18"},
-          "8": {"id": "8", "text": "Antarctica", "next": "18"},
-        }
+        "options": {}
       },
       "18": {
         "id": "18",
@@ -250,6 +234,7 @@ class DBServiceMocked implements DBService {
         "options": {
           "1": {"id": "1", "text": "Ski resort", "next": "19"},
           "2": {"id": "2", "text": "Beach", "next": "19"},
+          "3": {"id": "3", "text": "Other", "next": "19"},
         }
       },
       "19": {
@@ -397,7 +382,7 @@ class DBServiceMocked implements DBService {
       },
       "32": {
         "id": "32",
-        "text": "Are you religious?",
+        "text": "What is your religion?",
         "hasOther": "true",
         "category": "Social Distancing",
         "widgetType": "MultiplePillSelection",
@@ -408,7 +393,8 @@ class DBServiceMocked implements DBService {
           "4": {"id": "4", "text": "Hinduism", "next": "33"},
           "5": {"id": "5", "text": "Islam", "next": "33"},
           "6": {"id": "6", "text": "Judaism", "next": "33"},
-          "7": {"id": "7", "text": "Other", "next": "33"},
+          "7": {"id": "7", "text": "None", "next": "33"},
+          "8": {"id": "8", "text": "Other", "next": "33"},
         },
       },
       "33": {
@@ -480,26 +466,16 @@ class DBServiceMocked implements DBService {
       "39": {
         "id": "39",
         "text": "Have you tested positive for COVID-19 in at least one test?",
-        "hasOther": "true",
+        "hasOther": "false",
         "category": "Social Distancing",
         "widgetType": "SingleCheckableSelection",
         "options": {
           "1": {"id": "1", "text": "Yes", "next": "40"},
-          "2": {"id": "2", "text": "No", "next": "41"},
+          "2": {"id": "2", "text": "No", "next": "40"},
         }
       },
       "40": {
         "id": "40",
-        "text": "How many weeks last week?",
-        "hasOther": "false",
-        "category": "Social Distancing",
-        "widgetType": "DialSelection",
-        "options": {
-          "1": {"id": "1", "text": "Times", "next": "41"},
-        }
-      },
-      "41": {
-        "id": "41",
         "text": "Your iCOVID scores are?",
         "hasOther": "false",
         "category": "Congratulations!",
@@ -513,6 +489,7 @@ class DBServiceMocked implements DBService {
   QuestionsModel getDB() {
     jsonResponse["questions"]["5"]["options"] = countriesToString("6");
     jsonResponse["questions"]["6"]["options"] = countriesToString("7");
+    jsonResponse["questions"]["17"]["options"] = countriesToString("17");
     return QuestionsModel.fromJson(jsonResponse);
   }
 }

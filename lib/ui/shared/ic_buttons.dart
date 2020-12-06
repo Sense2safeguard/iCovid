@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:iCovid/core/constants.dart';
+import 'package:iCovid/core/helpers/responsive_sized_widgets.dart';
 
 class ICMainButton extends StatelessWidget {
   final bool isDisabled;
@@ -18,12 +19,14 @@ class ICMainButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Container(
-      width: width ?? 115,
-      height: 48,
+      width: width ?? kMainButtonWidth(size),
+      height: kMainButtonHeight(size),
       child: MaterialButton(
         disabledColor: kNeoAccent.withOpacity(0.15),
-        onPressed: onPressed,
+        onPressed: isDisabled ? null : onPressed,
         color: backgroundColor ?? kNeoAccent,
         highlightColor: kAccent,
         splashColor: Colors.white,
@@ -55,9 +58,11 @@ class ICSecondaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Container(
-      width: width ?? 115,
-      height: 48,
+      width: width ?? kMainButtonWidth(size),
+      height: kMainButtonHeight(size),
       child: MaterialButton(
           disabledColor: kNeoAccent.withOpacity(0.15),
           onPressed: isDisabled ? null : onPressed,

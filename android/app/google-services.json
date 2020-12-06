@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "456283469748",
+    "firebase_url": "https://colorado-icovid.firebaseio.com",
+    "project_id": "colorado-icovid",
+    "storage_bucket": "colorado-icovid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:456283469748:android:81db297323990176bea4e1",
+        "android_client_info": {
+          "package_name": "com.example.iCovid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "456283469748-4la2ks6l3jtfa56g36ubh1l2qfl8p578.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFVxBUgbesGe2s93sfKCL0WCvCROwtzAs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "456283469748-4la2ks6l3jtfa56g36ubh1l2qfl8p578.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

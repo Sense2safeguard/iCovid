@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 
 import 'package:iCovid/core/constants.dart';
+import 'package:iCovid/core/helpers/responsive_sized_widgets.dart';
 import 'package:iCovid/core/models/data_structure_models.dart';
 
 class ICAppBar extends StatelessWidget {
@@ -10,6 +11,8 @@ class ICAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     String _accentTitle = "i";
     String _lightBlueTitle = "COVID";
 
@@ -36,11 +39,13 @@ class ICAppBar extends StatelessWidget {
           _lightBlueTitle = "";
           break;
         default:
+          _accentTitle = "iCOVID";
+          _lightBlueTitle = "";
       }
     }
 
     return Container(
-      height: 56,
+      height: kAppBarHeight(size),
       width: double.infinity,
       decoration: BoxDecoration(
         color: kBlue,

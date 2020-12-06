@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:iCovid/core/constants.dart';
+import 'package:iCovid/core/helpers/regex_helper.dart';
 import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
 
 class ICDialSelection extends StatefulWidget {
@@ -105,8 +106,14 @@ class _ICDialSelectionState extends State<ICDialSelection> {
                   keyboardType: TextInputType.number,
                   controller: _controller,
                   onSubmitted: (value) {
-                    _controllerCounter = computeControllerText();
-                    widget.model.storeAnswers(value.toString());
+                    if (!isNumeric(value)) {
+                      _controller.text = widget.text;
+                      return;
+                    } else {
+                      _controllerCounter = computeControllerText();
+                      widget.model.storeAnswers(value.toString());
+                      widget.model.calculateNextDisabled();
+                    }
                   },
                   decoration: InputDecoration(border: InputBorder.none),
                   style: kSecondaryButtonTextStyle.copyWith(

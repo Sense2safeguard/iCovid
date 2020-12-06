@@ -11,8 +11,10 @@ class SingleRadioSelection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<QuizViewmodel>(builder: (_, model, __) {
       Map<String, Option> optionsMap = model.currentOptions.optionsMap;
+      Size size = MediaQuery.of(context).size;
+
       return Container(
-        height: 340,
+        height: size.height * 0.44,
         child: GridView.count(
           crossAxisCount: 2,
           childAspectRatio: 3,

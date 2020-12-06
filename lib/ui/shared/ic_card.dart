@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iCovid/core/constants.dart';
+import 'package:iCovid/core/helpers/responsive_sized_widgets.dart';
 
 class ICCard extends StatelessWidget {
   final String infectionScore;
@@ -10,6 +11,8 @@ class ICCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     bool isInfection = infectionScore != null ? true : false;
     int score =
         isInfection ? int.parse(infectionScore) : int.parse(complicationScore);
@@ -22,8 +25,8 @@ class ICCard extends StatelessWidget {
     }
 
     return Container(
-        width: 247,
-        height: 110,
+        width: size.width * 0.63,
+        height: size.height * 0.15,
         decoration: BoxDecoration(
             color: riskLevel() == "low risk"
                 ? kSuccess
@@ -32,7 +35,7 @@ class ICCard extends StatelessWidget {
                     : kError,
             borderRadius: BorderRadius.all(Radius.circular(8))),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+          padding: kResultsCardMainBodyPadding(size),
           child: Column(
             children: [
               Row(children: [
@@ -44,16 +47,14 @@ class ICCard extends StatelessWidget {
                     style:
                         kheadline6.copyWith(fontSize: 12, color: Colors.white)),
               ]),
-              SizedBox(
-                height: 8,
-              ),
+              smallestSizedBoxVertical(currentDeviceSize: size),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(score.toString(),
                       style: kheadline6.copyWith(
                           fontSize: 50, color: Colors.white)),
-                  SizedBox(width: 16),
+                  smallSizedBoxHorizontal(currentDeviceSize: size),
                   Flexible(
                     child: Text(
                         "You are at ${riskLevel()} of COVID-19 ${isInfection ? "infection" : "complication"}. If you are feeling unwell, you still see a doctor",

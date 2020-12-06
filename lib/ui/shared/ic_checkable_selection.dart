@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iCovid/core/helpers/responsive_sized_widgets.dart';
 
 import 'package:provider/provider.dart';
 
@@ -19,22 +20,23 @@ class ICCheckableSelection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     QuizViewmodel model = Provider.of<QuizViewmodel>(context);
+    Size size = MediaQuery.of(context).size;
 
     bool _isSelected =
         isPreviouslySelected ? true : index == model.selectedOption;
     return Column(
       children: [
         Container(
-          height: 48,
+          height: size.height * 0.063,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(vertical: 4),
+          margin: EdgeInsets.symmetric(vertical: size.height * 0.002),
           decoration: BoxDecoration(
               color: _isSelected ? kNeoAccent : Colors.white,
               borderRadius: BorderRadius.circular(6),
               boxShadow: [
                 if (_isSelected)
                   BoxShadow(
-                      offset: Offset(0, 8),
+                      offset: Offset(0, size.height * 0.01),
                       blurRadius: 10,
                       color: kCoolGrey.withOpacity(0.4))
               ],
@@ -50,7 +52,7 @@ class ICCheckableSelection extends StatelessWidget {
                 }
               },
               child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
@@ -58,17 +60,17 @@ class ICCheckableSelection extends StatelessWidget {
                       children: [
                         if (_isSelected)
                           Container(
-                              width: 20,
-                              height: 20,
+                              width: size.width * 0.05,
+                              height: size.width * 0.05,
                               decoration: BoxDecoration(
                                   color: kAccent, shape: BoxShape.circle),
                               child: Icon(
                                 Icons.check,
                                 color: Colors.white,
-                                size: 12,
+                                size: size.width * 0.03,
                               )),
-                        SizedBox(
-                          width: 10,
+                        smallestSizedBoxHorizontal(
+                          currentDeviceSize: size,
                         ),
                         Text(text,
                             style: _isSelected
@@ -78,8 +80,8 @@ class ICCheckableSelection extends StatelessWidget {
                     ),
                   ))),
         ),
-        SizedBox(
-          height: 6,
+        smallestSizedBoxVertical(
+          currentDeviceSize: size,
         ),
       ],
     );

@@ -11,8 +11,10 @@ class SingleScrollableSelection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<QuizViewmodel>(builder: (_, model, __) {
       Map<String, Option> optionsMap = model.currentOptions.optionsMap;
+      Size size = MediaQuery.of(context).size;
+
       return Container(
-        height: 380,
+        height: size.height * 0.47,
         child: ListView(
           children: [
             for (var entry in optionsMap.entries)

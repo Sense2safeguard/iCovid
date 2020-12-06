@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:iCovid/core/helpers/check_progress_helper.dart';
 
 import 'package:provider/provider.dart';
 
+import 'package:iCovid/core/helpers/check_progress_helper.dart';
+import 'package:iCovid/core/helpers/responsive_sized_widgets.dart';
 import 'package:iCovid/core/constants.dart';
 import 'package:iCovid/core/models/data_structure_models.dart';
 import 'package:iCovid/ui/shared/ic_app_bar.dart';
@@ -15,8 +16,6 @@ class QuizScreen extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     QuizViewmodel model = Provider.of<QuizViewmodel>(context);
 
-    print('Quiz Screen painted');
-
     return SafeArea(
       child: Scaffold(
         backgroundColor: kBlue,
@@ -25,7 +24,7 @@ class QuizScreen extends StatelessWidget {
             ICAppBar(
               question: model.currentQuestion,
             ),
-            SizedBox(height: 34),
+            mediumSizedBoxVertical(currentDeviceSize: size),
             buildBody(size, model.currentQuestion, model)
           ],
         ),
@@ -35,18 +34,18 @@ class QuizScreen extends StatelessWidget {
 
   Padding buildBody(Size size, Question question, QuizViewmodel model) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40),
+      padding: kQuizBodyPadding(size),
       child: Column(
         children: [
-          buildTitleArea(question.category, model),
-          SizedBox(height: 26),
+          buildTitleArea(question.category, model, size),
+          smallSizedBoxVertical(currentDeviceSize: size),
           ICQuestion(size: size)
         ],
       ),
     );
   }
 
-  Column buildTitleArea(String category, QuizViewmodel model) {
+  Column buildTitleArea(String category, QuizViewmodel model, Size size) {
     return Column(
       children: [
         Text(
@@ -54,12 +53,12 @@ class QuizScreen extends StatelessWidget {
           category,
           style: kheadline4.copyWith(color: Colors.white),
         ),
-        SizedBox(height: 20),
+        smallSizedBoxVertical(currentDeviceSize: size),
         Align(
             alignment: Alignment.centerLeft,
             child: Text("${(checkProgress(model) * 100).toInt()} % to complete",
                 style: kOverlineTextStyle)),
-        SizedBox(height: 10),
+        smallestSizedBoxVertical(currentDeviceSize: size),
         ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(6)),
           child: LinearProgressIndicator(
