@@ -35,9 +35,7 @@ class _ICOtherInputState extends State<ICOtherInput> {
     QuizViewmodel model = Provider.of<QuizViewmodel>(context);
 
     return Padding(
-      padding: model.widgetType == "MultiplePillSelection"
-          ? EdgeInsets.all(10.0)
-          : EdgeInsets.only(top: 10),
+      padding: EdgeInsets.only(top: 10),
       child: Container(
         width: double.infinity,
         child: TextField(

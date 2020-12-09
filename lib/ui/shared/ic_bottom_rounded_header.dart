@@ -24,7 +24,11 @@ class BottomRoundedHeader extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset("assets/images/Virus_with_molecules.png"),
+                Container(
+                    width: size.width * 0.3,
+                    height: size.height * 0.12,
+                    child:
+                        Image.asset("assets/images/virus_with_molecules.png")),
                 SizedBox(width: size.width * 0.051),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,

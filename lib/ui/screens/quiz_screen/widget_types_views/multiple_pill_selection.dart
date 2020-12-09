@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iCovid/ui/shared/ic_other_input.dart';
 
 import 'package:provider/provider.dart';
 
@@ -9,25 +10,38 @@ import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
 class MultiplePillSelection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Consumer<QuizViewmodel>(builder: (_, model, __) {
       Map<String, Option> optionsMap = model.currentOptions.optionsMap;
-      return Wrap(
-        children: [
-          for (var entry in optionsMap.entries)
-            ICPillMultipleSelection(
-                isNoneSelected: model.isNoneSelected,
-                isSelected:
-                    model.amISelected(optionsMap[entry.key].text, entry.key),
-                text: optionsMap[entry.key].text,
-                index: entry.key,
-                isPreviouslySelected:
-                    model.answers.storedAnswers[model.currentQuestion.id] !=
-                            null
-                        ? model.answers.storedAnswers[model.currentQuestion.id]
-                            .selectedOptions
-                            .contains(entry.key)
-                        : false),
-        ],
+      return Container(
+        height: size.height * 0.4,
+        child: SingleChildScrollView(
+          child: Wrap(
+            children: [
+              for (var entry in optionsMap.entries)
+                ICPillMultipleSelection(
+                    isNoneSelected: model.isNoneSelected,
+                    text: optionsMap[entry.key].text,
+                    index: entry.key,
+                    isSelected:
+                        model.answers.storedAnswers[model.currentQuestion.id] !=
+                                null
+                            ? model
+                                .answers
+                                .storedAnswers[model.currentQuestion.id]
+                                .selectedOptions
+                                .contains(entry.key)
+                            : false),
+              if (model.isOtherVisible)
+                ICOtherInput(
+                    key: Key(model.currentQuestion.id),
+                    previousValue: model.answers
+                        .storedAnswers[model.currentQuestion.id].otherValue,
+                    updateOtherValue: model.updateOtherValue),
+            ],
+          ),
+        ),
       );
     });
   }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:iCovid/core/constants.dart';
-import 'package:iCovid/ui/screens/post_assessment_screen/widget_types_views/post_assessment_viewmodel.dart';
+import 'package:iCovid/ui/screens/post_assessment_screen/post_assessment_viewmodel.dart';
 
 class ICPossAssessmentTextField extends StatefulWidget {
   final Size size;

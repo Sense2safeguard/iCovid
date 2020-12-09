@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:iCovid/core/models/data_structure_models.dart';
+import 'package:iCovid/core/services/shared_preferences_service.dart';
 
 class PostAssessmentViewmodel extends ChangeNotifier {
   PostAssessmentViewmodel() {
@@ -23,11 +24,29 @@ class PostAssessmentViewmodel extends ChangeNotifier {
 
   TextEditingController textController = TextEditingController();
 
-  PostAssessment _postAssessment;
-  String _postAssessmentResult;
+  bool arrivedPostAssessment = UserPreferences().userUid != null &&
+      UserPreferences().selectedOption != null;
+
+  // for future requests
+  // PostAssessment _postAssessment;
+  // String _postAssessmentResult;
 
   void initialize() {
     checkisDisabled();
+
+    if (arrivedPostAssessment) {
+      _selectedOption = UserPreferences().selectedOption;
+
+      if (_selectedOption == "1" || _selectedOption == "2") {
+        _isSentTestScreen = false;
+        _areObservationsSent = false;
+        _isDisabled = true;
+      } else {
+        _isSentTestScreen = true;
+        _areObservationsSent = false;
+        _isDisabled = true;
+      }
+    }
   }
 
   void checkisDisabled() {

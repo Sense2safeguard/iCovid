@@ -111,22 +111,22 @@ class DBServiceMocked implements DBService {
       },
       "8": {
         "id": "8",
-        "text": "What is your weight?",
+        "text": "What is your weight in pounds?",
         "hasOther": "false",
         "category": "Demographics",
         "widgetType": "DialSelection",
         "options": {
-          "1": {"id": "1", "text": "pounds", "next": "9"},
+          "1": {"id": "1", "text": "Pounds", "next": "9"},
         }
       },
       "9": {
         "id": "9",
-        "text": "What is your height?",
+        "text": "What is your height in feet?",
         "hasOther": "false",
         "category": "Demographics",
         "widgetType": "DialSelection",
         "options": {
-          "1": {"id": "1", "text": "centimeters", "next": "10"},
+          "1": {"id": "1", "text": "Feet", "next": "10"},
         }
       },
       "10": {
@@ -212,166 +212,165 @@ class DBServiceMocked implements DBService {
         "category": "International",
         "widgetType": "SingleCheckableSelection",
         "options": {
-          // TODO: correct this and all the next to 16 ...
-          "1": {"id": "1", "text": "Yes", "next": "17"},
-          "2": {"id": "2", "text": "No", "next": "19"},
+          "1": {"id": "1", "text": "Yes", "next": "16"},
+          "2": {"id": "2", "text": "No", "next": "18"},
         }
       },
-      "17": {
-        "id": "17",
+      "16": {
+        "id": "16",
         "text": "Destination?",
         "hasOther": "false",
         "category": "International",
         "widgetType": "SingleScrollableSelection",
         "options": {}
       },
-      "18": {
-        "id": "18",
+      "17": {
+        "id": "17",
         "text": "Type of travel?",
         "hasOther": "true",
         "category": "International",
         "widgetType": "SingleCheckableSelection",
         "options": {
-          "1": {"id": "1", "text": "Ski resort", "next": "19"},
-          "2": {"id": "2", "text": "Beach", "next": "19"},
-          "3": {"id": "3", "text": "Other", "next": "19"},
+          "1": {"id": "1", "text": "Ski resort", "next": "18"},
+          "2": {"id": "2", "text": "Beach", "next": "18"},
+          "3": {"id": "3", "text": "Other", "next": "18"},
         }
       },
-      "19": {
-        "id": "19",
+      "18": {
+        "id": "18",
         "text": "Do you wear a mask?",
         "hasOther": "false",
         "category": "Social Distancing",
         "widgetType": "SingleCheckableSelection",
         "options": {
-          "1": {"id": "1", "text": "Yes", "next": "20"},
-          "2": {"id": "2", "text": "No", "next": "20"},
+          "1": {"id": "1", "text": "Yes", "next": "19"},
+          "2": {"id": "2", "text": "No", "next": "19"},
         }
       },
-      "20": {
-        "id": "20",
+      "19": {
+        "id": "19",
         "text": "Do you work from home?",
         "hasOther": "true",
         "category": "Social Distancing",
         "widgetType": "SingleCheckableSelection",
         "options": {
-          "1": {"id": "1", "text": "Never", "next": "22"},
-          "2": {"id": "2", "text": "Sometimes", "next": "21"},
-          "3": {"id": "2", "text": "Most of the time", "next": "21"},
+          "1": {"id": "1", "text": "Never", "next": "21"},
+          "2": {"id": "2", "text": "Sometimes", "next": "20"},
+          "3": {"id": "2", "text": "Most of the time", "next": "20"},
         }
       },
-      "21": {
-        "id": "21",
+      "20": {
+        "id": "20",
         "text": "How many times last week?",
         "hasOther": "false",
         "category": "Social Distancing",
         "widgetType": "DialSelection",
         "options": {
-          "1": {"id": "1", "text": "Times", "next": "22"},
+          "1": {"id": "1", "text": "Times", "next": "21"},
         }
       },
-      "22": {
-        "id": "22",
+      "21": {
+        "id": "21",
         "text": "Do you eat out in restaurants?",
         "hasOther": "true",
         "category": "Social Distancing",
         "widgetType": "SingleCheckableSelection",
         "options": {
-          "1": {"id": "1", "text": "Never", "next": "30"},
-          "2": {"id": "2", "text": "Sometimes", "next": "23"},
-          "3": {"id": "2", "text": "Most of the time", "next": "23"},
+          "1": {"id": "1", "text": "Never", "next": "29"},
+          "2": {"id": "2", "text": "Sometimes", "next": "22"},
+          "3": {"id": "2", "text": "Most of the time", "next": "22"},
         }
       },
-      "23": {
-        "id": "23",
+      "22": {
+        "id": "22",
         "text": "How many times last week?",
         "hasOther": "false",
         "category": "Social Distancing",
         "widgetType": "DialSelection",
         "options": {
-          "1": {"id": "1", "text": "Times", "next": "24"},
+          "1": {"id": "1", "text": "Times", "next": "23"},
         }
       },
-      "24": {
-        "id": "24",
+      "23": {
+        "id": "23",
         "text": "Do you eat inside?",
         "hasOther": "true",
         "category": "Social Distancing",
         "widgetType": "SingleCheckableSelection",
         "options": {
-          "1": {"id": "1", "text": "Never", "next": "26"},
-          "2": {"id": "2", "text": "Sometimes", "next": "25"},
-          "3": {"id": "2", "text": "Most of the time", "next": "25"},
+          "1": {"id": "1", "text": "Never", "next": "25"},
+          "2": {"id": "2", "text": "Sometimes", "next": "24"},
+          "3": {"id": "2", "text": "Most of the time", "next": "24"},
         }
       },
-      "25": {
-        "id": "25",
+      "24": {
+        "id": "24",
         "text": "How many times last week?",
         "hasOther": "false",
         "category": "Social Distancing",
         "widgetType": "DialSelection",
         "options": {
-          "1": {"id": "1", "text": "Times", "next": "24"},
+          "1": {"id": "1", "text": "Times", "next": "25"},
         }
       },
-      "26": {
-        "id": "26",
+      "25": {
+        "id": "25",
         "text": "Do you eat outside?",
         "hasOther": "true",
         "category": "Social Distancing",
         "widgetType": "SingleCheckableSelection",
         "options": {
-          "1": {"id": "1", "text": "Never", "next": "28"},
-          "2": {"id": "2", "text": "Sometimes", "next": "27"},
-          "3": {"id": "2", "text": "Most of the time", "next": "27"},
+          "1": {"id": "1", "text": "Never", "next": "27"},
+          "2": {"id": "2", "text": "Sometimes", "next": "26"},
+          "3": {"id": "2", "text": "Most of the time", "next": "26"},
         }
       },
-      "27": {
-        "id": "27",
+      "26": {
+        "id": "26",
         "text": "How many times last week?",
         "hasOther": "false",
         "category": "Social Distancing",
         "widgetType": "DialSelection",
         "options": {
-          "1": {"id": "1", "text": "Times", "next": "28"},
+          "1": {"id": "1", "text": "Times", "next": "27"},
         }
       },
-      "28": {
-        "id": "28",
+      "27": {
+        "id": "27",
         "text": "Do you take out?",
         "hasOther": "true",
         "category": "Social Distancing",
         "widgetType": "SingleCheckableSelection",
         "options": {
-          "1": {"id": "1", "text": "Never", "next": "30"},
-          "2": {"id": "2", "text": "Sometimes", "next": "29"},
-          "3": {"id": "2", "text": "Most of the time", "next": "29"},
+          "1": {"id": "1", "text": "Never", "next": "29"},
+          "2": {"id": "2", "text": "Sometimes", "next": "28"},
+          "3": {"id": "2", "text": "Most of the time", "next": "28"},
         }
       },
-      "29": {
-        "id": "29",
+      "28": {
+        "id": "28",
         "text": "How many times last week?",
         "hasOther": "false",
         "category": "Social Distancing",
         "widgetType": "DialSelection",
         "options": {
-          "1": {"id": "1", "text": "Times", "next": "30"},
+          "1": {"id": "1", "text": "Times", "next": "29"},
         }
       },
-      "30": {
-        "id": "28",
+      "29": {
+        "id": "29",
         "text": "Do you go to church?",
         "hasOther": "true",
         "category": "Social Distancing",
         "widgetType": "SingleCheckableSelection",
         "options": {
-          "1": {"id": "1", "text": "Never", "next": "32"},
-          "2": {"id": "2", "text": "Sometimes", "next": "31"},
-          "3": {"id": "2", "text": "Most of the time", "next": "31"},
+          "1": {"id": "1", "text": "Never", "next": "31"},
+          "2": {"id": "2", "text": "Sometimes", "next": "30"},
+          "3": {"id": "2", "text": "Most of the time", "next": "30"},
         }
       },
-      "31": {
-        "id": "29",
+      "30": {
+        "id": "30",
         "text": "How many times last week?",
         "hasOther": "false",
         "category": "Social Distancing",
@@ -380,107 +379,111 @@ class DBServiceMocked implements DBService {
           "1": {"id": "1", "text": "Times", "next": "32"},
         }
       },
-      "32": {
-        "id": "32",
+      "31": {
+        "id": "31",
         "text": "What is your religion?",
         "hasOther": "true",
         "category": "Social Distancing",
         "widgetType": "MultiplePillSelection",
         "options": {
-          "1": {"id": "1", "text": "Buddhism", "next": "33"},
-          "2": {"id": "2", "text": "Christianity", "next": "33"},
-          "3": {"id": "3", "text": "Daoism", "next": "33"},
-          "4": {"id": "4", "text": "Hinduism", "next": "33"},
-          "5": {"id": "5", "text": "Islam", "next": "33"},
-          "6": {"id": "6", "text": "Judaism", "next": "33"},
-          "7": {"id": "7", "text": "None", "next": "33"},
-          "8": {"id": "8", "text": "Other", "next": "33"},
+          "1": {"id": "1", "text": "Buddhism", "next": "32"},
+          "2": {"id": "2", "text": "Christianity", "next": "32"},
+          "3": {"id": "3", "text": "Daoism", "next": "32"},
+          "4": {"id": "4", "text": "Hinduism", "next": "32"},
+          "5": {"id": "5", "text": "Islam", "next": "32"},
+          "6": {"id": "6", "text": "Judaism", "next": "32"},
+          "7": {"id": "7", "text": "None", "next": "32"},
+          "8": {"id": "8", "text": "Other", "next": "32"},
         },
       },
-      "33": {
-        "id": "33",
+      "32": {
+        "id": "32",
         "text": "Do you go to parties?",
         "hasOther": "true",
         "category": "Social Distancing",
         "widgetType": "SingleCheckableSelection",
         "options": {
-          "1": {"id": "1", "text": "Never", "next": "35"},
-          "2": {"id": "2", "text": "Sometimes", "next": "34"},
-          "3": {"id": "2", "text": "Most of the time", "next": "34"},
+          "1": {"id": "1", "text": "Never", "next": "34"},
+          "2": {"id": "2", "text": "Sometimes", "next": "33"},
+          "3": {"id": "2", "text": "Most of the time", "next": "33"},
         }
       },
-      "34": {
-        "id": "34",
+      "33": {
+        "id": "33",
         "text": "How many times last week?",
         "hasOther": "false",
         "category": "Social Distancing",
         "widgetType": "DialSelection",
         "options": {
-          "1": {"id": "1", "text": "Times", "next": "35"},
+          "1": {"id": "1", "text": "Times", "next": "34"},
         }
       },
-      "35": {
-        "id": "35",
+      "34": {
+        "id": "34",
         "text": "Do you go to gym?",
         "hasOther": "true",
         "category": "Social Distancing",
         "widgetType": "SingleCheckableSelection",
         "options": {
-          "1": {"id": "1", "text": "Never", "next": "37"},
-          "2": {"id": "2", "text": "Sometimes", "next": "36"},
-          "3": {"id": "2", "text": "Most of the time", "next": "36"},
+          "1": {"id": "1", "text": "Never", "next": "36"},
+          "2": {"id": "2", "text": "Sometimes", "next": "35"},
+          "3": {"id": "2", "text": "Most of the time", "next": "35"},
         }
       },
-      "36": {
-        "id": "36",
+      "35": {
+        "id": "35",
         "text": "How many times last week?",
         "hasOther": "false",
         "category": "Social Distancing",
         "widgetType": "DialSelection",
         "options": {
-          "1": {"id": "1", "text": "Times", "next": "37"},
+          "1": {"id": "1", "text": "Times", "next": "36"},
         }
       },
-      "37": {
-        "id": "37",
+      "36": {
+        "id": "36",
         "text": "Do you use public transportation?",
         "hasOther": "true",
         "category": "Social Distancing",
         "widgetType": "SingleCheckableSelection",
         "options": {
-          "1": {"id": "1", "text": "Never", "next": "39"},
-          "2": {"id": "2", "text": "Sometimes", "next": "38"},
-          "3": {"id": "2", "text": "Most of the time", "next": "38"},
+          "1": {"id": "1", "text": "Never", "next": "38"},
+          "2": {"id": "2", "text": "Sometimes", "next": "37"},
+          "3": {"id": "2", "text": "Most of the time", "next": "37"},
         }
       },
-      "38": {
-        "id": "38",
+      "37": {
+        "id": "37",
         "text": "How many times last week?",
         "hasOther": "false",
         "category": "Social Distancing",
         "widgetType": "DialSelection",
         "options": {
-          "1": {"id": "1", "text": "Times", "next": "39"},
+          "1": {"id": "1", "text": "Times", "next": "38"},
         }
       },
-      "39": {
-        "id": "39",
+      "38": {
+        "id": "38",
         "text": "Have you tested positive for COVID-19 in at least one test?",
         "hasOther": "false",
         "category": "Social Distancing",
         "widgetType": "SingleCheckableSelection",
         "options": {
-          "1": {"id": "1", "text": "Yes", "next": "40"},
-          "2": {"id": "2", "text": "No", "next": "40"},
+          "1": {"id": "1", "text": "Yes", "next": "39"},
+          "2": {"id": "2", "text": "No", "next": "39"},
         }
       },
-      "40": {
-        "id": "40",
+      "39": {
+        "id": "39",
         "text": "Your iCOVID scores are?",
         "hasOther": "false",
         "category": "Congratulations!",
         "widgetType": "ScoreResults",
-        "options": {}
+        "options": {
+          // instead of {}, it's a hack to prevent a bug in back button
+          // after resuming and arriving to screen score
+          "1": {"id": "1", "text": "null", "next": "40"},
+        }
       },
     }
   };
@@ -489,7 +492,7 @@ class DBServiceMocked implements DBService {
   QuestionsModel getDB() {
     jsonResponse["questions"]["5"]["options"] = countriesToString("6");
     jsonResponse["questions"]["6"]["options"] = countriesToString("7");
-    jsonResponse["questions"]["17"]["options"] = countriesToString("17");
+    jsonResponse["questions"]["16"]["options"] = countriesToString("17");
     return QuestionsModel.fromJson(jsonResponse);
   }
 }

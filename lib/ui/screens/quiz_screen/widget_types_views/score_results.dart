@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iCovid/core/helpers/responsive_sized_widgets.dart';
+import 'package:iCovid/core/services/shared_preferences_service.dart';
 
 import 'package:provider/provider.dart';
 
@@ -10,6 +11,7 @@ class ScoreResults extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     QuizViewmodel model = Provider.of<QuizViewmodel>(context);
+    UserPreferences().setResultsReceived(true);
     Size size = MediaQuery.of(context).size;
 
     return Column(

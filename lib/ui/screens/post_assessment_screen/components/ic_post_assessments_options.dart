@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:iCovid/core/services/shared_preferences_service.dart';
 import 'package:iCovid/ui/shared/ic_buttons.dart';
 import 'package:iCovid/ui/shared/ic_multiline_input.dart';
 
 import 'package:provider/provider.dart';
 
 import 'package:iCovid/ui/shared/ic_radio_selection_post_assessment%20.dart';
-import 'package:iCovid/ui/screens/post_assessment_screen/widget_types_views/post_assessment_viewmodel.dart';
+import 'package:iCovid/ui/screens/post_assessment_screen/post_assessment_viewmodel.dart';
 import 'package:iCovid/core/helpers/responsive_sized_widgets.dart';
 import 'package:iCovid/core/constants.dart';
 
@@ -27,6 +28,7 @@ class ICPostAsessmentsOptions extends StatelessWidget {
             mediumSizedBoxVertical(
               currentDeviceSize: size,
             ),
+            // test screen
             if (model.isSentTestScreen)
               for (var option in model.options)
                 ICRadioSelectionPostAssessment(
@@ -36,6 +38,7 @@ class ICPostAsessmentsOptions extends StatelessWidget {
                   isPreviouslySelected: false,
                   width: size.width * 0.6,
                 ),
+            // obervations screen
             if (!model.isSentTestScreen) ICPossAssessmentTextField(size: size),
             if (model.isSentTestScreen)
               mediumSizedBoxVertical(
@@ -48,9 +51,11 @@ class ICPostAsessmentsOptions extends StatelessWidget {
                 width: double.infinity,
                 onPressed: () {
                   if (model.isSentTestScreen) {
+                    UserPreferences().setSelectedOptions(model.selectedOption);
                     model.toggleIsDisabled();
                     model.sendTestResults();
                   } else {
+                    UserPreferences().setSelectedOptions(model.selectedOption);
                     model.toggleIsDisabled();
                     model.areObservationsSentToTrue();
                   }

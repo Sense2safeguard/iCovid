@@ -6,7 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'package:iCovid/core/services/shared_preferences_service.dart';
 import 'package:iCovid/ui/screens/post_assessment_screen/post_assessment_screen.dart';
-import 'package:iCovid/ui/screens/post_assessment_screen/widget_types_views/post_assessment_viewmodel.dart';
+import 'package:iCovid/ui/screens/post_assessment_screen/post_assessment_viewmodel.dart';
 import 'package:iCovid/ui/screens/privacy_policy_screen/privacy_policy_screen.dart';
 import 'package:iCovid/ui/screens/home_screen/home_screen.dart';
 import 'package:iCovid/ui/screens/quiz_screen/quiz_screen.dart';
@@ -22,10 +22,15 @@ void main() async {
 class ICovidApp extends StatelessWidget {
   final String userUid = UserPreferences().userUid;
   final bool haveAnswers = UserPreferences().questionOrder != null;
+  final bool arrivedPostAssessment = UserPreferences().resultsReceived ?? false;
+  final bool advancedPostAssessment = UserPreferences().selectedOption != null;
 
   String getInitialRoute() {
-    if (userUid != null && UserPreferences().questionOrder != null)
-      return '/quiz_screen';
+    if (userUid != null && advancedPostAssessment)
+      return '/post-assessment-screen';
+    if (userUid != null && arrivedPostAssessment)
+      return '/post-assessment-screen';
+    if (userUid != null && haveAnswers) return '/quiz_screen';
     if (userUid != null) return '/';
     return '/privacy-policy';
   }

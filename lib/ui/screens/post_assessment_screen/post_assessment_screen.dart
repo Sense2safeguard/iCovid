@@ -51,7 +51,7 @@ Row buildButtons(BuildContext context, Size size, QuizViewmodel quizViewmodel) {
         accentColor: kBlue,
         width: size.width * 0.35,
         onPressed: () {
-          Navigator.pop(context);
+          Navigator.pushNamed(context, "/quiz_screen");
         },
         text: "View Score",
       )),

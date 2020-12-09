@@ -21,11 +21,9 @@ class MultipleScrollablePillSelection extends StatelessWidget {
               for (var entry in optionsMap.entries)
                 ICPillMultipleSelection(
                     isNoneSelected: model.isNoneSelected,
-                    isSelected: model.amISelected(
-                        optionsMap[entry.key].text, entry.key),
                     text: optionsMap[entry.key].text,
                     index: entry.key,
-                    isPreviouslySelected:
+                    isSelected:
                         model.answers.storedAnswers[model.currentQuestion.id] !=
                                 null
                             ? model

@@ -8,18 +8,16 @@ import 'package:provider/provider.dart';
 class ICPillMultipleSelection extends StatefulWidget {
   final String text;
   final String index;
-  final bool isPreviouslySelected;
-  final bool isNoneSelected;
   final bool isSelected;
+  final bool isNoneSelected;
 
-  const ICPillMultipleSelection(
-      {Key key,
-      this.text,
-      this.index,
-      this.isPreviouslySelected,
-      this.isNoneSelected,
-      this.isSelected})
-      : super(key: key);
+  const ICPillMultipleSelection({
+    Key key,
+    this.text,
+    this.index,
+    this.isSelected,
+    this.isNoneSelected,
+  }) : super(key: key);
 
   @override
   _ICPillMultipleSelectionState createState() =>
@@ -53,7 +51,6 @@ class _ICPillMultipleSelectionState extends State<ICPillMultipleSelection> {
               onTap: () {
                 model.toggleNoneSelected(widget.text);
                 model.storeAnswers(widget.index, widget.text);
-                model.amISelected(widget.text, widget.index);
                 model.otherVisible(widget.text);
                 model.selectNext(widget.index);
                 model.calculateNextDisabled();

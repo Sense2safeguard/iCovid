@@ -14,7 +14,6 @@ import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/single_checkabl
 import 'package:iCovid/ui/screens/quiz_screen/widget_types_views/multiple_pill_selection.dart';
 import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
 
-import 'package:iCovid/ui/shared/ic_other_input.dart';
 import 'package:iCovid/ui/shared/ic_buttons.dart';
 
 import 'package:iCovid/core/models/data_structure_models.dart';
@@ -57,14 +56,6 @@ class ICQuestion extends StatelessWidget {
                       Align(
                           alignment: Alignment.center,
                           child: buildOptionsArea(_widgetType)),
-                      if (model.isOtherVisible)
-                        ICOtherInput(
-                            key: Key(model.currentQuestion.id),
-                            previousValue: model
-                                .answers
-                                .storedAnswers[model.currentQuestion.id]
-                                .otherValue,
-                            updateOtherValue: model.updateOtherValue),
                       Spacer(),
                       buildButtons(model, _widgetType, context),
                       smallSizedBoxVertical(currentDeviceSize: size),
@@ -125,17 +116,18 @@ class ICQuestion extends StatelessWidget {
             },
             text: "Back",
           )),
-        // TODO: better code
         if (model.isNextDisabled)
           Expanded(child: ICMainButton(isDisabled: true, text: "Next")),
         if (!model.isNextDisabled)
           Expanded(
               child: ICMainButton(
                   onPressed: () {
-                    widgetType == "ScoreResults"
-                        ? Navigator.pushNamed(
-                            context, "/post-assessment-screen")
-                        : model.navigateNext();
+                    if (widgetType == "ScoreResults") {
+                      model.stablishScore();
+                      Navigator.pushNamed(context, "/post-assessment-screen");
+                    } else {
+                      model.navigateNext();
+                    }
                   },
                   text: widgetType == "ScoreResults" ? "Finish" : "Next")),
       ],

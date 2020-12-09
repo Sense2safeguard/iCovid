@@ -24,8 +24,9 @@ class ICDialSelection extends StatefulWidget {
 class _ICDialSelectionState extends State<ICDialSelection> {
   Timer timer;
   int _counter = 0;
+  double _doubleCounter = 0;
   TextEditingController _controller = TextEditingController();
-  int _controllerCounter;
+  var _controllerCounter;
 
   @override
   void initState() {
@@ -35,8 +36,6 @@ class _ICDialSelectionState extends State<ICDialSelection> {
         0) {
       _controller.text = widget.model.answers
           .storedAnswers[widget.model.currentQuestion.id].selectedOptions[0];
-    } else {
-      _controller.text = widget.text;
     }
   }
 
@@ -46,35 +45,63 @@ class _ICDialSelectionState extends State<ICDialSelection> {
     super.dispose();
   }
 
-  int computeControllerText() {
+  dynamic computeControllerText() {
+    dynamic doubleOrInt = widget.text == "Feet" ? 0.0 : 0;
     return _controller.text == "" || _controller.text == "${widget.text}"
-        ? 0
-        : int.parse(_controller.text);
+        ? doubleOrInt
+        : widget.text == "Feet"
+            ? double.parse(_controller.text)
+            : int.parse(_controller.text);
   }
 
   void increment() {
     _controllerCounter = computeControllerText();
-    setState(() {
-      _counter = _controllerCounter;
-      _counter++;
-      _controller.text = _counter.toString();
-    });
-    widget.model.storeAnswers(_counter.toString());
+    if (widget.text == "Feet") {
+      setState(() {
+        _doubleCounter = _controllerCounter;
+        _doubleCounter = _doubleCounter + 0.1;
+        _controller.text = _doubleCounter.toStringAsFixed(1);
+      });
+    } else {
+      setState(() {
+        _counter = _controllerCounter;
+        _counter++;
+        _controller.text = _counter.toString();
+      });
+    }
+
+    storeAndCalculateNextDisabled();
+  }
+
+  void storeAndCalculateNextDisabled() {
+    widget.model.storeAnswers(widget.text == "Feet"
+        ? _doubleCounter.toString()
+        : _counter.toString());
     widget.model.calculateNextDisabled();
   }
 
   void decrement() {
     _controllerCounter = computeControllerText();
 
-    if (_controllerCounter > 0)
+    if (_controllerCounter > 0) if (widget.text == "Feet") {
+      setState(() {
+        _doubleCounter = _controllerCounter;
+        _doubleCounter = _doubleCounter - 0.1;
+        if (_doubleCounter < 1) _doubleCounter = 0;
+        _controller.text = _doubleCounter == 0
+            ? widget.text
+            : _doubleCounter.toStringAsFixed(1);
+      });
+    } else {
       setState(() {
         _counter = _controllerCounter;
         _counter--;
         if (_counter < 1) _counter = 0;
         _controller.text = _counter == 0 ? widget.text : _counter.toString();
       });
-    widget.model.storeAnswers(_counter.toString());
-    widget.model.calculateNextDisabled();
+    }
+
+    storeAndCalculateNextDisabled();
   }
 
   @override
@@ -102,6 +129,7 @@ class _ICDialSelectionState extends State<ICDialSelection> {
             Container(
               width: 110,
               child: TextField(
+                  autofocus: true,
                   textAlign: TextAlign.center,
                   keyboardType: TextInputType.number,
                   controller: _controller,

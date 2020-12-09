@@ -242,12 +242,6 @@ List<String> listOfCountries = [
   "Zimbabwe"
 ];
 
-// model
-//  "options": {
-//         "1": {"id": "1", "text": "Åland Islands", "next": "7"},
-//         "2": {"id": "2", "text": "Albania", "next": "7"},
-//       }
-
 Map<String, dynamic> mapOfCountries;
 
 Map<dynamic, dynamic> countriesToString(String nextValue) {

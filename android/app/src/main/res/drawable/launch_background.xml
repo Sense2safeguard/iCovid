@@ -7,6 +7,6 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/icovid_splash" />
+            android:src="@drawable/screen" />
     </item>
 </layer-list>

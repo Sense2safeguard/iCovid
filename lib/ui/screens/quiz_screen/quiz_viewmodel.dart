@@ -50,6 +50,7 @@ class QuizViewmodel extends ChangeNotifier {
   Answer _answer;
   bool _isNextDisabled = true;
   bool _isNoneSelected = false;
+  List<String> _navigatedQuestions = [];
 
   // Results
   Results _results;
@@ -65,13 +66,17 @@ class QuizViewmodel extends ChangeNotifier {
       _questionOrder = UserPreferences().questionOrder;
       _otherValue = UserPreferences().otherValue;
       _answers = AnswersModel.fromJson(jsonDecode(UserPreferences().answers));
+      _navigatedQuestions = UserPreferences().navigatedQuestions;
+      _navigatedQuestions.removeLast();
     }
+
     calculateOrder();
     initializeAnswers();
     computeOther();
 
     // to resume the app
     if (UserPreferences().questionOrder != null) calculateNextDisabled();
+    if (_currentQuestion.widgetType == "ScoreResults") getResultsMocked();
 
     notifyListeners();
   }
@@ -138,6 +143,7 @@ class QuizViewmodel extends ChangeNotifier {
 
   void navigateNext() async {
     saveOtherValue();
+    _navigatedQuestions.add(_currentQuestion.id);
 
     if (_currentQuestion.id == (_questions.questionsMap.length - 1).toString())
       await sendQuiz(UserPreferences().userUid);
@@ -149,14 +155,22 @@ class QuizViewmodel extends ChangeNotifier {
     computeOther();
     calculateNextDisabled();
 
-    if (_currentQuestion.widgetType == "ScoreResults") await getResultsMocked();
+    if (_currentQuestion.widgetType == "ScoreResults") getResultsMocked();
 
     notifyListeners();
   }
 
+  void stablishScore() async {
+    // _navigatedQuestions.add(_currentQuestion.id);
+    cachePrefs();
+    selectNext();
+  }
+
   void navigateBack() {
     saveOtherValue();
-    calculateOrder(calculateLastStoredAnswer());
+
+    calculateOrder(_navigatedQuestions[_navigatedQuestions.length - 1]);
+    _navigatedQuestions.removeLast();
     selectNext();
     computeOther();
     calculateNextDisabled();
@@ -220,10 +234,12 @@ class QuizViewmodel extends ChangeNotifier {
     initializeAnswers();
 
     if (!_selectedOptions.contains(optionId)) {
+      // delete restant fields
       if (text == "None") _selectedOptions.clear();
+      // delete "None" if was previously selected
       if (text != "None" && _selectedOptions.contains(getOptionId("None")))
         _selectedOptions.clear();
-
+      // updates value if is same field
       if (_selectedOptions.length == 1 && _selectedOptions.contains(optionId)) {
         _selectedOptions.clear();
       }
@@ -249,7 +265,9 @@ class QuizViewmodel extends ChangeNotifier {
     _answers.storedAnswers[_currentQuestion.id] = Answer(
         questionId: _currentQuestion.id, selectedOptions: _selectedOptions);
 
-    if ((text == "Other" || text == "No") && _answer.otherValue != null) {
+    // TODO: HARDCODED
+    if ((text == "Ski resort" || text == "Beach" || text == "No") &&
+        _answer.otherValue != null) {
       _answer.otherValue = null;
       _otherValue = null;
     }
@@ -261,12 +279,11 @@ class QuizViewmodel extends ChangeNotifier {
     UserPreferences().setAnswers(jsonEncode(_answers));
     UserPreferences().setQuestionOrder(_currentQuestion.id);
     UserPreferences().setOtherValue(_otherValue);
+    UserPreferences().setNavigatedQuestions(_navigatedQuestions);
   }
 
   void cleanCache() {
-    UserPreferences().setAnswers("");
-    UserPreferences().setQuestionOrder("");
-    UserPreferences().setOtherValue("");
+    UserPreferences().cleanCache();
   }
 
   void updateTestOption(String index) {
