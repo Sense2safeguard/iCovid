@@ -6,22 +6,10 @@ REMAINING TASKS
 
 NICE TO HAVE
 --
-Switch pounds meters
-Scrollable side bar
-
-Transferir
+[ ] Switch pounds/kilograms meters/feet
+[ ] Scrollable side bar
+[ ] Flexible input of data
 
 Blocked
-- corregir el texto de Privacy Policy
-
-VIDEO with questions to grosos
---
-Presentational video > linkedin
-a. app working, fast forward questions and show three parts
-b. app architecture: structure and code tour
-
-Better widgets > Nash
-a. most doubted widgets designs
-
-Better architecture > other gut from getIt
+[ ] Privacy Policy
 
