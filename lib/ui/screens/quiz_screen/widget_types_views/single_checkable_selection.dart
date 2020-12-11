@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:iCovid/core/helpers/responsiver.dart';
 
 import 'package:provider/provider.dart';
 
+import 'package:iCovid/core/helpers/responsiver.dart';
 import 'package:iCovid/ui/shared/ic_other_input.dart';
 import 'package:iCovid/core/models/data_structure_models.dart';
 import 'package:iCovid/ui/shared/ic_checkable_selection.dart';

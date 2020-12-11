@@ -44,9 +44,6 @@ class ICQuestion extends StatelessWidget {
                         textAlign: TextAlign.left,
                       ),
                       Spacer(),
-                      // TODO: Not semantic as I wish but if not,
-                      // the Align should go in each case of the switch
-                      // I could use Extensions to types
                       Align(
                           alignment: Alignment.center,
                           child: buildOptionsArea(_widgetType)),
@@ -94,7 +91,7 @@ class ICQuestion extends StatelessWidget {
       default:
         return Container(
             child: Center(
-          child: Text("Ops! Something happened!"),
+          child: Text("Oops! Something happened!", style: kheadline4),
         ));
     }
   }

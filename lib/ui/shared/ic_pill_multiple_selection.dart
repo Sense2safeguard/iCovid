@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+
 import 'package:iCovid/core/constants.dart';
 import 'package:iCovid/core/helpers/responsiver.dart';
 import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
-import 'package:provider/provider.dart';
 
 class ICPillMultipleSelection extends StatefulWidget {
   final String text;

@@ -22,17 +22,10 @@ class ICOption extends StatelessWidget {
       width: width ?? double.infinity,
       height: 48,
       child: MaterialButton(
-        // disabledColor: kNeoAccent.withOpacity(0.15),
         onPressed: () => onPressed(),
         color: isSelected ? kNeoAccent : Colors.white,
         highlightColor: kAccent,
         elevation: 0,
-        // shape: RoundedRectangleBorder(
-        //   borderRadius: BorderRadius.circular(8),
-        //   side: BorderSide(
-        //     color: isSelected,
-        //   )
-        // ),
         child: Text(option,
             style:
                 isSelected ? kButtonsDisabledTextStyle : kMainButtonTextStyle),

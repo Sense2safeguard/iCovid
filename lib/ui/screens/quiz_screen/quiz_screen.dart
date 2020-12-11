@@ -55,7 +55,6 @@ class QuizScreen extends StatelessWidget {
     return Column(
       children: [
         Text(
-          // question.category,
           category,
           style: kheadline4.copyWith(color: Colors.white),
         ),

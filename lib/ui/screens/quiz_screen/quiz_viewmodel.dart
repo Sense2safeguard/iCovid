@@ -264,7 +264,6 @@ class QuizViewmodel extends ChangeNotifier {
     _answers.storedAnswers[_currentQuestion.id] = Answer(
         questionId: _currentQuestion.id, selectedOptions: _selectedOptions);
 
-    // TODO: HARDCODED > change when final external db
     if ((text == "Ski resort" || text == "Beach" || text == "No") &&
         _answer.otherValue != null) {
       _answer.otherValue = null;

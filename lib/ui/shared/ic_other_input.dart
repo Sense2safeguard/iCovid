@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+
 import 'package:iCovid/core/constants.dart';
 import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
-import 'package:provider/provider.dart';
 
 class ICOtherInput extends StatefulWidget {
   final Function updateOtherValue;
