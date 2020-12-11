@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:iCovid/core/helpers/responsive_sized_widgets.dart';
 
 import 'package:provider/provider.dart';
 
+import 'package:iCovid/core/helpers/responsiver.dart';
 import 'package:iCovid/core/constants.dart';
 import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
 
@@ -21,6 +21,7 @@ class ICCheckableSelection extends StatelessWidget {
   Widget build(BuildContext context) {
     QuizViewmodel model = Provider.of<QuizViewmodel>(context);
     Size size = MediaQuery.of(context).size;
+    Responsiver responsiver = Responsiver(context: context);
 
     bool _isSelected =
         isPreviouslySelected ? true : index == model.selectedOption;
@@ -69,8 +70,8 @@ class ICCheckableSelection extends StatelessWidget {
                                 color: Colors.white,
                                 size: size.width * 0.03,
                               )),
-                        smallestSizedBoxHorizontal(
-                          currentDeviceSize: size,
+                        SizedBox(
+                          width: responsiver.smallestHorizontal,
                         ),
                         Text(text,
                             style: _isSelected
@@ -80,8 +81,8 @@ class ICCheckableSelection extends StatelessWidget {
                     ),
                   ))),
         ),
-        smallestSizedBoxVertical(
-          currentDeviceSize: size,
+        SizedBox(
+          height: responsiver.smallestVertical,
         ),
       ],
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
+import 'package:device_preview/device_preview.dart';
 import 'core/services/auth_firebase_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -16,7 +17,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await UserPreferences().init();
   await Firebase.initializeApp();
-  runApp(ICovidApp());
+  runApp(DevicePreview(enabled: false, builder: (context) => ICovidApp()));
 }
 
 class ICovidApp extends StatelessWidget {
@@ -30,7 +31,7 @@ class ICovidApp extends StatelessWidget {
       return '/post-assessment-screen';
     if (userUid != null && arrivedPostAssessment)
       return '/post-assessment-screen';
-    if (userUid != null && haveAnswers) return '/quiz_screen';
+    if (userUid != null && haveAnswers) return '/quiz-screen';
     if (userUid != null) return '/';
     return '/privacy-policy';
   }
@@ -46,6 +47,7 @@ class ICovidApp extends StatelessWidget {
           Provider<AuthFirebaseService>(create: (_) => AuthFirebaseService()),
         ],
         child: MaterialApp(
+            locale: DevicePreview.locale(context),
             title: "iCovid App",
             debugShowCheckedModeBanner: false,
             initialRoute: getInitialRoute(),
@@ -54,7 +56,7 @@ class ICovidApp extends StatelessWidget {
             routes: {
               '/privacy-policy': (context) => PrivacyPolicyScreen(),
               '/': (context) => HomeScreen(),
-              '/quiz_screen': (context) => QuizScreen(),
+              '/quiz-screen': (context) => QuizScreen(),
               '/post-assessment-screen': (context) => PostAssessmentScreen()
             }));
   }

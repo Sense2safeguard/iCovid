@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:iCovid/core/helpers/responsive_sized_widgets.dart';
 
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'package:iCovid/core/helpers/responsiver.dart';
 import 'package:iCovid/core/constants.dart';
 import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
 import 'package:iCovid/ui/shared/ic_buttons.dart';
@@ -25,16 +25,16 @@ The application uses machine learning techniques to provide useful predictions f
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     QuizViewmodel model = Provider.of<QuizViewmodel>(context);
+    Responsiver responsiver = Responsiver(context: context);
 
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Builder(
           builder: (BuildContext context) {
-            return generalPadding(
-              currentDeviceSize: size,
+            return Padding(
+              padding: responsiver.generalPadding,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -44,18 +44,18 @@ The application uses machine learning techniques to provide useful predictions f
                           fontSize: 29,
                           color: kBlue)),
                   Container(
-                    height: size.height * 0.75,
+                    height: responsiver.privacyContainerHeight,
                     child: SingleChildScrollView(
                         child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        bigSizedBoxVertical(
-                          currentDeviceSize: size,
+                        SizedBox(
+                          height: responsiver.mediumVertical,
                         ),
                         Text("Privacy Policy",
                             style: kheadline3.copyWith(color: kBlue)),
-                        smallSizedBoxVertical(
-                          currentDeviceSize: size,
+                        SizedBox(
+                          height: responsiver.smallVertical,
                         ),
                         Text(bodyText,
                             style: kBodyText2.copyWith(

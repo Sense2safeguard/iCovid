@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iCovid/core/constants.dart';
-import 'package:iCovid/core/helpers/responsive_sized_widgets.dart';
+import 'package:iCovid/core/helpers/responsiver.dart';
 
 class ICCard extends StatelessWidget {
   final String infectionScore;
@@ -11,7 +11,7 @@ class ICCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Responsiver responsiver = Responsiver(context: context);
 
     bool isInfection = infectionScore != null ? true : false;
     int score =
@@ -25,8 +25,8 @@ class ICCard extends StatelessWidget {
     }
 
     return Container(
-        width: size.width * 0.63,
-        height: size.height * 0.15,
+        width: responsiver.cardWidth,
+        height: responsiver.cardHeight,
         decoration: BoxDecoration(
             color: riskLevel() == "low risk"
                 ? kSuccess
@@ -35,7 +35,7 @@ class ICCard extends StatelessWidget {
                     : kError,
             borderRadius: BorderRadius.all(Radius.circular(8))),
         child: Padding(
-          padding: kResultsCardMainBodyPadding(size),
+          padding: responsiver.resultsMainBodyPadding,
           child: Column(
             children: [
               Row(children: [
@@ -47,14 +47,18 @@ class ICCard extends StatelessWidget {
                     style:
                         kheadline6.copyWith(fontSize: 12, color: Colors.white)),
               ]),
-              smallestSizedBoxVertical(currentDeviceSize: size),
+              SizedBox(
+                height: responsiver.smallestVertical,
+              ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(score.toString(),
                       style: kheadline6.copyWith(
                           fontSize: 50, color: Colors.white)),
-                  smallSizedBoxHorizontal(currentDeviceSize: size),
+                  SizedBox(
+                    width: responsiver.smallHorizontal,
+                  ),
                   Flexible(
                     child: Text(
                         "You are at ${riskLevel()} of COVID-19 ${isInfection ? "infection" : "complication"}. If you are feeling unwell, you still see a doctor",

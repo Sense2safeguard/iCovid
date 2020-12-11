@@ -7,16 +7,15 @@ import 'package:provider/provider.dart';
 
 import 'package:iCovid/ui/shared/ic_radio_selection_post_assessment%20.dart';
 import 'package:iCovid/ui/screens/post_assessment_screen/post_assessment_viewmodel.dart';
-import 'package:iCovid/core/helpers/responsive_sized_widgets.dart';
+import 'package:iCovid/core/helpers/responsiver.dart';
 import 'package:iCovid/core/constants.dart';
 
 class ICPostAsessmentsOptions extends StatelessWidget {
-  final Size size;
-
-  const ICPostAsessmentsOptions({Key key, this.size}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    Responsiver responsiver = Responsiver(context: context);
+
     return Consumer<PostAssessmentViewmodel>(
       builder: (context, model, _) {
         return Column(
@@ -24,9 +23,11 @@ class ICPostAsessmentsOptions extends StatelessWidget {
           children: [
             Text(model.isSentTestScreen ? model.titles[0] : model.titles[1],
                 textAlign: TextAlign.center,
-                style: kBodyText2.copyWith(color: kBlue)),
-            mediumSizedBoxVertical(
-              currentDeviceSize: size,
+                style: responsiver.isBig
+                    ? kBodyText2.copyWith(color: kBlue)
+                    : kBodyText2small.copyWith(color: kBlue)),
+            SizedBox(
+              height: responsiver.smallVertical,
             ),
             // test screen
             if (model.isSentTestScreen)
@@ -41,11 +42,9 @@ class ICPostAsessmentsOptions extends StatelessWidget {
             // obervations screen
             if (!model.isSentTestScreen) ICPossAssessmentTextField(size: size),
             if (model.isSentTestScreen)
-              mediumSizedBoxVertical(
-                currentDeviceSize: size,
+              SizedBox(
+                height: responsiver.smallVertical,
               ),
-
-            // TODO: fix same situation in quiz question
             ICMainButton(
                 isDisabled: model.isDisabled,
                 width: double.infinity,

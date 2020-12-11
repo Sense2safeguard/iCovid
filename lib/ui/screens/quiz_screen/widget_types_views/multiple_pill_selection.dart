@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:iCovid/ui/shared/ic_other_input.dart';
 
 import 'package:provider/provider.dart';
 
+import 'package:iCovid/core/helpers/responsiver.dart';
+import 'package:iCovid/ui/shared/ic_other_input.dart';
 import 'package:iCovid/ui/shared/ic_pill_multiple_selection.dart';
 import 'package:iCovid/core/models/data_structure_models.dart';
 import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
@@ -10,12 +11,12 @@ import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
 class MultiplePillSelection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Responsiver responsiver = Responsiver(context: context);
 
     return Consumer<QuizViewmodel>(builder: (_, model, __) {
       Map<String, Option> optionsMap = model.currentOptions.optionsMap;
       return Container(
-        height: size.height * 0.4,
+        height: responsiver.insideQuestionContainerHeight,
         child: SingleChildScrollView(
           child: Wrap(
             children: [

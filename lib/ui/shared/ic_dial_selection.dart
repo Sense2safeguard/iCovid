@@ -47,7 +47,9 @@ class _ICDialSelectionState extends State<ICDialSelection> {
 
   dynamic computeControllerText() {
     dynamic doubleOrInt = widget.text == "Feet" ? 0.0 : 0;
-    return _controller.text == "" || _controller.text == "${widget.text}"
+    return _controller.text == "" ||
+            !isNumeric(_controller.text) ||
+            _controller.text == "${widget.text}"
         ? doubleOrInt
         : widget.text == "Feet"
             ? double.parse(_controller.text)

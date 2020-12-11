@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:iCovid/core/constants.dart';
-import 'package:iCovid/core/helpers/responsive_sized_widgets.dart';
+import 'package:iCovid/core/helpers/responsiver.dart';
 import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -29,13 +29,15 @@ class _ICPillMultipleSelectionState extends State<ICPillMultipleSelection> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     QuizViewmodel model = Provider.of<QuizViewmodel>(context);
+    Responsiver responsiver = Responsiver(context: context);
 
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
           height: size.height * 0.042,
-          margin: EdgeInsets.symmetric(vertical: size.height * 0.005),
+          margin: EdgeInsets.symmetric(
+              vertical: size.height * 0.005, horizontal: size.width * 0.01),
           decoration: BoxDecoration(
             color: widget.isSelected ? kBlue : kPaleBlue.withOpacity(0.35),
             borderRadius: BorderRadius.circular(6),
@@ -57,33 +59,38 @@ class _ICPillMultipleSelectionState extends State<ICPillMultipleSelection> {
               },
               child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (widget.isSelected)
-                        Container(
-                            width: size.width * 0.05,
-                            height: size.width * 0.05,
-                            decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.2),
-                                shape: BoxShape.circle),
-                            child: Icon(
-                              Icons.check,
-                              color: Colors.white,
-                              size: size.width * 0.03,
-                            )),
-                      if (widget.isSelected)
-                        smallestSizedBoxHorizontal(
-                          currentDeviceSize: size,
-                        ),
-                      Text(widget.text,
-                          style: widget.isSelected
-                              ? kPillSelectedTextStyle
-                              : kPillUnselectedTextStyle)
-                    ],
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        if (widget.isSelected)
+                          Container(
+                              width: size.width * 0.05,
+                              height: size.width * 0.05,
+                              decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.2),
+                                  shape: BoxShape.circle),
+                              child: Icon(
+                                Icons.check,
+                                color: Colors.white,
+                                size: size.width * 0.03,
+                              )),
+                        if (widget.isSelected)
+                          SizedBox(
+                            width: responsiver.smallestHorizontal,
+                          ),
+                        Text(widget.text,
+                            style: widget.isSelected
+                                ? kPillSelectedTextStyle
+                                : kPillUnselectedTextStyle)
+                      ],
+                    ),
                   ))),
         ),
-        smallestSizedBoxHorizontal(currentDeviceSize: size),
+        SizedBox(
+          height: responsiver.smallestVertical,
+        ),
       ],
     );
   }

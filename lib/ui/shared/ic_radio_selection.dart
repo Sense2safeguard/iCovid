@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:iCovid/core/helpers/responsive_sized_widgets.dart';
 
 import 'package:provider/provider.dart';
 
+import 'package:iCovid/core/helpers/responsiver.dart';
 import 'package:iCovid/core/constants.dart';
 import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
 
@@ -21,6 +21,7 @@ class ICRadioSelection extends StatelessWidget {
   Widget build(BuildContext context) {
     QuizViewmodel model = Provider.of<QuizViewmodel>(context);
     Size size = MediaQuery.of(context).size;
+    Responsiver responsiver = Responsiver(context: context);
 
     bool _isSelected =
         isPreviouslySelected ? true : index == model.selectedOption;
@@ -28,8 +29,8 @@ class ICRadioSelection extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: [
         Container(
-          height: size.height * 0.04,
-          width: size.width * 0.32,
+          height: responsiver.icRadioSelectionHeight,
+          width: responsiver.icRadioSelectionWidth,
           margin: EdgeInsets.symmetric(vertical: 4),
           decoration: BoxDecoration(
               color: Colors.white,
@@ -82,8 +83,8 @@ class ICRadioSelection extends StatelessWidget {
                               )),
                         ),
                       ),
-                      smallestSizedBoxHorizontal(
-                        currentDeviceSize: size,
+                      SizedBox(
+                        width: responsiver.smallestHorizontal,
                       ),
                       Text(text,
                           style: _isSelected

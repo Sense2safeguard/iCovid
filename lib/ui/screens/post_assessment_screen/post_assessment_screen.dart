@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:iCovid/core/helpers/responsive_sized_widgets.dart';
 
 import 'package:provider/provider.dart';
 
+import 'package:iCovid/core/helpers/responsiver.dart';
 import 'package:iCovid/ui/screens/post_assessment_screen/components/ic_post_assessments_options.dart';
 import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
 import 'package:iCovid/ui/shared/ic_bottom_rounded_header.dart';
@@ -14,20 +14,21 @@ class PostAssessmentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     QuizViewmodel quizViewmodel = Provider.of<QuizViewmodel>(context);
+    Responsiver responsiver = Responsiver(context: context);
 
     return SafeArea(
       child: Scaffold(
         body: ListView(
           children: [
-            BottomRoundedHeader(size: size),
+            RoundedHeader(),
             Container(
-              height: size.height * 0.69,
+              height: responsiver.postAssessmentContainerHeight,
               child: Padding(
-                padding: kQuestionMainPostAssessmentBodyPadding(size),
+                padding: responsiver.postAssessmentOptionsPadding,
                 child: Column(
                   children: [
                     Spacer(),
-                    ICPostAsessmentsOptions(size: size),
+                    ICPostAsessmentsOptions(),
                     Spacer(),
                     buildButtons(context, size, quizViewmodel),
                   ],
@@ -43,17 +44,16 @@ class PostAssessmentScreen extends StatelessWidget {
 
 Row buildButtons(BuildContext context, Size size, QuizViewmodel quizViewmodel) {
   return Row(
-    // TODO: repeat with other buttons
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       Flexible(
           child: ICSecondaryButton(
         accentColor: kBlue,
-        width: size.width * 0.35,
+        width: double.infinity,
         onPressed: () {
-          Navigator.pushNamed(context, "/quiz_screen");
+          Navigator.pushNamed(context, "/quiz-screen");
         },
-        text: "View Score",
+        text: "Score",
       )),
       SizedBox(
         width: 14,
@@ -66,7 +66,7 @@ Row buildButtons(BuildContext context, Size size, QuizViewmodel quizViewmodel) {
                 quizViewmodel.resetQuiz();
                 Navigator.pushNamed(context, "/");
               },
-              text: "Repeat All")),
+              text: "Repeat")),
     ],
   );
 }

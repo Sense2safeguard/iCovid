@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:iCovid/core/helpers/responsive_sized_widgets.dart';
-import 'package:iCovid/core/services/shared_preferences_service.dart';
 
 import 'package:provider/provider.dart';
 
+import 'package:iCovid/core/services/shared_preferences_service.dart';
+import 'package:iCovid/core/helpers/responsiver.dart';
 import 'package:iCovid/ui/shared/ic_card.dart';
 import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
 
@@ -12,12 +12,14 @@ class ScoreResults extends StatelessWidget {
   Widget build(BuildContext context) {
     QuizViewmodel model = Provider.of<QuizViewmodel>(context);
     UserPreferences().setResultsReceived(true);
-    Size size = MediaQuery.of(context).size;
+    Responsiver responsiver = Responsiver(context: context);
 
     return Column(
       children: [
         ICCard(infectionScore: model.results.infectionScore),
-        smallSizedBoxVertical(currentDeviceSize: size),
+        SizedBox(
+          height: responsiver.smallVertical,
+        ),
         ICCard(
           complicationScore: model.results.complicationScore,
         ),

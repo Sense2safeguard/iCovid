@@ -84,13 +84,9 @@ class DBServiceMocked implements DBService {
         "widgetType": "MultipleScrollablePillSelection",
         "options": {
           "1": {"id": "1", "text": "African", "next": "8"},
-          "2": {
-            "id": "2",
-            "text": "American Indian or Alaska Native",
-            "next": "8"
-          },
-          "3": {"id": "3", "text": "Any other Asian background", "next": "8"},
-          "4": {"id": "4", "text": "Any other mixed background", "next": "8"},
+          "2": {"id": "2", "text": "American Indian", "next": "8"},
+          "3": {"id": "3", "text": "Other Asian background", "next": "8"},
+          "4": {"id": "4", "text": "Other mixed background", "next": "8"},
           "5": {"id": "5", "text": "Black or African American", "next": "8"},
           "6": {"id": "6", "text": "British", "next": "8"},
           "7": {"id": "7", "text": "Caribbean", "next": "8"},
@@ -178,7 +174,7 @@ class DBServiceMocked implements DBService {
           "6": {"id": "6", "text": "AB -", "next": "14"},
           "7": {"id": "7", "text": "0 +", "next": "14"},
           "8": {"id": "8", "text": "0 -", "next": "14"},
-          "9": {"id": "9", "text": "Don't know", "next": "14"},
+          "9": {"id": "9", "text": "DK / NA", "next": "14"},
         }
       },
       "14": {

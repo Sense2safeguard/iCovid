@@ -42,9 +42,11 @@ class _ICOtherInputState extends State<ICOtherInput> {
           onChanged: (value) =>
               model.updateOtherValue(textController.text.toString()),
           onSubmitted: (value) {
+            if (value == "") return null;
             model.saveOtherValue();
             model.calculateNextDisabled();
           },
+          autofocus: true,
           controller: textController,
           style: kHintTextStyle.copyWith(color: kBlue),
           decoration: InputDecoration(

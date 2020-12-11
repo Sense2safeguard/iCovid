@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 
 import 'package:iCovid/core/constants.dart';
-import 'package:iCovid/core/helpers/responsive_sized_widgets.dart';
+import 'package:iCovid/core/helpers/responsiver.dart';
 import 'package:iCovid/core/models/data_structure_models.dart';
 
 class ICAppBar extends StatelessWidget {
@@ -11,7 +11,7 @@ class ICAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Responsiver responsiver = Responsiver(context: context);
 
     String _accentTitle = "i";
     String _lightBlueTitle = "COVID";
@@ -45,7 +45,7 @@ class ICAppBar extends StatelessWidget {
     }
 
     return Container(
-      height: kAppBarHeight(size),
+      height: responsiver.appBarHeight,
       width: double.infinity,
       decoration: BoxDecoration(
         color: kBlue,
@@ -55,14 +55,15 @@ class ICAppBar extends StatelessWidget {
         child: Stack(
           children: [
             // buildCloseButton(),
-            buildLogo(_accentTitle, _lightBlueTitle),
+            buildLogo(_accentTitle, _lightBlueTitle, responsiver),
           ],
         ),
       ),
     );
   }
 
-  Align buildLogo(String accentTitle, String lightBlueTitle) {
+  Align buildLogo(
+      String accentTitle, String lightBlueTitle, Responsiver responsiver) {
     return Align(
       alignment: Alignment.center,
       child: RichText(
@@ -73,13 +74,13 @@ class ICAppBar extends StatelessWidget {
                 style: kheadline4.copyWith(
                     color: kNeoAccent,
                     fontWeight: FontWeight.w800,
-                    fontSize: 29)),
+                    fontSize: responsiver.isBig ? 29 : 26)),
             TextSpan(
                 text: lightBlueTitle,
                 style: kheadline4.copyWith(
                     color: kLightBlue,
                     fontWeight: FontWeight.w800,
-                    fontSize: 29)),
+                    fontSize: responsiver.isBig ? 29 : 26)),
           ],
         ),
       ),

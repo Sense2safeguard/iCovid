@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
 
 import 'package:iCovid/core/constants.dart';
-import 'package:iCovid/core/helpers/responsive_sized_widgets.dart';
+import 'package:iCovid/core/helpers/responsiver.dart';
 
-class BottomRoundedHeader extends StatelessWidget {
-  const BottomRoundedHeader({
-    Key key,
-    @required this.size,
-  }) : super(key: key);
-
-  final Size size;
-
+class RoundedHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    Responsiver responsiver = Responsiver(context: context);
+
     return ClipPath(
       clipper: HeaderClipper(size),
       child: Container(
-          height: size.height * 0.26,
+          height: responsiver.rounderHeaderHight,
           color: kBlue,
           child: Padding(
-            padding: EdgeInsets.only(top: kBottomRoundedHeaderTopPadding(size)),
+            padding: responsiver.rounderHeaderTopPadding,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,

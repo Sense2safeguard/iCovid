@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iCovid/core/helpers/responsiver.dart';
 
 import 'package:provider/provider.dart';
 
@@ -10,12 +11,12 @@ import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
 class SingleCheckableSelection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Responsiver responsiver = Responsiver(context: context);
 
     return Consumer<QuizViewmodel>(builder: (_, model, __) {
       Map<String, Option> optionsMap = model.currentOptions.optionsMap;
-      double buttonHeight = size.height * 0.063;
-      double extraSpace = size.height * 0.05;
+      double buttonHeight = responsiver.icSingleCheckableButtonHeight;
+      double extraSpace = responsiver.icSingleCheckableExtraSpace;
 
       return Container(
         // decide height in order to keep them always in the center

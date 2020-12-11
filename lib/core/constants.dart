@@ -36,6 +36,11 @@ const kheadline4 = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w600,
     color: kDarkBlue);
+const kheadline4small = TextStyle(
+    fontFamily: "Montserrat",
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    color: kDarkBlue);
 const kheadline6 = TextStyle(
     fontFamily: "Montserrat",
     fontSize: 18,
@@ -51,6 +56,11 @@ const kBodyText1 = TextStyle(
 const kBodyText2 = TextStyle(
     fontFamily: "Open Sans",
     fontSize: 20,
+    fontWeight: FontWeight.w400,
+    color: Colors.white);
+const kBodyText2small = TextStyle(
+    fontFamily: "Open Sans",
+    fontSize: 16,
     fontWeight: FontWeight.w400,
     color: Colors.white);
 

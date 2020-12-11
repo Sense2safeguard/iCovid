@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:iCovid/core/helpers/check_progress_helper.dart';
-import 'package:iCovid/core/helpers/responsive_sized_widgets.dart';
+import 'package:iCovid/core/helpers/responsiver.dart';
 import 'package:iCovid/core/constants.dart';
 import 'package:iCovid/core/models/data_structure_models.dart';
 import 'package:iCovid/ui/shared/ic_app_bar.dart';
@@ -13,8 +13,8 @@ import 'package:iCovid/ui/screens/quiz_screen/quiz_viewmodel.dart';
 class QuizScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     QuizViewmodel model = Provider.of<QuizViewmodel>(context);
+    Responsiver responsiver = Responsiver(context: context);
 
     return SafeArea(
       child: Scaffold(
@@ -24,28 +24,34 @@ class QuizScreen extends StatelessWidget {
             ICAppBar(
               question: model.currentQuestion,
             ),
-            mediumSizedBoxVertical(currentDeviceSize: size),
-            buildBody(size, model.currentQuestion, model)
+            SizedBox(
+              height: responsiver.mediumVertical,
+            ),
+            buildBody(responsiver, model.currentQuestion, model)
           ],
         ),
       ),
     );
   }
 
-  Padding buildBody(Size size, Question question, QuizViewmodel model) {
+  Padding buildBody(
+      Responsiver responsiver, Question question, QuizViewmodel model) {
     return Padding(
-      padding: kQuizBodyPadding(size),
+      padding: responsiver.quizBodyPadding,
       child: Column(
         children: [
-          buildTitleArea(question.category, model, size),
-          smallSizedBoxVertical(currentDeviceSize: size),
-          ICQuestion(size: size)
+          buildTitleArea(question.category, model, responsiver),
+          SizedBox(
+            height: responsiver.smallVertical,
+          ),
+          ICQuestion()
         ],
       ),
     );
   }
 
-  Column buildTitleArea(String category, QuizViewmodel model, Size size) {
+  Column buildTitleArea(
+      String category, QuizViewmodel model, Responsiver responsiver) {
     return Column(
       children: [
         Text(
@@ -53,12 +59,16 @@ class QuizScreen extends StatelessWidget {
           category,
           style: kheadline4.copyWith(color: Colors.white),
         ),
-        smallSizedBoxVertical(currentDeviceSize: size),
+        SizedBox(
+          height: responsiver.smallVertical,
+        ),
         Align(
             alignment: Alignment.centerLeft,
             child: Text("${(checkProgress(model) * 100).toInt()} % to complete",
                 style: kOverlineTextStyle)),
-        smallestSizedBoxVertical(currentDeviceSize: size),
+        SizedBox(
+          height: responsiver.smallestVertical,
+        ),
         ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(6)),
           child: LinearProgressIndicator(

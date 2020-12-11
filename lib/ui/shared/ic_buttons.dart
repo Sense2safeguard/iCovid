@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:iCovid/core/constants.dart';
-import 'package:iCovid/core/helpers/responsive_sized_widgets.dart';
+import 'package:iCovid/core/helpers/responsiver.dart';
 
 class ICMainButton extends StatelessWidget {
   final bool isDisabled;
@@ -19,11 +19,11 @@ class ICMainButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Responsiver responsiver = Responsiver(context: context);
 
     return Container(
-      width: width ?? kMainButtonWidth(size),
-      height: kMainButtonHeight(size),
+      width: width ?? responsiver.mainButtonWidth,
+      height: responsiver.mainButtonHeight,
       child: MaterialButton(
         disabledColor: kNeoAccent.withOpacity(0.15),
         onPressed: isDisabled ? null : onPressed,
@@ -58,11 +58,11 @@ class ICSecondaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Responsiver responsiver = Responsiver(context: context);
 
     return Container(
-      width: width ?? kMainButtonWidth(size),
-      height: kMainButtonHeight(size),
+      width: width ?? responsiver.mainButtonWidth,
+      height: responsiver.mainButtonHeight,
       child: MaterialButton(
           disabledColor: kNeoAccent.withOpacity(0.15),
           onPressed: isDisabled ? null : onPressed,

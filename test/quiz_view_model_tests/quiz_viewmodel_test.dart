@@ -96,7 +96,7 @@ void main() {
 
       test("if no stored answers, next button disabled", () {});
 
-      // TODO: better supply a #widget_test
+      // better supply a #widget_test
       test("populate other field if visible", () {
         quizViewmodel.navigateBack();
         quizViewmodel.navigateBack();
@@ -104,7 +104,7 @@ void main() {
         expect(quizViewmodel.otherValue, "Other value");
       });
 
-      // TODO: better supply a #widget_test
+      // better supply a #widget_test
       test("checked selected options", () {});
 
       test("notify its listeners", () {
